@@ -1,0 +1,58 @@
+.header {
+  min-height: 50px;
+  background-color: white;
+  height: 8%;
+  display: flex;
+  width: 100%;
+  min-width: 600px;
+}
+
+.menuLateral ul {
+  display: inline;
+  color: white;
+}
+
+.menuLateral a {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.menuLateral li {
+  color: white;
+  margin-bottom: 20px;
+}
+
+ul {
+  display: flex;
+  margin-left: 30px;
+  align-self: flex-end;
+}
+
+li {
+  margin-left: 30px;
+}
+
+.header img {
+  align-self: center;
+  margin-left: 35px;
+  cursor: pointer;
+}
+
+.container {
+  display: flex !important;
+  height: 92% !important;
+  width: 100% !important;
+}
+
+.sectionLeft {
+  background-color: #2f353a;
+  max-width: 235px;
+  width: 100%;
+}
+
+.sectionRight {
+  background-color: #e4e5e6;
+  width: 100%;
+  overflow: auto;
+  padding-top: 30px;
+}

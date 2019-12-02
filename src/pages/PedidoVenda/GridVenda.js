@@ -5,6 +5,8 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import Button from 'react-bootstrap/Button';
 import { useDispatch } from 'react-redux';
 import { GridVendaStore } from '~/store/modules/gridVenda/actions';
+import store from '~/store';
+import { Input } from '@rocketseat/unform';
 
 export default function GridVenda() {
   const [state] = useState({
@@ -67,19 +69,36 @@ export default function GridVenda() {
   });
   const dispatch = useDispatch();
   dispatch(GridVendaStore('R$13.500,00'));
+
+  const { total } = store.getState().gridVenda;
+
   return (
-    <div
-      className="ag-theme-balham"
-      style={{ height: '200px', width: '100%', justifyContent: 'center' }}
-    >
-      <AgGridReact
-        enableSorting={true}
-        enableFilter={true}
-        pagination={true}
-        columnDefs={state.columnDefs}
-        rowData={state.rowData}
-        rowHeight={35}
-      ></AgGridReact>
-    </div>
+    <>
+      <div
+        className="ag-theme-balham"
+        style={{ height: '200px', width: '100%', justifyContent: 'center' }}
+      >
+        <AgGridReact
+          enableSorting={true}
+          enableFilter={true}
+          pagination={true}
+          columnDefs={state.columnDefs}
+          rowData={state.rowData}
+          rowHeight={35}
+        ></AgGridReact>
+      </div>
+      <div style={{ display: 'flex', marginLeft: '-30px' }}>
+        <div className={'inputWidth'}>
+          <label for="name">Total</label>
+          <Input
+            name="total"
+            type="text"
+            placeholder="Nome"
+            value={`${total}`}
+            disabled
+          />
+        </div>
+      </div>
+    </>
   );
 }

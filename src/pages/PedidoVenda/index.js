@@ -7,7 +7,8 @@ import Tabs from '../../components/Tabs';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Pesquisa from './Pesquisa';
-import store from '~/store';
+import Logistica from './Logistica';
+import Contabilidade from './Contabilidade';
 
 // import { Container } from './styles';
 
@@ -20,7 +21,6 @@ export default function PedidoVenda() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const { total } = store.getState().gridVenda;
 
   function handleSubmit({ nome, PessoaContato }) {
     console.log(nome, PessoaContato);
@@ -139,32 +139,15 @@ export default function PedidoVenda() {
                 </Tabs.Tab>
 
                 <Tabs.Tab label={'Logística'}>
-                  <h1>Logística</h1>
+                  <Logistica />
                 </Tabs.Tab>
 
                 <Tabs.Tab label={'Contabilidade'}>
-                  <h1>Contabilidade</h1>
-                </Tabs.Tab>
-
-                <Tabs.Tab label={'Imposto'}>
-                  <h1>Imposto</h1>
+                  <Contabilidade />
                 </Tabs.Tab>
               </Tabs>
 
               {/* tabs */}
-            </div>
-
-            <div style={{ display: 'flex' }}>
-              <div className={'inputWidth'}>
-                <label for="name">Total</label>
-                <Input
-                  name="total"
-                  type="text"
-                  placeholder="Nome"
-                  value={`${total}`}
-                  disabled
-                />
-              </div>
             </div>
 
             <div style={{ display: 'flex', marginBottom: '30px' }}>

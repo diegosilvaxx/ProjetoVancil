@@ -7,11 +7,11 @@ import api from '~/services/api';
 import { signInSuccess } from './actions';
 
 export function* signIn({ payload }) {
-  const { email, password } = payload;
+  const { usuario, password } = payload;
 
   //CHAMADA API
   const response = yield call(api.post, 'HUB/HUB/Authenticate', {
-    appID: email,
+    appID: usuario,
     AppKey: password,
   });
 

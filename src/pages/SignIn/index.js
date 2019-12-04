@@ -9,9 +9,7 @@ import Button from 'react-bootstrap/Button';
 import { signInRequest } from '~/store/modules/auth/actions';
 
 const schema = Yup.object().shape({
-  email: Yup.string()
-    // .email('Insira um e-mail válido')
-    .required('O e-mail é obrigatorio'),
+  usuario: Yup.string().required('O usuário é obrigatorio'),
   password: Yup.string().required('A senha é obrigatória'),
 });
 
@@ -20,16 +18,15 @@ const schema = Yup.object().shape({
 export default function SignIn() {
   const dispatch = useDispatch();
 
-  function handleSubmit({ email, password }) {
-    dispatch(signInRequest(email, password));
+  function handleSubmit({ usuario, password }) {
+    dispatch(signInRequest(usuario, password));
   }
 
   return (
     <>
       <img src={logo} style={{ width: 100 }} alt="PortalVendas" />
       <Form schema={schema} onSubmit={handleSubmit}>
-        <Input name="email" type="text" placeholder="Seu e-mail" />
-        {/* <Input name="email" type="email" placeholder="Seu e-mail" /> */}
+        <Input name="usuario" type="text" placeholder="Usuário" />
         <Input
           name="password"
           type="password"

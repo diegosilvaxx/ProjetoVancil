@@ -12,7 +12,7 @@ class Cliente extends Component {
           >
             <label for="name">DDD</label>
             <Input
-              name="DDD"
+              name="ddd"
               type="text"
               placeholder="(99)"
               style={{
@@ -25,11 +25,11 @@ class Cliente extends Component {
           </div>
           <div className={'inputWidth'}>
             <label for="name">Telefone</label>
-            <Input name="Telefone" type="text" placeholder="9999-9999" />
+            <Input name="telefone" type="text" placeholder="9999-9999" />
           </div>
           <div className={'inputWidth'}>
             <label for="name">Celular</label>
-            <Input name="Celular" type="text" placeholder="(99) 99999-9999" />
+            <Input name="celular" type="text" placeholder="(99) 99999-9999" />
           </div>
           <div className={'inputWidth'}>
             <label for="name" class="">
@@ -43,21 +43,17 @@ class Cliente extends Component {
             <label for="name" class="">
               Observações
             </label>
-            <Input name="Observacoes" type="text" placeholder="Observações" />
+            <Input name="observacoes" type="text" placeholder="Observações" />
           </div>
           <div className={'inputWidth'}>
             <label for="name" class="">
               Vendedor
             </label>
-            <Input
-              name="VendedorComprador"
-              type="text"
-              placeholder="Vendedor/Comprador"
-            />
+            <Input name="vendedor" type="text" placeholder="Vendedor" />
           </div>
           <div className={'inputWidth'}>
             <label>Território *</label>
-            <Input name="Territorio" type="text" placeholder="Território" />
+            <Input name="territorio" type="text" placeholder="Território" />
           </div>
         </div>
       </>

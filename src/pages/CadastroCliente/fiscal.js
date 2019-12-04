@@ -10,20 +10,20 @@ class Fiscal extends Component {
             <label for="name" class="">
               CNAE
             </label>
-            <Input name="CNAE" type="text" placeholder="CNAE" />
+            <Input name="cnae" type="text" placeholder="CNAE" />
           </div>
           <div className={'inputWidth'}>
             <label for="name" class="">
               CNPJ
             </label>
-            <Input name="CNPJ" type="text" placeholder="CNPJ" />
+            <Input name="cnpj" type="text" placeholder="CNPJ" />
           </div>
           <div className={'inputWidth'}>
             <label for="name" class="">
               Inscrição Estadual
             </label>
             <Input
-              name="InscricaoEstadual"
+              name="inscricaoEstadual"
               type="text"
               placeholder="Inscrição Estadual"
             />
@@ -35,7 +35,7 @@ class Fiscal extends Component {
             <label for="name" class="">
               CPF
             </label>
-            <Input name="CPF" type="text" placeholder="CPF" />
+            <Input name="cpf" type="text" placeholder="CPF" />
           </div>
           <div
             style={{ display: 'flex', alignItems: 'center', marginTop: '26px' }}
@@ -44,7 +44,7 @@ class Fiscal extends Component {
               Insento Inscrição Estadual
             </label>
             <Input
-              name="InscricaoEstadual"
+              name="InsentoInscricaoEstadual"
               type="checkbox"
               className="checkbox"
             />

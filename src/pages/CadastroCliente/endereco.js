@@ -12,7 +12,11 @@ class endereco extends Component {
               Id endereço (cobrança/entrega)
             </label>
             <Form.Group controlId="idEndereco" className={'comboboxGroup'}>
-              <Form.Control as="select" className={'comboboxControl'}>
+              <Form.Control
+                as="select"
+                name="idEndereco"
+                className={'comboboxControl'}
+              >
                 <option>Cobrança</option>
                 <option>Entrega</option>
               </Form.Control>
@@ -23,7 +27,7 @@ class endereco extends Component {
               Tipo Logradouro (Rua,viela e etc)
             </label>
             <Input
-              name="TipoLogradouro"
+              name="tipoLogradouro"
               type="text"
               placeholder="Tipo Logradouro"
             />
@@ -32,7 +36,7 @@ class endereco extends Component {
             <label for="name" class="">
               Nome da Rua
             </label>
-            <Input name="Rua" type="text" placeholder="Rua" />
+            <Input name="nomeRua" type="text" placeholder="Rua" />
           </div>
         </div>
 
@@ -41,19 +45,19 @@ class endereco extends Component {
             <label for="name" class="">
               Nº
             </label>
-            <Input name="Numero" type="text" placeholder="Numero" />
+            <Input name="numero" type="text" placeholder="Numero" />
           </div>
           <div className={'inputWidth'}>
             <label for="name" class="">
               Complemento
             </label>
-            <Input name="Complemento" type="text" placeholder="Complemento" />
+            <Input name="complemento" type="text" placeholder="Complemento" />
           </div>
           <div className={'inputWidth'}>
             <label for="name" class="">
               CEP (Apenas numero)
             </label>
-            <Input name="CEP" type="text" placeholder="CEP" />
+            <Input name="cep" type="text" placeholder="CEP" />
           </div>
         </div>
 
@@ -62,19 +66,19 @@ class endereco extends Component {
             <label for="name" class="">
               Bairro
             </label>
-            <Input name="Bairro" type="text" placeholder="Bairro" />
+            <Input name="bairro" type="text" placeholder="Bairro" />
           </div>
           <div className={'inputWidth'}>
             <label for="name" class="">
               Estado
             </label>
-            <Input name="Estado" type="text" placeholder="Estado" />
+            <Input name="estado" type="text" placeholder="Estado" />
           </div>
           <div className={'inputWidth'}>
             <label for="name" class="">
               Município
             </label>
-            <Input name="Municipio" type="text" placeholder="Município" />
+            <Input name="municipio" type="text" placeholder="Município" />
           </div>
         </div>
 
@@ -83,7 +87,7 @@ class endereco extends Component {
             <label for="name" class="">
               Cidade
             </label>
-            <Input name="Cidade" type="text" placeholder="Cidade" />
+            <Input name="cidade" type="text" placeholder="Cidade" />
           </div>
         </div>
       </>

@@ -1,26 +1,42 @@
 import React from 'react';
 import { Form } from '@rocketseat/unform';
-import * as Yup from 'yup';
 import Endereco from './endereco';
 import PessoaContato from './pessoaContato';
 import Cliente from './cliente';
 import Fiscal from './fiscal';
 import Button from 'react-bootstrap/Button';
+import { useDispatch, useSelector, connect } from 'react-redux';
+import {
+  insertCliente,
+  setState,
+} from '~/store/modules/cadastroCliente/actions';
+
+import history from 'services/history';
 
 import Tabs from '../../components/Tabs';
-// import { Container } from './styles';
 
-const schema = Yup.object().shape({
-  email: Yup.string()
-    .email('Insira um e-mail válido')
-    .required('O e-mail é obrigatorio'),
-  password: Yup.string().required('A senha é obrigatória'),
-});
+import Schema from './schema';
+const schema = Schema;
 
-export default function CadastroCliente() {
-  function handleSubmit({ email, password }) {
-    console.log(email, password);
+const CadastroCliente = () => {
+  const dispatch = useDispatch();
+  const stateCadastroCliente = useSelector(state => state.cadastroCliente);
+
+  async function onSubmitForm() {
+    var btnSubmit = document.getElementById('btnSubmit');
+    btnSubmit.click();
   }
+
+  async function handleForm(data) {
+    if (data != null) {
+      dispatch(setState({ data }));
+    }
+  }
+
+  async function handleSubmit() {
+    dispatch(insertCliente(stateCadastroCliente));
+  }
+
   return (
     <>
       <div
@@ -35,10 +51,14 @@ export default function CadastroCliente() {
         }}
       >
         <label className={'lblTitulo'}>Cadastro de Cliente</label>
-        <Form schema={schema} onSubmit={handleSubmit}>
-          <div className={'containerForm'}>
+        <Form
+          initialData={stateCadastroCliente}
+          onSubmit={handleForm}
+          id="formCliente"
+          schema={schema}
+        >
+          <div className={'containerForm'} onClick={onSubmitForm}>
             {/* tabs */}
-
             <Tabs>
               <Tabs.Tab label={'Geral'}>
                 <Cliente></Cliente>
@@ -61,13 +81,20 @@ export default function CadastroCliente() {
 
             <div style={{ display: 'flex', marginBottom: '30px' }}>
               <div className={'inputWidth'} style={{ margin: '0 30px 0' }}>
-                <Button type="submit">Ok</Button>
+                <Button onClick={handleSubmit}>Ok</Button>
+                <Button
+                  style={{ visibility: 'hidden', height: '0px' }}
+                  type="submit"
+                  form="formCliente"
+                  id="btnSubmit"
+                >
+                  Ok
+                </Button>
               </div>
               <div className={'inputWidth'}>
                 <Button
                   variant="secondary"
-                  onClick={() => alert('Cancelado')}
-                  type="submit"
+                  onClick={() => history.push('/dashboard')}
                 >
                   Cancelar
                 </Button>
@@ -78,4 +105,6 @@ export default function CadastroCliente() {
       </div>
     </>
   );
-}
+};
+
+export default connect()(CadastroCliente);

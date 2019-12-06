@@ -41,7 +41,7 @@ class Fiscal extends Component {
             style={{ display: 'flex', alignItems: 'center', marginTop: '26px' }}
           >
             <label for="name" style={{ marginTop: '5px' }}>
-              Insento Inscrição Estadual
+              Isento Inscrição Estadual
             </label>
             <Input
               name="InsentoInscricaoEstadual"

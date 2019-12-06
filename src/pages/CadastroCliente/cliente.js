@@ -56,6 +56,28 @@ class Cliente extends Component {
             <Input name="territorio" type="text" placeholder="Território" />
           </div>
         </div>
+        <div style={{ display: 'flex' }}>
+          <div className={'inputWidth'}>
+            <label for="name" class="">
+              Nome do Cliente
+            </label>
+            <Input
+              name="nomeCliente"
+              type="text"
+              placeholder="Nome do Cliente"
+            />
+          </div>
+          <div className={'inputWidth'}>
+            <label for="name" class="">
+              Nome Fantasia
+            </label>
+            <Input
+              name="nomeFantasia"
+              type="text"
+              placeholder="Nome Fantasia"
+            />
+          </div>
+        </div>
       </>
     );
   }

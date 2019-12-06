@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
-import Grid from '~/components/Grid';
+import Grid from './GridVenda';
 
-class Pesquisa extends Component {
+class PesquisaProduto extends Component {
   render() {
     return (
       <>
@@ -18,10 +18,10 @@ class Pesquisa extends Component {
             <Button variant="outline-secondary">Pesquisar</Button>
           </InputGroup.Append>
         </InputGroup>
-        <Grid corpo={{ teste: 'nome' }}></Grid>
+        <Grid></Grid>
       </>
     );
   }
 }
 
-export default Pesquisa;
+export default PesquisaProduto;

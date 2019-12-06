@@ -14,30 +14,24 @@ class pessoaContato extends Component {
           </div>
           <div className={'inputWidth'}>
             <label for="name" class="">
-              Nome Completo
+              Nome
             </label>
-            <Input
-              name="nomeCompleto"
-              type="text"
-              placeholder="Nome Completo"
-            />
+            <Input name="nome" type="text" placeholder="Nome" />
           </div>
-          <div
-            className={'inputWidth'}
-            style={{ width: '40px', marginRight: '20px' }}
-          >
-            <label for="name">DDD</label>
-            <Input
-              name="dddPessoaContato"
-              type="text"
-              placeholder="(99)"
-              style={{
-                width: '40px',
-                marginRight: '20px',
-                padding: '0',
-                textAlign: 'center',
-              }}
-            />
+          <div className={'inputWidth'}>
+            <label for="name" class="">
+              Segundo Nome
+            </label>
+            <Input name="segundoNome" type="text" placeholder="Segundo Nome" />
+          </div>
+        </div>
+
+        <div style={{ display: 'flex' }}>
+          <div className={'inputWidth'}>
+            <label for="name" class="">
+              Sobrenome
+            </label>
+            <Input name="sobrenome" type="text" placeholder="Sobrenome" />
           </div>
           <div className={'inputWidth'}>
             <label for="name" class="">
@@ -49,9 +43,6 @@ class pessoaContato extends Component {
               placeholder="(99) 9999-9999"
             />
           </div>
-        </div>
-
-        <div style={{ display: 'flex' }}>
           <div className={'inputWidth'}>
             <label for="name" class="">
               Email

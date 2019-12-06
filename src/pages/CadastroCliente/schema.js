@@ -3,6 +3,8 @@ import * as Yup from 'yup';
 const Schema = Yup.object().shape({
   email: Yup.string().email('Insira um e-mail válido'),
   // .required('O e-mail é obrigatorio'),
+  nomeCliente: Yup.string(),
+  nomeFantasia: Yup.string(),
   ddd: Yup.string(),
   telefone: Yup.string(),
   celular: Yup.string(),
@@ -11,6 +13,7 @@ const Schema = Yup.object().shape({
   territorio: Yup.string(),
   //Endereço
   idEndereco: Yup.string(),
+  tipoEndereco: Yup.string(),
   tipoLogradouro: Yup.string(),
   nomeRua: Yup.string(),
   numero: Yup.string(),
@@ -22,7 +25,9 @@ const Schema = Yup.object().shape({
   cidade: Yup.string(),
   //PESSOA CONTATO
   idContato: Yup.string(),
-  nomeCompleto: Yup.string(),
+  nome: Yup.string(),
+  segundoNome: Yup.string(),
+  sobrenome: Yup.string(),
   dddPessoaContato: Yup.string(),
   telefonePessoaContato: Yup.string(),
   emailPessoaContato: Yup.string(),

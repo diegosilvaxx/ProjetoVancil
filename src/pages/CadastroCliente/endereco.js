@@ -9,12 +9,18 @@ class endereco extends Component {
         <div style={{ display: 'flex' }}>
           <div className={'inputWidth'}>
             <label for="name" class="">
-              Id endereço (cobrança/entrega)
+              Id endereço
             </label>
-            <Form.Group controlId="idEndereco" className={'comboboxGroup'}>
+            <Input name="idEndereco" type="text" placeholder="Id endereço" />
+          </div>
+          <div className={'inputWidth'}>
+            <label for="name" class="">
+              Tipo endereço (cobrança/entrega)
+            </label>
+            <Form.Group controlId="tipoEndereco" className={'comboboxGroup'}>
               <Form.Control
                 as="select"
-                name="idEndereco"
+                name="tipoEndereco"
                 className={'comboboxControl'}
               >
                 <option>Cobrança</option>
@@ -32,15 +38,15 @@ class endereco extends Component {
               placeholder="Tipo Logradouro"
             />
           </div>
+        </div>
+
+        <div style={{ display: 'flex' }}>
           <div className={'inputWidth'}>
             <label for="name" class="">
               Nome da Rua
             </label>
             <Input name="nomeRua" type="text" placeholder="Rua" />
           </div>
-        </div>
-
-        <div style={{ display: 'flex' }}>
           <div className={'inputWidth'}>
             <label for="name" class="">
               Nº
@@ -53,15 +59,15 @@ class endereco extends Component {
             </label>
             <Input name="complemento" type="text" placeholder="Complemento" />
           </div>
+        </div>
+
+        <div style={{ display: 'flex' }}>
           <div className={'inputWidth'}>
             <label for="name" class="">
               CEP (Apenas numero)
             </label>
             <Input name="cep" type="text" placeholder="CEP" />
           </div>
-        </div>
-
-        <div style={{ display: 'flex' }}>
           <div className={'inputWidth'}>
             <label for="name" class="">
               Bairro
@@ -74,15 +80,15 @@ class endereco extends Component {
             </label>
             <Input name="estado" type="text" placeholder="Estado" />
           </div>
+        </div>
+
+        <div style={{ display: 'flex' }}>
           <div className={'inputWidth'}>
             <label for="name" class="">
               Município
             </label>
-            <Input name="municipio" type="text" placeholder="Município" />
+            <Input name="municipio" type="number" placeholder="Município" />
           </div>
-        </div>
-
-        <div style={{ display: 'flex' }}>
           <div className={'inputWidth'}>
             <label for="name" class="">
               Cidade

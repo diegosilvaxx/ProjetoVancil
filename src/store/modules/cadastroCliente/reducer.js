@@ -8,8 +8,11 @@ const INITIAL_STATE = {
   observacoes: '',
   vendedor: '',
   territorio: '',
+  nomeCliente: '',
+  nomeFantasia: '',
   // Enderecos: {
   idEndereco: '',
+  tipoEndereco: '',
   tipoLogradouro: '',
   nomeRua: '',
   numero: '',
@@ -29,8 +32,9 @@ const INITIAL_STATE = {
   // },
   // Contato: {
   idContato: '',
-  nomeCompleto: '',
-  dddPessoaContato: '',
+  nome: '',
+  segundoNome: '',
+  sobrenome: '',
   telefonePessoaContato: '',
   emailPessoaContato: '',
   // },
@@ -38,7 +42,7 @@ const INITIAL_STATE = {
 
 export default function cadastroCliente(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case '@cadastroCliente/SIGN_IN_SUCCESS':
+    case '@cadastroCliente/INSERT_CLIENTE':
       return produce(state, draft => {
         draft = action.payload;
       });
@@ -72,11 +76,23 @@ export default function cadastroCliente(state = INITIAL_STATE, action) {
           action.payload.data.territorio != undefined
             ? action.payload.data.territorio
             : draft.territorio;
+        draft.nomeCliente =
+          action.payload.data.nomeCliente != undefined
+            ? action.payload.data.nomeCliente
+            : draft.nomeCliente;
+        draft.nomeFantasia =
+          action.payload.data.nomeFantasia != undefined
+            ? action.payload.data.nomeFantasia
+            : draft.nomeFantasia;
         //ENDERECO
         draft.idEndereco =
           action.payload.data.idEndereco != undefined
             ? action.payload.data.idEndereco
             : draft.idEndereco;
+        draft.tipoEndereco =
+          action.payload.data.tipoEndereco != undefined
+            ? action.payload.data.tipoEndereco
+            : draft.tipoEndereco;
         draft.tipoLogradouro =
           action.payload.data.tipoLogradouro != undefined
             ? action.payload.data.tipoLogradouro
@@ -118,10 +134,18 @@ export default function cadastroCliente(state = INITIAL_STATE, action) {
           action.payload.data.idContato != undefined
             ? action.payload.data.idContato
             : draft.idContato;
-        draft.nomeCompleto =
-          action.payload.data.nomeCompleto != undefined
-            ? action.payload.data.nomeCompleto
-            : draft.nomeCompleto;
+        draft.nome =
+          action.payload.data.nome != undefined
+            ? action.payload.data.nome
+            : draft.nome;
+        draft.segundoNome =
+          action.payload.data.segundoNome != undefined
+            ? action.payload.data.segundoNome
+            : draft.segundoNome;
+        draft.sobrenome =
+          action.payload.data.sobrenome != undefined
+            ? action.payload.data.sobrenome
+            : draft.sobrenome;
         draft.dddPessoaContato =
           action.payload.data.dddPessoaContato != undefined
             ? action.payload.data.dddPessoaContato

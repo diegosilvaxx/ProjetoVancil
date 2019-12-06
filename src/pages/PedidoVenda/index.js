@@ -6,7 +6,8 @@ import GridVenda from './GridVenda';
 import Tabs from '../../components/Tabs';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Pesquisa from './Pesquisa';
+import PesquisaCliente from './PesquisaCliente';
+import PesquisaProduto from './PesquisaProduto';
 import Logistica from './Logistica';
 import Contabilidade from './Contabilidade';
 
@@ -50,12 +51,12 @@ export default function PedidoVenda() {
           </Button>
         </div>
 
-        <Modal show={show} onHide={handleClose} size="lg">
+        <Modal show={show} onHide={handleClose} size="xl">
           <Modal.Header closeButton>
             <Modal.Title>Pesquisa</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Pesquisa></Pesquisa>
+            <PesquisaCliente></PesquisaCliente>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>

@@ -87,18 +87,6 @@ export default function GridVenda() {
           rowHeight={35}
         ></AgGridReact>
       </div>
-      <div style={{ display: 'flex', marginLeft: '-30px' }}>
-        <div className={'inputWidth'}>
-          <label for="name">Total</label>
-          <Input
-            name="total"
-            type="text"
-            placeholder="Nome"
-            value={`${total}`}
-            disabled
-          />
-        </div>
-      </div>
     </>
   );
 }

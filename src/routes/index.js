@@ -21,19 +21,27 @@ export default function Routes() {
       <>
         <Header />
         <GlobalStyle />
-        <div className="container">
+        <div className="container" key={'divIndexRouterKey'}>
           <section id={'sectionLeft'} className="sectionLeft">
             <MenuLateral></MenuLateral>
           </section>
-          <section className="sectionRight">
-            <Route path="/dashboard" exact component={Dashboard} isPrivate />
+          <section className="sectionRight" key={'sectionRightKey'}>
+            <Route
+              path="/dashboard"
+              key={'dashboardKey'}
+              exact
+              component={Dashboard}
+              isPrivate
+            />
             <Route
               path="/cadastroCliente"
+              key={'cadastroClienteKey'}
               exact
               component={CadastroCliente}
               isPrivate
             />
             <Route
+              key={'KEYpedidoVenda'}
               path="/pedidoVenda"
               exact
               component={PedidoVenda}

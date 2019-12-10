@@ -7,7 +7,7 @@ class Contabilidade extends Component {
       <>
         <div style={{ display: 'flex' }}>
           <div className={'inputWidth'}>
-            <label for="name" class="">
+            <label htmlFor="name" className="">
               Condições de pagamento
             </label>
             <Input
@@ -17,13 +17,13 @@ class Contabilidade extends Component {
             />
           </div>
           <div className={'inputWidth'}>
-            <label for="name" class="">
-              Forma de pagamento
+            <label htmlFor="name" className="">
+              htmlForma de pagamento
             </label>
             <Input
-              name="FormaPagamento"
+              name="htmlFormaPagamento"
               type="text"
-              placeholder="Forma de pagamento"
+              placeholder="htmlForma de pagamento"
             />
           </div>
         </div>

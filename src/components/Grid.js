@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 
 import React, { Component } from 'react';
 
-class Grid extends Component {
+className Grid extends Component {
   constructor(props) {
     super(props);
 

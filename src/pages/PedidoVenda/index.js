@@ -72,11 +72,11 @@ export default function PedidoVenda() {
           <div className={'containerForm'}>
             <div style={{ display: 'flex' }}>
               <div className={'inputWidth'}>
-                <label for="name">Nome</label>
+                <label htmlFor="name">Nome</label>
                 <Input name="nome" type="text" placeholder="Nome" />
               </div>
               <div className={'inputWidth'}>
-                <label for="name">Pessoa de contato</label>
+                <label htmlFor="name">Pessoa de contato</label>
                 <Input
                   name="PessoaContato"
                   type="text"
@@ -84,7 +84,7 @@ export default function PedidoVenda() {
                 />
               </div>
               <div className={'inputWidth'}>
-                <label for="name" class="">
+                <label htmlFor="name" className="">
                   Nº Ref. Cliente
                 </label>
                 <Input
@@ -97,13 +97,13 @@ export default function PedidoVenda() {
 
             <div style={{ display: 'flex' }}>
               <div className={'inputWidth'}>
-                <label for="name" class="">
+                <label htmlFor="name" className="">
                   Status
                 </label>
                 <Input name="Status" type="text" placeholder="Status" />
               </div>
               <div className={'inputWidth'}>
-                <label for="name" class="">
+                <label htmlFor="name" className="">
                   Nº – Seq. numérica
                 </label>
                 <Input
@@ -113,7 +113,7 @@ export default function PedidoVenda() {
                 />
               </div>
               <div className={'inputWidth'}>
-                <label for="name" class="">
+                <label htmlFor="name" className="">
                   Nº Doc SAP
                 </label>
                 <Input name="DocSap" type="text" placeholder="Nº Doc SAP" />

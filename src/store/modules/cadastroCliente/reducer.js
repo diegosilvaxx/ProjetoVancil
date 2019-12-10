@@ -41,9 +41,9 @@ const INITIAL_STATE = {
   GrupoCombox: undefined,
   MunicipioCombox: undefined,
   EstadoCombox: undefined,
-  EstadoSelecionado: [{ id: undefined, title: undefined }],
+  EstadoSelecionado: [{ id: 'Carregando', title: 'Carregando' }],
   MunicipioSelecionado: [
-    { id: undefined, title: undefined, estado: undefined },
+    { id: 'Carregando', title: 'Carregando', estado: 'Carregando' },
   ],
   // },
 };

@@ -8,7 +8,7 @@ export default function MenuLateral() {
     <header className="menuLateral">
       <ul>
         <li>
-          <i class="nav-icon icon-puzzle"></i>
+          <i className="nav-icon icon-puzzle"></i>
           <Link to="/">
             <FaBeer style={{ marginRight: 10 }} />
             Dashboard

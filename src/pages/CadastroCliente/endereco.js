@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input, Select } from '@rocketseat/unform';
 import Form from 'react-bootstrap/Form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,18 +11,36 @@ import {
 
 const Endereco = () => {
   const dispatch = useDispatch();
+  const [selecionoMunicipio, setSelecionoMunicipio] = useState(true);
+  const [carregoDados, setCarregoDados] = useState(false);
+  const [seleciono, setSeleciono] = useState(true);
+  const options = [
+    { id: 'Cobrança', title: 'Cobrança' },
+    { id: 'Entrega', title: 'Entrega' },
+  ];
+
+  var Carregando = [{ id: 'Carregando', title: 'Carregando...' }];
+
   //MUNICIPIO
-  const [optionsMunicipio, setOptionsMunicipio] = useState([{}]);
+  const [optionsMunicipio, setOptionsMunicipio] = useState([
+    { id: 'Carregando', title: 'Carregando' },
+  ]);
 
   //ESTADO
-  const [optionsEstado, setOptionsEstado] = useState([{}]);
+  const [optionsEstado, setOptionsEstado] = useState([
+    { id: 'Carregando', title: 'Carregando' },
+  ]);
 
   const stateCadastroCliente = useSelector(state => state.cadastroCliente);
+  if (carregoDados == false) {
+    dispatch(getMunicipio());
+    dispatch(getEstado());
+    setCarregoDados(true);
+  }
 
   //CARREGA MUNICIPIO
   async function loadMunicipio() {
-    await dispatch(getMunicipio());
-    let resultMunicipio = [{}];
+    let resultMunicipio = [{ id: 'Carregando', title: 'Carregando' }];
     if (stateCadastroCliente.MunicipioCombox != undefined) {
       stateCadastroCliente.MunicipioCombox.forEach(element => {
         resultMunicipio.push({
@@ -43,8 +61,7 @@ const Endereco = () => {
 
   //CARREGA ESTADO
   async function loadEstado() {
-    await dispatch(getEstado());
-    let resultEstado = [{}];
+    let resultEstado = [{ id: 'Carregando', title: 'Carregando' }];
     if (stateCadastroCliente.EstadoCombox != undefined) {
       stateCadastroCliente.EstadoCombox.forEach(element => {
         resultEstado.push({
@@ -58,18 +75,18 @@ const Endereco = () => {
     }
   }
 
-  //forca carregar municipio
+  //htmlForca carregar municipio
   if (optionsMunicipio.length <= 1 && stateCadastroCliente.estado != '') {
     loadMunicipio();
   }
 
-  //forca carregar estado
+  //htmlForca carregar estado
   if (optionsEstado.length <= 1) {
     loadEstado();
   }
 
   //setEstadoSelecionado
-  const [seleciono, setSeleciono] = useState(true);
+
   async function setEstadoSelecionadoEndereco() {
     if (seleciono) {
       if (stateCadastroCliente.EstadoSelecionado[0].id == undefined) {
@@ -95,12 +112,12 @@ const Endereco = () => {
   }
 
   //setMunicipioSelecionado
-  const [selecionoMunicipio, setSelecionoMunicipio] = useState(true);
+
   async function setMunicipioelecionadoEndereco() {
     if (selecionoMunicipio) {
       if (stateCadastroCliente.MunicipioSelecionado[0].id == undefined) {
         const result = document.getElementById('municipio').value;
-        if (result != '') {
+        if (result != '' && optionsMunicipio.length > 1) {
           const municipioSelecionado = [
             {
               id: result,
@@ -119,34 +136,35 @@ const Endereco = () => {
     }
   }
 
-  const options = [
-    { id: 'Cobrança', title: 'Cobrança' },
-    { id: 'Entrega', title: 'Entrega' },
-  ];
   return (
     <>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex' }} key={'gfd'}>
         <div className={'inputWidth'}>
-          <label for="name" class="">
+          <label htmlFor="name" className="">
             Id endereço
           </label>
           <Input name="idEndereco" type="text" placeholder="Id endereço" />
         </div>
-        <div className={'inputWidth'}>
-          <label for="name" class="">
+        <div className={'inputWidth'} key={'gfdfgh'}>
+          <label htmlFor="name" className="">
             Tipo endereço (cobrança/entrega)
           </label>
-          <Form.Group controlId="formCliente" className={'comboboxGroup'}>
+          <Form.Group
+            controlId="FormCliente"
+            key={'KeyFormGrupoEndereco'}
+            className={'comboboxGroup'}
+          >
             <Select
               name="tipoEndereco"
-              options={options}
+              options={options.length <= 1 ? Carregando : options}
               className={'comboboxControl'}
               placeholder={'Selecione'}
+              key={'KeyFormGrupoSelectEndereco'}
             />
           </Form.Group>
         </div>
         <div className={'inputWidth'}>
-          <label for="name" class="">
+          <label htmlFor="name" className="">
             Tipo Logradouro (Rua,viela e etc)
           </label>
           <Input
@@ -159,19 +177,19 @@ const Endereco = () => {
 
       <div style={{ display: 'flex' }}>
         <div className={'inputWidth'}>
-          <label for="name" class="">
+          <label htmlFor="name" className="">
             Nome da Rua
           </label>
           <Input name="nomeRua" type="text" placeholder="Rua" />
         </div>
         <div className={'inputWidth'}>
-          <label for="name" class="">
+          <label htmlFor="name" className="">
             Nº
           </label>
           <Input name="numero" type="text" placeholder="Numero" />
         </div>
         <div className={'inputWidth'}>
-          <label for="name" class="">
+          <label htmlFor="name" className="">
             Complemento
           </label>
           <Input name="complemento" type="text" placeholder="Complemento" />
@@ -180,26 +198,29 @@ const Endereco = () => {
 
       <div style={{ display: 'flex' }}>
         <div className={'inputWidth'}>
-          <label for="name" class="">
+          <label htmlFor="name" className="">
             CEP (Apenas numero)
           </label>
           <Input name="cep" type="text" placeholder="CEP" />
         </div>
         <div className={'inputWidth'}>
-          <label for="name" class="">
-            Bairro
-          </label>
+          <label>Bairro</label>
           <Input name="bairro" type="text" placeholder="Bairro" />
         </div>
         <div className={'inputWidth'}>
-          <label for="name" class="">
-            Estado
-          </label>
-          <Form.Group controlId="formCliente" className={'comboboxGroup'}>
+          <label>Estado</label>
+          <Form.Group
+            controlId="FormCliente"
+            key={'KeyFormFroupEstado'}
+            className={'comboboxGroup'}
+          >
             <Select
+              key={'selectEstadoComboBoxKey'}
               name="estado"
               options={
-                stateCadastroCliente.EstadoSelecionado[0].id == undefined
+                optionsEstado.length <= 1
+                  ? Carregando
+                  : stateCadastroCliente.EstadoSelecionado[0].id == undefined
                   ? optionsEstado
                   : stateCadastroCliente.EstadoSelecionado
               }
@@ -213,15 +234,17 @@ const Endereco = () => {
       </div>
 
       <div style={{ display: 'flex' }}>
-        <div className={'inputWidth'}>
-          <label for="name" class="">
+        <div className={'inputWidth'} onMouseOver={loadMunicipio}>
+          <label htmlFor="name" className="">
             Município
           </label>
-          <Form.Group controlId="formCliente" className={'comboboxGroup'}>
+          <Form.Group controlId="htmlFormCliente" className={'comboboxGroup'}>
             <Select
               name="municipio"
               options={
-                stateCadastroCliente.MunicipioSelecionado[0].id == undefined
+                optionsMunicipio.length <= 1
+                  ? Carregando
+                  : stateCadastroCliente.MunicipioSelecionado[0].id == undefined
                   ? optionsMunicipio
                   : stateCadastroCliente.MunicipioSelecionado
               }
@@ -232,7 +255,7 @@ const Endereco = () => {
           </Form.Group>
         </div>
         <div className={'inputWidth'}>
-          <label for="name" class="">
+          <label htmlFor="name" className="">
             Cidade
           </label>
           <Input name="cidade" type="text" placeholder="Cidade" />

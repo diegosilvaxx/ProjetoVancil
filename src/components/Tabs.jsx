@@ -47,9 +47,13 @@ class Tabs extends Component {
     const { className } = this.props;
     const cssClass = cx('tabs', className);
     return (
-      <section className={cssClass}>
-        <ul className={'tabs__list'}>{this.renderChildrenTabs()}</ul>
-        <div className={'tabs__content'}>{this.renderActiveTabContent()}</div>
+      <section className={cssClass} key={'keyTabSection'}>
+        <ul keu={'keyUlTabs'} className={'tabs__list'}>
+          {this.renderChildrenTabs()}
+        </ul>
+        <div key={'keyTabs'} className={'tabs__content'}>
+          {this.renderActiveTabContent()}
+        </div>
       </section>
     );
   }

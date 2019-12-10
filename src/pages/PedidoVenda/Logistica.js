@@ -7,7 +7,7 @@ class Logistica extends Component {
       <>
         <div style={{ display: 'flex' }}>
           <div className={'inputWidth'}>
-            <label for="name" class="">
+            <label htmlFor="name" className="">
               Ponto de entrega
             </label>
             <Form.Group controlId="PontoEntrega" className={'comboboxGroup'}>
@@ -24,7 +24,7 @@ class Logistica extends Component {
             </Form.Group>
           </div>
           <div className={'inputWidth'}>
-            <label for="name" class="">
+            <label htmlFor="name" className="">
               Endereço de cobrança
             </label>
             <Form.Group

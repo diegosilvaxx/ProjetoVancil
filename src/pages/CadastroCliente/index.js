@@ -66,24 +66,28 @@ const CadastroCliente = () => {
           onSubmit={handleForm}
           id="formCliente"
           schema={schema}
+          key={'FormIndexCadClienteKey'}
         >
-          <div className={'containerForm'} onClick={onSubmitForm}>
+          <div className={'containerForm'} onClick={onSubmitForm} key="123144">
             {/* tabs */}
-            <Tabs>
-              <Tabs.Tab label={'Geral'}>
-                <Cliente key="Cliente"></Cliente>
+            <Tabs key={'TabsIndexClienteKey'}>
+              <Tabs.Tab label={'Geral'} key={'KeyTabsTabGeral'}>
+                <Cliente key="ClienteKey"></Cliente>
               </Tabs.Tab>
 
-              <Tabs.Tab label={'Endereço'}>
-                <Endereco key="Endereco"></Endereco>
+              <Tabs.Tab label={'Endereço'} key={'KeyTabsTabEndereco'}>
+                <Endereco key="EnderecoKey"></Endereco>
               </Tabs.Tab>
 
-              <Tabs.Tab label={'Pessoas de contato'}>
-                <PessoaContato key="PessoaContato"></PessoaContato>
+              <Tabs.Tab
+                label={'Pessoas de contato'}
+                key={'KeyTabsTabPessoaContato'}
+              >
+                <PessoaContato key="PessoaContatoKey"></PessoaContato>
               </Tabs.Tab>
 
-              <Tabs.Tab label={'Fiscal'}>
-                <Fiscal key="Fiscal"></Fiscal>
+              <Tabs.Tab label={'Fiscal'} key={'KeyTabsTabFiscal'}>
+                <Fiscal key="FiscalKey"></Fiscal>
               </Tabs.Tab>
             </Tabs>
 
@@ -129,4 +133,4 @@ const CadastroCliente = () => {
   );
 };
 
-export default connect()(CadastroCliente, Confirmation);
+export default CadastroCliente;

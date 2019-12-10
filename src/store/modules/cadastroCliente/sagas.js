@@ -68,19 +68,14 @@ export function* insertCliente({ payload }) {
     };
 
     //CHAMADA API
-    const response = yield call(api.post, 'HUB/HUB/Authenticate', {
-      appID: 1,
-      AppKey: 'ABC123',
-    });
+    const { token } = store.getState().auth;
 
-    const { Token } = response.data;
-
-    if (!Token) {
+    if (!token) {
       toast.error('Falha na autenticação, verifique seus dados!');
       return;
     }
 
-    const result = yield call(api.put, `HUB/HUB/InserirCliente/${Token}`, data);
+    const result = yield call(api.put, `HUB/HUB/InserirCliente/${token}`, data);
     console.log(result);
     toast.success('Dados inserido com sucesso!');
     history.push('/cadastroCliente');
@@ -93,15 +88,21 @@ export function* getGrupoSaga() {
   //CHAMADA API
 
   const { token } = store.getState().auth;
-  const { MunicipioCombox, EstadoCombox } = store.getState().cadastroCliente;
+  const {
+    MunicipioCombox,
+    EstadoCombox,
+    GrupoCombox,
+  } = store.getState().cadastroCliente;
 
   if (!token) {
     toast.error('Falha na autenticação, verifique seus dados!');
     return;
   }
   //GRUPO
-  const result = yield call(api.get, `HUB/HUB/ListaGrupoCliente/${token}`);
-  yield put(setGrupo(result));
+  if (GrupoCombox == undefined) {
+    const result = yield call(api.get, `HUB/HUB/ListaGrupoCliente/${token}`);
+    yield put(setGrupo(result));
+  }
 
   //MUNICIPIO
   if (MunicipioCombox == undefined) {

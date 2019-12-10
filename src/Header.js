@@ -24,7 +24,7 @@ export default function Header() {
         width="89"
         height="25"
         alt="CoreUI Logo"
-        class="navbar-brand-full"
+        className="navbar-brand-full"
       />
 
       <img
@@ -33,7 +33,7 @@ export default function Header() {
         width="29"
         height="25"
         alt="CoreUI Logo"
-        class="navbar-brand-full"
+        className="navbar-brand-full"
       />
 
       <ul>

@@ -7,19 +7,19 @@ class pessoaContato extends Component {
       <>
         <div style={{ display: 'flex' }}>
           <div className={'inputWidth'}>
-            <label for="name" class="">
+            <label htmlFor="name" className="">
               Id contato
             </label>
             <Input name="idContato" type="text" placeholder="Id contato" />
           </div>
           <div className={'inputWidth'}>
-            <label for="name" class="">
+            <label htmlFor="name" className="">
               Nome
             </label>
             <Input name="nome" type="text" placeholder="Nome" />
           </div>
           <div className={'inputWidth'}>
-            <label for="name" class="">
+            <label htmlFor="name" className="">
               Segundo Nome
             </label>
             <Input name="segundoNome" type="text" placeholder="Segundo Nome" />
@@ -28,13 +28,13 @@ class pessoaContato extends Component {
 
         <div style={{ display: 'flex' }}>
           <div className={'inputWidth'}>
-            <label for="name" class="">
+            <label htmlFor="name" className="">
               Sobrenome
             </label>
             <Input name="sobrenome" type="text" placeholder="Sobrenome" />
           </div>
           <div className={'inputWidth'}>
-            <label for="name" class="">
+            <label htmlFor="name" className="">
               Telefone
             </label>
             <Input
@@ -44,7 +44,7 @@ class pessoaContato extends Component {
             />
           </div>
           <div className={'inputWidth'}>
-            <label for="name" class="">
+            <label htmlFor="name" className="">
               Email
             </label>
             <Input name="emailPessoaContato" type="email" placeholder="Email" />

@@ -14,11 +14,11 @@ class Fiscal extends Component {
       'insentoInscricaoEstadual'
     );
     if (stateIsento == false) {
-      inscricaoEstadual.value = '';
-      inscricaoEstadual.setAttribute('disabled', true);
+      inscricaoEstadual.removeAttribute('disabled');
       this.setState({ stateIsento: true });
     } else {
-      inscricaoEstadual.removeAttribute('disabled');
+      inscricaoEstadual.value = '';
+      inscricaoEstadual.setAttribute('disabled', true);
       this.setState({ stateIsento: false });
     }
   };
@@ -27,32 +27,33 @@ class Fiscal extends Component {
       <>
         <div style={{ display: 'flex' }}>
           <div className={'inputWidth'}>
-            <label for="name" class="">
+            <label htmlFor="name" className="">
               CNAE
             </label>
             <Input name="cnae" type="text" placeholder="CNAE" />
           </div>
           <div className={'inputWidth'}>
-            <label for="name" class="">
+            <label htmlFor="name" className="">
               CNPJ
             </label>
             <Input name="cnpj" type="text" placeholder="CNPJ" />
           </div>
           <div className={'inputWidth'}>
-            <label for="name" class="">
+            <label htmlFor="name" className="">
               Inscrição Estadual
             </label>
             <Input
               name="inscricaoEstadual"
               type="text"
               placeholder="Inscrição Estadual"
+              disabled
             />
           </div>
         </div>
 
         <div style={{ display: 'flex' }}>
           <div className={'inputWidth'}>
-            <label for="name" class="">
+            <label htmlFor="name" className="">
               CPF
             </label>
             <Input name="cpf" type="text" placeholder="CPF" />
@@ -60,13 +61,14 @@ class Fiscal extends Component {
           <div
             style={{ display: 'flex', alignItems: 'center', marginTop: '26px' }}
           >
-            <label for="name" style={{ marginTop: '5px' }}>
+            <label htmlFor="name" style={{ marginTop: '5px' }}>
               Isento Inscrição Estadual
             </label>
             <Check
               name="insentoInscricaoEstadual"
               onClick={this.verificaInsento}
               className="checkbox"
+              checked={this.stateIsento}
             />
           </div>
         </div>

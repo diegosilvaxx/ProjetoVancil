@@ -11,10 +11,13 @@ const Cliente = () => {
 
   async function loadGrupo() {
     await dispatch(getGrupo());
-    let resultGrupo = [{}];
+    let resultGrupo = [{ id: undefined, title: undefined }];
     if (stateCadastroCliente.GrupoCombox != undefined) {
       stateCadastroCliente.GrupoCombox.forEach(element => {
-        resultGrupo.push({ id: element.Codigo, title: element.Descricao });
+        resultGrupo.push({
+          id: element.Codigo,
+          title: element.Descricao,
+        });
       });
       resultGrupo.splice(0, 1);
       setOptions(resultGrupo);
@@ -25,14 +28,16 @@ const Cliente = () => {
     loadGrupo();
   }
 
+  var Carregando = [{ id: 'Carregando', title: 'Carregando...' }];
+
   return (
     <>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex' }} key={'fgdf'}>
         <div
           className={'inputWidth'}
           style={{ width: '40px', marginRight: '20px' }}
         >
-          <label for="name">DDD</label>
+          <label htmlFor="name">DDD</label>
           <Input
             name="ddd"
             type="text"
@@ -46,23 +51,23 @@ const Cliente = () => {
           />
         </div>
         <div className={'inputWidth'}>
-          <label for="name">Telefone</label>
+          <label htmlFor="name">Telefone</label>
           <Input name="telefone" type="text" placeholder="9999-9999" />
         </div>
         <div className={'inputWidth'}>
-          <label for="name">Celular</label>
+          <label htmlFor="name">Celular</label>
           <Input name="celular" type="text" placeholder="(99) 99999-9999" />
         </div>
         <div className={'inputWidth'}>
-          <label for="name" class="">
+          <label htmlFor="name" className="">
             Email
           </label>
           <Input name="email" type="email" placeholder="Email" />
         </div>
       </div>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex' }} key={'teste3123'}>
         <div className={'inputWidth'}>
-          <label for="name" class="">
+          <label htmlFor="name" className="">
             Observações
           </label>
           <Input name="observacoes" type="text" placeholder="Observações" />
@@ -71,14 +76,18 @@ const Cliente = () => {
           <label>Território *</label>
           <Input name="territorio" type="text" placeholder="Território" />
         </div>
-        <div className={'inputWidth'}>
-          <label for="name" class="">
+        <div className={'inputWidth'} key={'teste'}>
+          <label htmlFor="name" className="" key={'teste33'}>
             Grupo
           </label>
-          <Form.Group controlId="grupo" className={'comboboxGroup'}>
+          <Form.Group
+            key={'clientehtmlFormGroupSelectComboBox'}
+            controlId="grupo"
+            className={'comboboxGroup'}
+          >
             <Select
               name="grupo"
-              options={options}
+              options={options.length <= 1 ? Carregando : options}
               className={'comboboxControl'}
               placeholder={'Selecione'}
             />
@@ -87,13 +96,13 @@ const Cliente = () => {
       </div>
       <div style={{ display: 'flex' }}>
         <div className={'inputWidth'}>
-          <label for="name" class="">
+          <label htmlFor="name" className="">
             Nome do Cliente
           </label>
           <Input name="nomeCliente" type="text" placeholder="Nome do Cliente" />
         </div>
         <div className={'inputWidth'}>
-          <label for="name" class="">
+          <label htmlFor="name" className="">
             Nome Fantasia
           </label>
           <Input name="nomeFantasia" type="text" placeholder="Nome Fantasia" />

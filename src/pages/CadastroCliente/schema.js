@@ -9,8 +9,8 @@ const Schema = Yup.object().shape({
   telefone: Yup.string(),
   celular: Yup.string(),
   observacoes: Yup.string(),
-  vendedor: Yup.string(),
   territorio: Yup.string(),
+  grupo: Yup.string(),
   //Endereço
   idEndereco: Yup.string(),
   tipoEndereco: Yup.string(),

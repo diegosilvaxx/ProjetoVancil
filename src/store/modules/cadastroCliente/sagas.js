@@ -1,8 +1,11 @@
-import { all, takeLatest, call } from 'redux-saga/effects';
+import { all, takeLatest, call, put } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
 import history from 'services/history';
 import api from '~/services/api';
+
+import { setGrupo, setMunicipio, setEstado } from './actions';
+import store from '~/store';
 
 export function* insertCliente({ payload }) {
   try {
@@ -13,8 +16,8 @@ export function* insertCliente({ payload }) {
       },
       Codigo: '',
       Nome: payload.nomeCliente,
-      Grupo: 102,
-      Telefone1: '3561 4358',
+      Grupo: parseInt(payload.grupo),
+      Telefone1: payload.telefone,
       Telefone2: payload.ddd,
       Celular: payload.celular,
       Email: payload.email,
@@ -36,7 +39,7 @@ export function* insertCliente({ payload }) {
           Numero: payload.numero,
           Bairro: payload.bairro,
           Cidade: payload.cidade,
-          Municipio: payload.municipio,
+          Municipio: parseInt(payload.municipio),
           Estado: payload.estado,
           CEP: payload.cep,
           Complemento: payload.complemento,
@@ -46,7 +49,7 @@ export function* insertCliente({ payload }) {
         CNAE: payload.cnae,
         CNPJ: payload.cnpj,
         IE: payload.inscricaoEstadual,
-        IsentoIE: false,
+        IsentoIE: false, //payload.insentoInscricaoEstadual,
         CPF: payload.cpf,
       },
       Pagamento: {
@@ -86,6 +89,39 @@ export function* insertCliente({ payload }) {
   }
 }
 
+export function* getGrupoSaga() {
+  //CHAMADA API
+
+  const { token } = store.getState().auth;
+  const { MunicipioCombox, EstadoCombox } = store.getState().cadastroCliente;
+
+  if (!token) {
+    toast.error('Falha na autenticação, verifique seus dados!');
+    return;
+  }
+  //GRUPO
+  const result = yield call(api.get, `HUB/HUB/ListaGrupoCliente/${token}`);
+  yield put(setGrupo(result));
+
+  //MUNICIPIO
+  if (MunicipioCombox == undefined) {
+    const resultMunicipio = yield call(
+      api.get,
+      `HUB/HUB/ListaMunicipios/${token}`
+    );
+    yield put(setMunicipio(resultMunicipio));
+  }
+
+  //ESTADO
+  if (EstadoCombox == undefined) {
+    const resultEstado = yield call(api.get, `HUB/HUB/ListaUF/${token}`);
+    yield put(setEstado(resultEstado));
+  }
+}
+
 export default all([
   takeLatest('@cadastroCliente/INSERT_CLIENTE', insertCliente),
+  takeLatest('@cadastroCliente/GET_GRUPO', getGrupoSaga),
+  takeLatest('@cadastroCliente/GET_MUNICIPIO', getGrupoSaga),
+  takeLatest('@cadastroCliente/GET_ESTADO', getGrupoSaga),
 ]);

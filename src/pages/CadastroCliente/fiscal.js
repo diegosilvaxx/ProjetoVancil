@@ -1,7 +1,27 @@
-import React, { Component } from 'react';
-import { Input } from '@rocketseat/unform';
+import React, { Component, useState } from 'react';
+import { Input, Check } from '@rocketseat/unform';
 
 class Fiscal extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { stateIsento: false };
+  }
+  verificaInsento = () => {
+    const { stateIsento } = this.state;
+    var inscricaoEstadual = document.getElementById('inscricaoEstadual');
+    var isentoInscEstadual = document.getElementById(
+      'insentoInscricaoEstadual'
+    );
+    if (stateIsento == false) {
+      inscricaoEstadual.value = '';
+      inscricaoEstadual.setAttribute('disabled', true);
+      this.setState({ stateIsento: true });
+    } else {
+      inscricaoEstadual.removeAttribute('disabled');
+      this.setState({ stateIsento: false });
+    }
+  };
   render() {
     return (
       <>
@@ -43,9 +63,9 @@ class Fiscal extends Component {
             <label for="name" style={{ marginTop: '5px' }}>
               Isento Inscrição Estadual
             </label>
-            <Input
-              name="InsentoInscricaoEstadual"
-              type="checkbox"
+            <Check
+              name="insentoInscricaoEstadual"
+              onClick={this.verificaInsento}
               className="checkbox"
             />
           </div>

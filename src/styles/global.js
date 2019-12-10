@@ -11,6 +11,12 @@ export default createGlobalStyle`
   box-sizing: border-box;
 }
 
+.comboboxControl{
+  width: 100%;
+  color: #666;
+  padding-left: '10px'
+}
+
 .container{
   max-width: 100%;
   padding-right: 0;

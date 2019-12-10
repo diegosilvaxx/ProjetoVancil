@@ -1,10 +1,12 @@
 import { all, takeLatest, put, call } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 
 import history from 'services/history';
 import api from '~/services/api';
 
 import { signInSuccess, signFailure } from './actions';
+import { getGrupo } from '~/store/modules/cadastroCliente/actions';
 
 export function* signIn({ payload }) {
   const { usuario, password } = payload;
@@ -25,11 +27,12 @@ export function* signIn({ payload }) {
 
   const result = yield call(api.post, `/HUB/HUB/Login?Token=${Token}`, {
     Usuario: usuario,
-    Senha: password,
+    Senha: password, //'L@g0En1gma',
   });
 
   if (result.data.MsgRetorno === 'OK') {
     yield put(signInSuccess(Token));
+    yield put(getGrupo());
     history.push('/dashboard');
   } else {
     toast.error('Usuário ou senha incorreto, verifique seus dados!');

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form } from '@rocketseat/unform';
+import Modal from 'react-bootstrap/Modal';
 import Endereco from './endereco';
 import PessoaContato from './pessoaContato';
 import Cliente from './cliente';
@@ -9,7 +10,10 @@ import { useDispatch, useSelector, connect } from 'react-redux';
 import {
   insertCliente,
   setState,
+  setConfirmation,
 } from '~/store/modules/cadastroCliente/actions';
+
+import Confirmation from '~/components/Confirmation';
 
 import history from 'services/history';
 
@@ -37,9 +41,14 @@ const CadastroCliente = () => {
     dispatch(insertCliente(stateCadastroCliente));
   }
 
+  async function handleConfirmation() {
+    dispatch(setConfirmation(true));
+  }
+
   return (
     <>
       <div
+        key={'Principal'}
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -52,6 +61,7 @@ const CadastroCliente = () => {
       >
         <label className={'lblTitulo'}>Cadastro de Cliente</label>
         <Form
+          noValidate
           initialData={stateCadastroCliente}
           onSubmit={handleForm}
           id="formCliente"
@@ -61,19 +71,19 @@ const CadastroCliente = () => {
             {/* tabs */}
             <Tabs>
               <Tabs.Tab label={'Geral'}>
-                <Cliente></Cliente>
+                <Cliente key="Cliente"></Cliente>
               </Tabs.Tab>
 
               <Tabs.Tab label={'Endereço'}>
-                <Endereco></Endereco>
+                <Endereco key="Endereco"></Endereco>
               </Tabs.Tab>
 
               <Tabs.Tab label={'Pessoas de contato'}>
-                <PessoaContato></PessoaContato>
+                <PessoaContato key="PessoaContato"></PessoaContato>
               </Tabs.Tab>
 
               <Tabs.Tab label={'Fiscal'}>
-                <Fiscal></Fiscal>
+                <Fiscal key="Fiscal"></Fiscal>
               </Tabs.Tab>
             </Tabs>
 
@@ -81,7 +91,19 @@ const CadastroCliente = () => {
 
             <div style={{ display: 'flex', marginBottom: '30px' }}>
               <div className={'inputWidth'} style={{ margin: '0 30px 0' }}>
-                <Button onClick={handleSubmit}>Ok</Button>
+                {stateCadastroCliente.ConfirmaCadastro == true ? (
+                  <Confirmation
+                    title={'Atenção!'}
+                    body={'Deseja realmente cadastrar o cliente?'}
+                    acao={handleSubmit}
+                    disabled={stateCadastroCliente.ConfirmaCadastro}
+                  ></Confirmation>
+                ) : (
+                  ''
+                )}
+                <Button variant="primary" onClick={handleConfirmation}>
+                  Cadastrar
+                </Button>
                 <Button
                   style={{ visibility: 'hidden', height: '0px' }}
                   type="submit"
@@ -107,4 +129,4 @@ const CadastroCliente = () => {
   );
 };
 
-export default connect()(CadastroCliente);
+export default connect()(CadastroCliente, Confirmation);

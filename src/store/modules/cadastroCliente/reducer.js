@@ -6,10 +6,10 @@ const INITIAL_STATE = {
   celular: '',
   email: '',
   observacoes: '',
-  vendedor: '',
   territorio: '',
   nomeCliente: '',
   nomeFantasia: '',
+  grupo: '',
   // Enderecos: {
   idEndereco: '',
   tipoEndereco: '',
@@ -37,6 +37,14 @@ const INITIAL_STATE = {
   sobrenome: '',
   telefonePessoaContato: '',
   emailPessoaContato: '',
+  ConfirmaCadastro: false,
+  GrupoCombox: undefined,
+  MunicipioCombox: undefined,
+  EstadoCombox: undefined,
+  EstadoSelecionado: [{ id: undefined, title: undefined }],
+  MunicipioSelecionado: [
+    { id: undefined, title: undefined, estado: undefined },
+  ],
   // },
 };
 
@@ -45,6 +53,36 @@ export default function cadastroCliente(state = INITIAL_STATE, action) {
     case '@cadastroCliente/INSERT_CLIENTE':
       return produce(state, draft => {
         draft = action.payload;
+      });
+    case '@cadastroCliente/SET_CONFIRMATION':
+      return produce(state, draft => {
+        draft.ConfirmaCadastro = action.payload;
+      });
+    case '@cadastroCliente/GET_GRUPO':
+      return produce(state, draft => {});
+    case '@cadastroCliente/SET_GRUPO':
+      return produce(state, draft => {
+        draft.GrupoCombox = action.payload.data.Grupos;
+      });
+    case '@cadastroCliente/GET_ESTADO':
+      return produce(state, draft => {});
+    case '@cadastroCliente/SET_ESTADO':
+      return produce(state, draft => {
+        draft.EstadoCombox = action.payload.data.Estados;
+      });
+    case '@cadastroCliente/SET_ESTADO_SELECIONADO':
+      return produce(state, draft => {
+        draft.EstadoSelecionado = action.payload;
+      });
+    case '@cadastroCliente/SET_MUNICIPIO_SELECIONADO':
+      return produce(state, draft => {
+        draft.MunicipioSelecionado = action.payload;
+      });
+    case '@cadastroCliente/GET_MUNICIPIO':
+      return produce(state, draft => {});
+    case '@cadastroCliente/SET_MUNICIPIO':
+      return produce(state, draft => {
+        draft.MunicipioCombox = action.payload.data.Municipios;
       });
     case '@cadastroCliente/SET_STATE':
       return produce(state, draft => {
@@ -56,6 +94,10 @@ export default function cadastroCliente(state = INITIAL_STATE, action) {
           action.payload.data.telefone != undefined
             ? action.payload.data.telefone
             : draft.telefone;
+        draft.grupo =
+          action.payload.data.grupo != undefined
+            ? action.payload.data.grupo
+            : draft.grupo;
         draft.celular =
           action.payload.data.celular != undefined
             ? action.payload.data.celular
@@ -68,10 +110,6 @@ export default function cadastroCliente(state = INITIAL_STATE, action) {
           action.payload.data.observacoes != undefined
             ? action.payload.data.observacoes
             : draft.observacoes;
-        draft.vendedor =
-          action.payload.data.vendedor != undefined
-            ? action.payload.data.vendedor
-            : draft.vendedor;
         draft.territorio =
           action.payload.data.territorio != undefined
             ? action.payload.data.territorio

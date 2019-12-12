@@ -5,25 +5,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   getMunicipio,
   getEstado,
-  setEstadoSelecionado,
-  setMunicipioSelecionado,
 } from '~/store/modules/cadastroCliente/actions';
 
 const Endereco = () => {
   const dispatch = useDispatch();
-  const [selecionoMunicipio, setSelecionoMunicipio] = useState(true);
   const [carregoDados, setCarregoDados] = useState(false);
-  const [seleciono, setSeleciono] = useState(true);
   const options = [
     { id: 'Cobrança', title: 'Cobrança' },
     { id: 'Entrega', title: 'Entrega' },
   ];
 
-  var Carregando = [{ id: 'Carregando', title: 'Carregando...' }];
+  var Carregando = [{ id: 'Carregando', title: 'Selecione um estado!' }];
 
   //MUNICIPIO
   const [optionsMunicipio, setOptionsMunicipio] = useState([
-    { id: 'Carregando', title: 'Carregando' },
+    { id: 'Carregando', title: 'Selecione um estado!' },
   ]);
 
   //ESTADO
@@ -45,7 +41,7 @@ const Endereco = () => {
       stateCadastroCliente.MunicipioCombox.forEach(element => {
         resultMunicipio.push({
           id: element.Codigo,
-          title: element.Nome + ' ' + element.Estado,
+          title: element.Nome + ' - ' + element.Estado,
           estado: element.Estado,
         });
       });
@@ -55,8 +51,6 @@ const Endereco = () => {
       );
       setOptionsMunicipio(resultMunicipioFiltrado);
     }
-    setEstadoSelecionadoEndereco();
-    setMunicipioelecionadoEndereco();
   }
 
   //CARREGA ESTADO
@@ -83,57 +77,6 @@ const Endereco = () => {
   //htmlForca carregar estado
   if (optionsEstado.length <= 1) {
     loadEstado();
-  }
-
-  //setEstadoSelecionado
-
-  async function setEstadoSelecionadoEndereco() {
-    if (seleciono) {
-      if (stateCadastroCliente.EstadoSelecionado[0].id == undefined) {
-        const result = document.getElementById('estado').value;
-        if (result != '') {
-          if (optionsEstado.length <= 1) {
-            loadEstado();
-          } else {
-            const estadoSelecionado = [
-              {
-                id: result,
-                title: optionsEstado.find(x => x.id == result).title,
-              },
-            ];
-            await dispatch(setEstadoSelecionado(estadoSelecionado));
-          }
-        }
-      }
-      setSeleciono(false);
-    } else {
-      await dispatch(setEstadoSelecionado(optionsEstado));
-    }
-  }
-
-  //setMunicipioSelecionado
-
-  async function setMunicipioelecionadoEndereco() {
-    if (selecionoMunicipio) {
-      if (stateCadastroCliente.MunicipioSelecionado[0].id == undefined) {
-        const result = document.getElementById('municipio').value;
-        if (result != '' && optionsMunicipio.length > 1) {
-          const municipioSelecionado = [
-            {
-              id: result,
-              title: optionsMunicipio.find(x => x.id == result).title,
-              estado: optionsMunicipio.find(x => x.id == result).estado,
-            },
-          ];
-          await dispatch(setMunicipioSelecionado(municipioSelecionado));
-        }
-      }
-      setSelecionoMunicipio(false);
-    } else {
-      if (optionsMunicipio.length > 1) {
-        await dispatch(setMunicipioSelecionado(optionsMunicipio));
-      }
-    }
   }
 
   return (
@@ -217,17 +160,10 @@ const Endereco = () => {
             <Select
               key={'selectEstadoComboBoxKey'}
               name="estado"
-              options={
-                optionsEstado.length <= 1
-                  ? Carregando
-                  : stateCadastroCliente.EstadoSelecionado[0].id == undefined
-                  ? optionsEstado
-                  : stateCadastroCliente.EstadoSelecionado
-              }
+              options={optionsEstado.length <= 1 ? Carregando : optionsEstado}
               className={'comboboxControl'}
               placeholder={'Selecione'}
-              onClick={loadMunicipio}
-              onChange={setEstadoSelecionadoEndereco}
+              onClick={loadEstado}
             />
           </Form.Group>
         </div>
@@ -242,11 +178,7 @@ const Endereco = () => {
             <Select
               name="municipio"
               options={
-                optionsMunicipio.length <= 1
-                  ? Carregando
-                  : stateCadastroCliente.MunicipioSelecionado[0].id == undefined
-                  ? optionsMunicipio
-                  : stateCadastroCliente.MunicipioSelecionado
+                optionsMunicipio.length <= 1 ? Carregando : optionsMunicipio
               }
               className={'comboboxControl'}
               placeholder={'Selecione o Estado primeiro'}

@@ -8,7 +8,7 @@ import Grid from './GridCliente';
 
 const PesquisaCliente = () => {
   const dispatch = useDispatch();
-  const [pesquisa, setPesquisa] = useState(true);
+  const [pesquisa, setPesquisa] = useState('');
   const [pesquisando, setPesquisando] = useState(false);
 
   function handlePesquisa() {

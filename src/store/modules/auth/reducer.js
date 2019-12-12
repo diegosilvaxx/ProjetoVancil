@@ -5,6 +5,8 @@ const INITIAL_STATE = {
   signed: false,
   failLogin: false,
   loading: false,
+  codigoVendedor: undefined,
+  nomeVendedor: undefined,
 };
 
 export default function auth(state = INITIAL_STATE, action) {
@@ -18,6 +20,8 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.token = action.payload.token;
         draft.signed = true;
         draft.loading = false;
+        draft.nomeVendedor = action.payload.nomeVendedor;
+        draft.codigoVendedor = action.payload.codigoVendedor;
       });
     case '@auth/SIGN_FAILURE':
       return produce(state, draft => {

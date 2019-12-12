@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { Input, Select } from '@rocketseat/unform';
 import Form from 'react-bootstrap/Form';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGrupo } from '~/store/modules/cadastroCliente/actions';
+// import { getGrupoAndTerritorio } from '~/store/modules/cadastroCliente/actions';
 
 const Cliente = () => {
-  const dispatch = useDispatch();
-  const [options, setOptions] = useState([{}]);
   const stateCadastroCliente = useSelector(state => state.cadastroCliente);
 
+  //CARREGA GRUPO
+  const [optionsGrupo, setOptionsGrupo] = useState([
+    { id: 'Carregando', title: 'Carregando' },
+  ]);
   async function loadGrupo() {
-    await dispatch(getGrupo());
-    let resultGrupo = [{ id: undefined, title: undefined }];
+    let resultGrupo = [{ id: 'Carregando', title: 'Carregando' }];
     if (stateCadastroCliente.GrupoCombox != undefined) {
       stateCadastroCliente.GrupoCombox.forEach(element => {
         resultGrupo.push({
@@ -20,12 +21,34 @@ const Cliente = () => {
         });
       });
       resultGrupo.splice(0, 1);
-      setOptions(resultGrupo);
+      setOptionsGrupo(resultGrupo);
     }
   }
 
-  if (options.length <= 1) {
+  if (optionsGrupo.length <= 1 && stateCadastroCliente.grupo != '') {
     loadGrupo();
+  }
+
+  //CARREGA TERRITORIO
+  const [optionsTerritorio, setOptionsTerritorio] = useState([
+    { id: 'Carregando', title: 'Carregando' },
+  ]);
+  async function loadTerritorio() {
+    let resultTerritorio = [{ id: 'Carregando', title: 'Carregando' }];
+    if (stateCadastroCliente.TerritorioCombox != undefined) {
+      stateCadastroCliente.TerritorioCombox.forEach(element => {
+        resultTerritorio.push({
+          id: element.Codigo,
+          title: element.Descricao,
+        });
+      });
+      resultTerritorio.splice(0, 1);
+      setOptionsTerritorio(resultTerritorio);
+    }
+  }
+
+  if (optionsTerritorio.length <= 1 && stateCadastroCliente.territorio != '') {
+    loadTerritorio();
   }
 
   var Carregando = [{ id: 'Carregando', title: 'Carregando...' }];
@@ -72,11 +95,25 @@ const Cliente = () => {
           </label>
           <Input name="observacoes" type="text" placeholder="Observações" />
         </div>
-        <div className={'inputWidth'}>
+        <div className={'inputWidth'} onMouseOver={loadTerritorio}>
           <label>Território *</label>
-          <Input name="territorio" type="text" placeholder="Território" />
+          <Form.Group
+            key={'clientehtmlFormGroupSelectComboBox'}
+            controlId="territorio"
+            className={'comboboxGroup'}
+          >
+            <Select
+              name="territorio"
+              options={
+                optionsTerritorio.length <= 1 ? Carregando : optionsTerritorio
+              }
+              className={'comboboxControl'}
+              placeholder={'Selecione'}
+              onClick={loadTerritorio}
+            />
+          </Form.Group>
         </div>
-        <div className={'inputWidth'} key={'teste'}>
+        <div className={'inputWidth'} key={'teste'} onMouseOver={loadGrupo}>
           <label htmlFor="name" className="" key={'teste33'}>
             Grupo
           </label>
@@ -87,9 +124,10 @@ const Cliente = () => {
           >
             <Select
               name="grupo"
-              options={options.length <= 1 ? Carregando : options}
+              options={optionsGrupo.length <= 1 ? Carregando : optionsGrupo}
               className={'comboboxControl'}
               placeholder={'Selecione'}
+              onClick={loadGrupo}
             />
           </Form.Group>
         </div>

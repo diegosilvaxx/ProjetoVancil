@@ -26,6 +26,12 @@ export default function MenuLateral() {
             Pedido de Vendas
           </Link>
         </li>
+        <li>
+          <Link to="/pedidoCompra">
+            <FaTruckMoving style={{ marginRight: 10 }} />
+            Pedido de Compras
+          </Link>
+        </li>
       </ul>
     </header>
   );

@@ -6,7 +6,7 @@ import history from 'services/history';
 import api from '~/services/api';
 
 import { signInSuccess, signFailure } from './actions';
-import { getGrupo } from '~/store/modules/cadastroCliente/actions';
+import { getGrupoAndTerritorio } from '~/store/modules/cadastroCliente/actions';
 
 export function* signIn({ payload }) {
   const { usuario, password } = payload;
@@ -30,9 +30,15 @@ export function* signIn({ payload }) {
     Senha: password, //'L@g0En1gma',
   });
 
-  if (result.data.MsgRetorno === 'OK') {
-    yield put(signInSuccess(Token));
-    yield put(getGrupo());
+  const payloadLogin = {
+    token: Token,
+    codigoVendedor: result.data.CodVendedor,
+    nomeVendedor: result.data.Nome,
+  };
+
+  if (result.data.Retorno.MsgRetorno === 'OK') {
+    yield put(signInSuccess(payloadLogin));
+    yield put(getGrupoAndTerritorio());
     history.push('/dashboard');
   } else {
     toast.error('Usuário ou senha incorreto, verifique seus dados!');

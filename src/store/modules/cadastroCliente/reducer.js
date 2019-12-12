@@ -28,7 +28,7 @@ const INITIAL_STATE = {
   cnpj: '',
   inscricaoEstadual: '',
   cpf: '',
-  insentoInscricaoEstadual: '',
+  insentoInscricaoEstadual: false,
   // },
   // Contato: {
   idContato: '',
@@ -39,12 +39,10 @@ const INITIAL_STATE = {
   emailPessoaContato: '',
   ConfirmaCadastro: false,
   GrupoCombox: undefined,
+  TerritorioCombox: undefined,
   MunicipioCombox: undefined,
   EstadoCombox: undefined,
-  EstadoSelecionado: [{ id: 'Carregando', title: 'Carregando' }],
-  MunicipioSelecionado: [
-    { id: 'Carregando', title: 'Carregando', estado: 'Carregando' },
-  ],
+  MunicipioSelecionado: [],
   // },
 };
 
@@ -62,7 +60,8 @@ export default function cadastroCliente(state = INITIAL_STATE, action) {
       return produce(state, draft => {});
     case '@cadastroCliente/SET_GRUPO':
       return produce(state, draft => {
-        draft.GrupoCombox = action.payload.data.Grupos;
+        draft.GrupoCombox = action.grupo.data.Grupos;
+        draft.TerritorioCombox = action.territorio.data.Territorios;
       });
     case '@cadastroCliente/GET_ESTADO':
       return produce(state, draft => {});
@@ -73,6 +72,14 @@ export default function cadastroCliente(state = INITIAL_STATE, action) {
     case '@cadastroCliente/SET_ESTADO_SELECIONADO':
       return produce(state, draft => {
         draft.EstadoSelecionado = action.payload;
+      });
+    case '@cadastroCliente/SET_GRUPO_SELECIONADO':
+      return produce(state, draft => {
+        draft.GrupoSelecionado = action.payload;
+      });
+    case '@cadastroCliente/SET_TERRITORIO_SELECIONADO':
+      return produce(state, draft => {
+        draft.TerritorioSelecionado = action.payload;
       });
     case '@cadastroCliente/SET_MUNICIPIO_SELECIONADO':
       return produce(state, draft => {

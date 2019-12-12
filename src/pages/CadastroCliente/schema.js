@@ -36,7 +36,7 @@ const Schema = Yup.object().shape({
   cnpj: Yup.string(),
   inscricaoEstadual: Yup.string(),
   cpf: Yup.string(),
-  insentoInscricaoEstadual: Yup.string(),
+  insentoInscricaoEstadual: Yup.boolean(),
 });
 
 export default Schema;

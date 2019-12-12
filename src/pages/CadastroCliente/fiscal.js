@@ -10,16 +10,14 @@ class Fiscal extends Component {
   verificaInsento = () => {
     const { stateIsento } = this.state;
     var inscricaoEstadual = document.getElementById('inscricaoEstadual');
-    var isentoInscEstadual = document.getElementById(
-      'insentoInscricaoEstadual'
-    );
-    if (stateIsento == false) {
+
+    if (stateIsento == true) {
       inscricaoEstadual.removeAttribute('disabled');
-      this.setState({ stateIsento: true });
+      this.setState({ stateIsento: false });
     } else {
       inscricaoEstadual.value = '';
       inscricaoEstadual.setAttribute('disabled', true);
-      this.setState({ stateIsento: false });
+      this.setState({ stateIsento: true });
     }
   };
   render() {
@@ -46,7 +44,6 @@ class Fiscal extends Component {
               name="inscricaoEstadual"
               type="text"
               placeholder="Inscrição Estadual"
-              disabled
             />
           </div>
         </div>

@@ -19,16 +19,17 @@ export function setConfirmation(action) {
   };
 }
 
-export function getGrupo() {
+export function getGrupoAndTerritorio() {
   return {
     type: '@cadastroCliente/GET_GRUPO',
   };
 }
 
-export function setGrupo(action) {
+export function setGrupo(grupo, territorio) {
   return {
     type: '@cadastroCliente/SET_GRUPO',
-    payload: action,
+    grupo: grupo,
+    territorio: territorio,
   };
 }
 
@@ -54,20 +55,6 @@ export function getEstado() {
 export function setEstado(action) {
   return {
     type: '@cadastroCliente/SET_ESTADO',
-    payload: action,
-  };
-}
-
-export function setEstadoSelecionado(action) {
-  return {
-    type: '@cadastroCliente/SET_ESTADO_SELECIONADO',
-    payload: action,
-  };
-}
-
-export function setMunicipioSelecionado(action) {
-  return {
-    type: '@cadastroCliente/SET_MUNICIPIO_SELECIONADO',
     payload: action,
   };
 }

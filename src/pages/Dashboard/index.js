@@ -1,6 +1,8 @@
 import React from 'react';
+import store from '~/store';
 
 export default function Dashboard() {
+  const { nomeVendedor } = store.getState().auth;
   return (
     <>
       <div
@@ -12,7 +14,7 @@ export default function Dashboard() {
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <h1>DashBoard</h1>
+          <h1 style={{ fontSize: '20pt' }}>Seja bem vindo {nomeVendedor}</h1>
         </div>
       </div>
     </>

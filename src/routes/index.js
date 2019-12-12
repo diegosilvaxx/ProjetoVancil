@@ -7,6 +7,7 @@ import SignUp from '../pages/SignUp';
 
 import Dashboard from '../pages/Dashboard';
 import PedidoVenda from '../pages/PedidoVenda';
+import PedidoCompra from '../pages/PedidoCompra';
 import CadastroCliente from '../pages/CadastroCliente';
 import MenuLateral from '~/MenuLateral';
 import Header from '~/Header';
@@ -45,6 +46,13 @@ export default function Routes() {
               path="/pedidoVenda"
               exact
               component={PedidoVenda}
+              isPrivate
+            />
+            <Route
+              key={'KEYpedidoCompra'}
+              path="/pedidoCompra"
+              exact
+              component={PedidoCompra}
               isPrivate
             />
           </section>

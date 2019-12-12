@@ -28,7 +28,7 @@ export function* insertCliente({ payload }) {
       EntregaMercadoria: 0,
       Pedidos: 0,
       Observacoes: payload.observacoes,
-      Vendedor: payload.vendedor,
+      Vendedor: '1',
       Territorio: payload.territorio,
       Enderecos: [
         {
@@ -49,7 +49,7 @@ export function* insertCliente({ payload }) {
         CNAE: payload.cnae,
         CNPJ: payload.cnpj,
         IE: payload.inscricaoEstadual,
-        IsentoIE: false, //payload.insentoInscricaoEstadual,
+        IsentoIE: payload.insentoInscricaoEstadual,
         CPF: payload.cpf,
       },
       Pagamento: {
@@ -92,16 +92,24 @@ export function* getGrupoSaga() {
     MunicipioCombox,
     EstadoCombox,
     GrupoCombox,
+    TerritorioCombox,
   } = store.getState().cadastroCliente;
 
   if (!token) {
     toast.error('Falha na autenticação, verifique seus dados!');
     return;
   }
-  //GRUPO
-  if (GrupoCombox == undefined) {
-    const result = yield call(api.get, `HUB/HUB/ListaGrupoCliente/${token}`);
-    yield put(setGrupo(result));
+  //GRUPO or Territorio
+  if (GrupoCombox == undefined || TerritorioCombox == undefined) {
+    const resultGrupo = yield call(
+      api.get,
+      `HUB/HUB/ListaGrupoCliente/${token}`
+    );
+    const resultTerritorio = yield call(
+      api.get,
+      `HUB/HUB/ListaTerritorios/${token}`
+    );
+    yield put(setGrupo(resultGrupo, resultTerritorio));
   }
 
   //MUNICIPIO

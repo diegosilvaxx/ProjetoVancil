@@ -46,6 +46,9 @@ export default function Header() {
         <li>
           <Link to="/pedidoVenda">Pedido de Vendas</Link>
         </li>
+        <li>
+          <Link to="/pedidoCompra">Pedido de Compras</Link>
+        </li>
       </ul>
     </header>
   );

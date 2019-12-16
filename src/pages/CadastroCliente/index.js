@@ -5,6 +5,7 @@ import Endereco from './endereco';
 import PessoaContato from './pessoaContato';
 import Cliente from './cliente';
 import Fiscal from './fiscal';
+import PesquisaCliente from './PesquisaCliente';
 import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import {
@@ -24,6 +25,9 @@ const schema = Schema;
 
 const CadastroCliente = () => {
   const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const stateCadastroCliente = useSelector(state => state.cadastroCliente);
 
   async function onSubmitForm() {
@@ -59,7 +63,31 @@ const CadastroCliente = () => {
           marginBottom: '15px',
         }}
       >
-        <label className={'lblTitulo'}>Cadastro de Cliente</label>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <label className={'lblTitulo'}>Cadastro de Cliente</label>
+          <Button onClick={handleShow} className={'PesquisaCliente'}>
+            Pesquisar Clientes
+          </Button>
+        </div>
+
+        <Modal show={show} onHide={handleClose} size="xl">
+          <Modal.Header closeButton>
+            <Modal.Title>Pesquisa</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <PesquisaCliente></PesquisaCliente>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Cancelar
+            </Button>
+          </Modal.Footer>
+        </Modal>
         <Form
           noValidate
           initialData={stateCadastroCliente}

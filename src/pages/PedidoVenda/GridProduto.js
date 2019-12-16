@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { setProduto } from '~/store/modules/pedidoVenda/actions';
 import { toast } from 'react-toastify';
+import { Input } from '@rocketseat/unform';
 
 export default function GridVenda() {
   const dispatch = useDispatch();
@@ -19,31 +20,17 @@ export default function GridVenda() {
 
   const [state] = useState({
     columnDefs: [
-      { headerName: 'Nº do item', field: 'Codigo', width: 110 },
-      { headerName: 'Descrição do item', field: 'Descricao' },
-      {
-        headerName: 'Quantidade',
-        field: 'quantidade',
-        editable: true,
-        width: 110,
-      },
+      { headerName: 'Nº do item', field: 'Codigo', editable: false },
+      { headerName: 'Descrição do item', field: 'Descricao', editable: false },
       {
         headerName: 'Preço unitário',
         field: 'Preco',
         editable: false,
-        width: 110,
+        width: 420,
       },
-      {
-        headerName: 'Desconto %',
-        field: 'desconto',
-        width: 110,
-        editable: true,
-      },
-      { headerName: 'Total(MC) ', field: 'total', editable: false },
       {
         headerName: 'Actions',
         field: 'actions',
-        width: 120,
         cellRendererFramework: function(params) {
           return (
             <Button
@@ -52,7 +39,7 @@ export default function GridVenda() {
               size="sm"
               onClick={() => selecionaProduto(params)}
             >
-              Excluir
+              Selecionar
             </Button>
           );
         },
@@ -64,7 +51,7 @@ export default function GridVenda() {
     <>
       <div
         className="ag-theme-balham"
-        style={{ height: '300px', width: '100%', justifyContent: 'center' }}
+        style={{ height: '390px', width: '100%', justifyContent: 'center' }}
       >
         <AgGridReact
           enableSorting={true}

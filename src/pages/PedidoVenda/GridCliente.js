@@ -4,32 +4,25 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { GridVendaStore } from '~/store/modules/gridVenda/actions';
-import store from '~/store';
+import { setCliente } from '~/store/modules/pedidoVenda/actions';
+import { toast } from 'react-toastify';
 
 export default function GridCliente() {
+  const dispatch = useDispatch();
   const stateGetCliente = useSelector(state => state.pedidoVenda);
-  const result = [stateGetCliente[1]];
-  debugger;
+  const result = stateGetCliente.Cliente;
+
+  async function selecionaCliente({ data }) {
+    dispatch(setCliente(data));
+    toast.success('Cliente selecionado com sucesso!');
+  }
+
   const [state] = useState({
     columnDefs: [
-      { headerName: 'Código', field: 'Codigo', width: 110 },
-      { headerName: 'Nome', field: 'Nome' },
-      {
-        headerName: 'Grupo',
-        field: 'Grupo',
-        width: 110,
-      },
-      {
-        headerName: 'Telefone',
-        field: 'Telefone',
-      },
-      { headerName: 'Celular', field: 'Celular' },
-      { headerName: 'Email', field: 'Email' },
-      { headerName: 'CNAE', field: 'CNAE' },
+      { headerName: 'CodigoCliente', field: 'Codigo' },
+      { headerName: 'Razao Social', field: 'Nome' },
       { headerName: 'CNPJ', field: 'CNPJ' },
-      { headerName: 'CPF', field: 'CPF' },
-      { headerName: 'IE', field: 'IE' },
+      { headerName: 'Telefone', field: 'Telefone', width: 380 },
       {
         headerName: 'Actions',
         field: 'actions',
@@ -40,7 +33,7 @@ export default function GridCliente() {
               style={{ width: 'auto', margin: '0', height: 'auto' }}
               variant="primary"
               size="sm"
-              onClick={() => alert('Selecionado com sucesso!')}
+              onClick={() => selecionaCliente(params)}
             >
               Selecionar
             </Button>
@@ -49,10 +42,6 @@ export default function GridCliente() {
       },
     ],
   });
-  const dispatch = useDispatch();
-  dispatch(GridVendaStore('R$13.500,00'));
-
-  const { total } = store.getState().gridVenda;
 
   return (
     <>
@@ -65,7 +54,7 @@ export default function GridCliente() {
           enableFilter={true}
           pagination={true}
           columnDefs={state.columnDefs}
-          rowData={result[0]}
+          rowData={result.length >= 2 ? result[1] : []}
           rowHeight={35}
         ></AgGridReact>
       </div>

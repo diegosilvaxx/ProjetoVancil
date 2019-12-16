@@ -37,3 +37,8 @@ label {
   height: fit-content;
   margin: 30px;
 }
+
+.comentario {
+  width: 100%;
+  margin-left: 30px;
+}

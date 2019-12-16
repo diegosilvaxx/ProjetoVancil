@@ -1,36 +1,86 @@
 import { all, takeLatest, put, call } from 'redux-saga/effects';
-import { useSelector } from 'react-redux';
+import store from '~/store';
 import { toast } from 'react-toastify';
 
 import api from '~/services/api';
 
-import { setClienteList } from './actions';
+import { setPedidoList, setProdutoList, setClienteList } from './actions';
 
-export function* getClienteByName({ payload }) {
-  const retorno = payload;
-
+//PEDIDO
+export function* getPedidoByName({ payload }) {
   //CHAMADA API
-  const response = yield call(api.post, 'HUB/HUB/Authenticate', {
-    appID: '1',
-    AppKey: 'ABC123',
-  });
+  const { token, codigoVendedor } = store.getState().auth;
 
-  const { Token } = response.data;
-
-  if (!Token) {
+  if (!token) {
     toast.error('Falha na autenticação, verifique seus dados!');
     return;
   }
 
   const result = yield call(
     api.get,
-    `/HUB/HUB/ListaCliente/${retorno},${Token}`
+    `/HUB/HUB/PedidoVenda/ListarPedidos/${codigoVendedor},${token}`
   );
 
+  debugger;
   if (result.statusText === 'OK') {
-    yield put(setClienteList(result.data.Clientes));
-    toast.success('Clientes carregado com sucesso!');
+    yield put(setPedidoList(result.data.Pedidos));
+    toast.success('Pedidos carregado com sucesso!');
   }
 }
 
-export default all([takeLatest('@pedidoVenda/GET_CLIENTE', getClienteByName)]);
+//PRODUTO
+export function* getProdutoByName({ payload }) {
+  //CHAMADA API
+  const { token } = store.getState().auth;
+  const { CodigoCliente } = store.getState().pedidoVenda;
+
+  if (!token) {
+    toast.error('Falha na autenticação, verifique seus dados!');
+    return;
+  }
+
+  debugger;
+  const result = yield call(
+    api.get,
+    `/HUB/HUB/ListaProdutos/${token}?CardCode=${CodigoCliente}`
+  );
+
+  debugger;
+  if (result.statusText === 'OK') {
+    yield put(setProdutoList(result.data.Produtos));
+    debugger;
+    toast.success('Pedidos carregado com sucesso!');
+  }
+}
+
+//CLIENTE
+export function* getClienteByName({ payload }) {
+  //CHAMADA API
+  const pesquisa = payload;
+  debugger;
+  const { token, codigoVendedor } = store.getState().auth;
+
+  if (!token) {
+    toast.error('Falha na autenticação, verifique seus dados!');
+    return;
+  }
+
+  debugger;
+  const result = yield call(
+    api.get,
+    `/HUB/HUB/ListaCliente/${codigoVendedor},${pesquisa},${token}`
+  );
+
+  debugger;
+  if (result.statusText === 'OK') {
+    yield put(setClienteList(result.data.Clientes));
+    debugger;
+    toast.success('Pedidos carregado com sucesso!');
+  }
+}
+
+export default all([
+  takeLatest('@pedidoVenda/GET_PEDIDO', getPedidoByName),
+  takeLatest('@pedidoVenda/GET_PRODUTO', getProdutoByName),
+  takeLatest('@pedidoVenda/GET_CLIENTE', getClienteByName),
+]);

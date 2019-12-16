@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
-import { useDispatch, connect } from 'react-redux';
-import { getCliente } from '~/store/modules/pedidoVenda/actions';
-import Grid from './GridCliente';
+import { useDispatch, useSelector, connect } from 'react-redux';
+import { getPedido } from '~/store/modules/pedidoVenda/actions';
+import Grid from './GridPedido';
 
-const PesquisaCliente = () => {
+const PesquisaPedido = () => {
   const dispatch = useDispatch();
   const [pesquisa, setPesquisa] = useState('');
   const [pesquisando, setPesquisando] = useState(false);
@@ -18,7 +18,7 @@ const PesquisaCliente = () => {
 
   function submitPesquisa() {
     setPesquisando(true);
-    dispatch(getCliente(pesquisa));
+    dispatch(getPedido(pesquisa));
     setTimeout(function() {
       setPesquisando(false);
     }, 4000);
@@ -45,4 +45,4 @@ const PesquisaCliente = () => {
   );
 };
 
-export default connect()(PesquisaCliente);
+export default connect()(PesquisaPedido);

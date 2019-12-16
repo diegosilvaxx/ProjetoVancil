@@ -135,9 +135,9 @@ const Cliente = () => {
       <div style={{ display: 'flex' }}>
         <div className={'inputWidth'}>
           <label htmlFor="name" className="">
-            Nome do Cliente
+            Razão Social
           </label>
-          <Input name="nomeCliente" type="text" placeholder="Nome do Cliente" />
+          <Input name="nomeCliente" type="text" placeholder="Razão Social" />
         </div>
         <div className={'inputWidth'}>
           <label htmlFor="name" className="">

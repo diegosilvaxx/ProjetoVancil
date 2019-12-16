@@ -4,9 +4,8 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { setProduto } from '~/store/modules/pedidoVenda/actions';
+import { adicionarProduto } from '~/store/modules/pedidoVenda/actions';
 import { toast } from 'react-toastify';
-import { Input } from '@rocketseat/unform';
 
 export default function GridVenda() {
   const dispatch = useDispatch();
@@ -14,7 +13,7 @@ export default function GridVenda() {
   const result = stateGetProduto.Produto;
 
   async function selecionaProduto({ data }) {
-    dispatch(setProduto(data));
+    dispatch(adicionarProduto(data));
     toast.success('Produto selecionado com sucesso!');
   }
 

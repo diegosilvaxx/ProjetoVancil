@@ -261,7 +261,7 @@ export default function PedidoVenda() {
                   name="total"
                   type="text"
                   placeholder="Nome"
-                  value={`Fazer implementação`}
+                  value={statePedidoVenda.Total}
                   disabled
                 />
               </div>

@@ -36,9 +36,9 @@ export function setProdutoList(action) {
   };
 }
 
-export function setProduto(action) {
+export function adicionarProduto(action) {
   return {
-    type: '@pedidoVenda/SET_PRODUTO',
+    type: '@pedidoVenda/ADICIONAR_PRODUTO',
     payload: action,
   };
 }

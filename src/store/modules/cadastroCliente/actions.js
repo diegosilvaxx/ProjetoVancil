@@ -58,3 +58,26 @@ export function setEstado(action) {
     payload: action,
   };
 }
+
+//CLIENTE
+export function getCliente(action) {
+  return {
+    type: '@cadastroCliente/GET_CLIENTE',
+    payload: action,
+  };
+}
+
+//LISTA USADA NA GRID
+export function setClienteList(action) {
+  return {
+    type: '@cadastroCliente/SET_CLIENTE_LIST',
+    payload: action,
+  };
+}
+
+export function setCliente(action) {
+  return {
+    type: '@cadastroCliente/SET_CLIENTE',
+    payload: action,
+  };
+}

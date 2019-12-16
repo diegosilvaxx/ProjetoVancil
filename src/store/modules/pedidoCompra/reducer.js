@@ -57,20 +57,6 @@ export default function pedidoVenda(state = INITIAL_STATE, action) {
         }
         draft.Total += parseFloat(action.payload.Preco);
       });
-    //CLIENTE
-    case '@pedidoVenda/GET_CLIENTE':
-      return state;
-    case '@pedidoVenda/SET_CLIENTE_LIST':
-      return produce(state, draft => {
-        draft.Cliente.push(action.payload);
-      });
-    case '@pedidoVenda/SET_CLIENTE':
-      return produce(state, draft => {
-        debugger;
-        draft.NomeCliente = action.payload.Nome;
-        draft.CodigoCliente = action.payload.Codigo;
-        debugger;
-      });
     default:
       return state;
   }

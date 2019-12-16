@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import api from '~/services/api';
 
-import { setPedidoList, setProdutoList, setClienteList } from './actions';
+import { setPedidoList, setProdutoList } from './actions';
 
 //PEDIDO
 export function* getPedidoByName({ payload }) {
@@ -18,7 +18,7 @@ export function* getPedidoByName({ payload }) {
 
   const result = yield call(
     api.get,
-    `/HUB/HUB/PedidoVenda/ListarPedidos/${codigoVendedor},${token}`
+    `/HUB/HUB/PedidoCompra/ListarPedidos/${codigoVendedor},${token}`
   );
 
   debugger;

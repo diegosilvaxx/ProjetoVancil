@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 import history from 'services/history';
 import api from '~/services/api';
-
+import { setClienteList } from './actions';
 import { setGrupo, setMunicipio, setEstado } from './actions';
 import store from '~/store';
 
@@ -128,9 +128,35 @@ export function* getGrupoSaga() {
   }
 }
 
+//CLIENTE
+export function* getClienteByName({ payload }) {
+  //CHAMADA API
+  const pesquisa = payload;
+  debugger;
+  const { token, codigoVendedor } = store.getState().auth;
+
+  if (!token) {
+    toast.error('Falha na autenticação, verifique seus dados!');
+    return;
+  }
+
+  debugger;
+  const result = yield call(
+    api.get,
+    `/HUB/HUB/ListaCliente/${codigoVendedor},${pesquisa},${token}`
+  );
+
+  debugger;
+  if (result.statusText === 'OK') {
+    yield put(setClienteList(result.data.Clientes));
+    toast.success('Clientes carregado com sucesso!');
+  }
+}
+
 export default all([
   takeLatest('@cadastroCliente/INSERT_CLIENTE', insertCliente),
   takeLatest('@cadastroCliente/GET_GRUPO', getGrupoSaga),
   takeLatest('@cadastroCliente/GET_MUNICIPIO', getGrupoSaga),
   takeLatest('@cadastroCliente/GET_ESTADO', getGrupoSaga),
+  takeLatest('@cadastroCliente/GET_CLIENTE', getClienteByName),
 ]);

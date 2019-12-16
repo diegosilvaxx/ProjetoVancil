@@ -1,6 +1,7 @@
 import produce from 'immer';
 
 const INITIAL_STATE = {
+  Cliente: [{}],
   ddd: '',
   telefone: '',
   celular: '',
@@ -224,6 +225,19 @@ export default function cadastroCliente(state = INITIAL_STATE, action) {
           action.payload.data.insentoInscricaoEstadual != undefined
             ? action.payload.data.insentoInscricaoEstadual
             : draft.insentoInscricaoEstadual;
+      });
+    //CLIENTE
+    case '@cadastroCliente/GET_CLIENTE':
+      return state;
+    case '@cadastroCliente/SET_CLIENTE_LIST':
+      return produce(state, draft => {
+        draft.Cliente.push(action.payload);
+      });
+    case '@cadastroCliente/SET_CLIENTE':
+      return produce(state, draft => {
+        debugger;
+        draft.nomeCliente = action.payload.Nome;
+        debugger;
       });
     default:
       return state;

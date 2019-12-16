@@ -4,17 +4,14 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { setProduto } from '~/store/modules/pedidoVenda/actions';
 import { toast } from 'react-toastify';
 
 export default function GridVenda() {
-  const dispatch = useDispatch();
   const stateGetProduto = useSelector(state => state.pedidoVenda);
-  const result = stateGetProduto.Produto;
+  const result = stateGetProduto.ProdutosSelecionado;
 
   async function selecionaProduto({ data }) {
-    dispatch(setProduto(data));
-    toast.success('Produto selecionado com sucesso!');
+    toast.success('Produto excluido com sucesso! FAZER IMPLEMENTAÇÃO');
   }
 
   const [state] = useState({
@@ -71,7 +68,7 @@ export default function GridVenda() {
           enableFilter={true}
           pagination={true}
           columnDefs={state.columnDefs}
-          rowData={result.length >= 2 ? result[1] : []}
+          rowData={result.length >= 2 ? result : []}
           rowHeight={35}
         ></AgGridReact>
       </div>

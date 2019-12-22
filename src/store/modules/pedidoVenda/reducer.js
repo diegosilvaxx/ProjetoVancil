@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce from "immer";
 
 const INITIAL_STATE = {
   //PEDIDO
@@ -7,64 +7,92 @@ const INITIAL_STATE = {
   NomeCliente: null,
   DataDocumento: null,
   Status: null,
+  Quantidade: 0,
   //PRODUTO
   NumeroItem: null,
   DescricaoItem: null,
   PrecoUnitario: null,
   Total: 0,
+  TotalPedido: 0,
   //CLIENTE
   Pedido: [{}],
   Produto: [{}],
   Cliente: [{}],
-  ProdutosSelecionado: [{}],
+  ProdutosSelecionado: [{}]
 };
 
 export default function pedidoVenda(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case '@pedidoVenda/GET_PEDIDO':
+    case "@pedidoVenda/GET_PEDIDO":
       return state;
-    case '@pedidoVenda/SET_PEDIDO_LIST':
+    case "@pedidoVenda/SET_PEDIDO_LIST":
       return produce(state, draft => {
         draft.Pedido.push(action.payload);
       });
-    case '@pedidoVenda/SET_PEDIDO':
+    case "@pedidoVenda/SET_PEDIDO":
       return produce(state, draft => {
         debugger;
         const dataFormatada = action.payload.DataDocumento.substr(0, 10)
-          .split('/')
+          .split("/")
           .reverse()
-          .join('-');
+          .join("-");
 
         draft.NumeroPedido = action.payload.NumeroPedido;
         draft.CodigoCliente = action.payload.CodigoCliente;
         draft.NomeCliente = action.payload.NomeCliente;
         draft.DataDocumento = dataFormatada;
-        draft.Status = 'teste';
+        draft.Status = "teste";
         debugger;
       });
     //PRODUTO
-    case '@pedidoVenda/GET_PRODUTO':
+    case "@pedidoVenda/GET_PRODUTO":
       return state;
-    case '@pedidoVenda/SET_PRODUTO_LIST':
+    case "@pedidoVenda/SET_PRODUTO_LIST":
       return produce(state, draft => {
+        console.log(action.payload);
+        debugger;
         draft.Produto.push(action.payload);
       });
-    case '@pedidoVenda/ADICIONAR_PRODUTO':
+    case "@pedidoVenda/ADICIONAR_PRODUTO":
       return produce(state, draft => {
-        draft.ProdutosSelecionado.push(action.payload);
-        if (state.ProdutosSelecionado[0].valueOf().Codigo == null) {
-          draft.ProdutosSelecionado.splice(0, 1);
+        const TotalDesconto = parseFloat(
+          (action.payload.Quantidade *
+            action.payload.data.Preco *
+            action.payload.Desconto) /
+            100
+        );
+        const TotalValor = parseFloat(
+          action.payload.Quantidade * action.payload.data.Preco - TotalDesconto
+        );
+        const prod = {
+          payload: {
+            CodigoItem: action.payload.data.Codigo,
+            ValorUnitario: action.payload.data.Preco,
+            Descricao: action.payload.data.Descricao,
+            Quantidade: parseInt(action.payload.Quantidade),
+            Deposito: "",
+            UM: "Manual",
+            PercDesconto: parseInt(action.payload.Desconto),
+            Utilizacao: 0,
+            Total: TotalValor
+          }
+        };
+        debugger;
+        draft.ProdutosSelecionado.push(prod.payload);
+        debugger;
+        if (draft.ProdutosSelecionado[0].CodigoItem == undefined) {
+          draft.ProdutosSelecionado.shift();
         }
-        draft.Total += parseFloat(action.payload.Preco);
+        draft.TotalPedido += parseFloat(TotalValor);
       });
     //CLIENTE
-    case '@pedidoVenda/GET_CLIENTE':
+    case "@pedidoVenda/GET_CLIENTE":
       return state;
-    case '@pedidoVenda/SET_CLIENTE_LIST':
+    case "@pedidoVenda/SET_CLIENTE_LIST":
       return produce(state, draft => {
         draft.Cliente.push(action.payload);
       });
-    case '@pedidoVenda/SET_CLIENTE':
+    case "@pedidoVenda/SET_CLIENTE":
       return produce(state, draft => {
         debugger;
         draft.NomeCliente = action.payload.Nome;

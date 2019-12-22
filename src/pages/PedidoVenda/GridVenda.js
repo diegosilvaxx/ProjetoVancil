@@ -3,40 +3,38 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import Button from 'react-bootstrap/Button';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 export default function GridVenda() {
   const stateGetProduto = useSelector(state => state.pedidoVenda);
-  const result = stateGetProduto.ProdutosSelecionado;
+  var result = stateGetProduto.ProdutosSelecionado;
+  debugger;
 
   async function selecionaProduto({ data }) {
-    toast.success('Produto excluido com sucesso! FAZER IMPLEMENTAÇÃO');
+    toast.success('Produto excluido com sucesso!');
   }
 
   const [state] = useState({
     columnDefs: [
-      { headerName: 'Nº do item', field: 'Codigo', width: 110 },
+      { headerName: 'Nº do item', field: 'CodigoItem', width: 110 },
       { headerName: 'Descrição do item', field: 'Descricao' },
       {
         headerName: 'Quantidade',
-        field: 'quantidade',
-        editable: true,
+        field: 'Quantidade',
         width: 110,
       },
       {
         headerName: 'Preço unitário',
-        field: 'Preco',
-        editable: false,
+        field: 'ValorUnitario',
         width: 110,
       },
       {
         headerName: 'Desconto %',
-        field: 'desconto',
+        field: 'PercDesconto',
         width: 110,
-        editable: true,
       },
-      { headerName: 'Total(MC) ', field: 'total', editable: false },
+      { headerName: 'Total(MC) ', field: 'Total' },
       {
         headerName: 'Actions',
         field: 'actions',
@@ -68,7 +66,7 @@ export default function GridVenda() {
           enableFilter={true}
           pagination={true}
           columnDefs={state.columnDefs}
-          rowData={result.length >= 2 ? result : []}
+          rowData={result[0].CodigoItem != undefined ? result : []}
           rowHeight={35}
         ></AgGridReact>
       </div>

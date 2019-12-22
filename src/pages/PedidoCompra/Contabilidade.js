@@ -14,6 +14,7 @@ class Contabilidade extends Component {
               name="CondicoesPagamento"
               type="text"
               placeholder="Condições de pagamento"
+              disabled
             />
           </div>
           <div className={'inputWidth'}>
@@ -24,6 +25,7 @@ class Contabilidade extends Component {
               name="FormaPagamento"
               type="text"
               placeholder="Forma de pagamento"
+              disabled
             />
           </div>
         </div>

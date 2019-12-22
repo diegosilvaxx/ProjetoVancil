@@ -12,24 +12,93 @@ export default function GridVenda() {
   const stateGetProduto = useSelector(state => state.pedidoVenda);
   const result = stateGetProduto.Produto;
 
+  async function VerificaDesconto({ data }) {
+    let Desconto = document.getElementById('Desconto' + data.Codigo).value;
+    if (parseInt(Desconto) > 50) {
+      toast.warn('Desconto máximo de 50%');
+      document.getElementById('Desconto' + data.Codigo).value = 50;
+    }else if(Desconto == ""){
+      document.getElementById('Desconto' + data.Codigo).value = 0;
+    }
+  }
+
+  async function VerificaQuantidade({ data }) {
+    let Quantidade = document.getElementById('Quantidade' + data.Codigo).value;
+    if(Quantidade == ""){
+      document.getElementById('Quantidade' + data.Codigo).value = 1;
+    }
+  }
+
   async function selecionaProduto({ data }) {
-    dispatch(adicionarProduto(data));
+    VerificaDesconto({ data });
+    VerificaQuantidade({ data });
+    const Quantidade = document.getElementById('Quantidade' + data.Codigo)
+      .value;
+
+    let Desconto = document.getElementById('Desconto' + data.Codigo).value;
+
+    const payload = {
+      data: data,
+      Quantidade: Quantidade,
+      Desconto: Desconto,
+    };
+    dispatch(adicionarProduto(payload));
     toast.success('Produto selecionado com sucesso!');
   }
 
   const [state] = useState({
     columnDefs: [
-      { headerName: 'Nº do item', field: 'Codigo', editable: false },
-      { headerName: 'Descrição do item', field: 'Descricao', editable: false },
+      {
+        headerName: 'Nº do item',
+        field: 'Codigo',
+        editable: false,
+        width: 120,
+      },
+      {
+        headerName: 'Descrição do item',
+        field: 'Descricao',
+        editable: false,
+        width: 510,
+      },
       {
         headerName: 'Preço unitário',
         field: 'Preco',
         editable: false,
-        width: 420,
+        width: 120,
+      },
+      {
+        headerName: 'Quantidade ',
+        field: 'Quantidade ',
+        width: 120,
+        cellRendererFramework: function(params) {
+          return (
+            <input
+              id={'Quantidade' + params.data.Codigo}
+              type="number"
+              style={{ width: '100px' }}
+            ></input>
+          );
+        },
+      },
+      {
+        headerName: 'Desconto ',
+        field: 'Desconto ',
+        width: 120,
+        cellRendererFramework: function(params) {
+          return (
+            <input
+              id={'Desconto' + params.data.Codigo}
+              style={{ width: '100px' }}
+              type="number"
+              onChange={() => VerificaDesconto(params)}
+            ></input>
+          );
+        },
       },
       {
         headerName: 'Actions',
         field: 'actions',
+        width: 120,
         cellRendererFramework: function(params) {
           return (
             <Button
@@ -57,7 +126,7 @@ export default function GridVenda() {
           enableFilter={true}
           pagination={true}
           columnDefs={state.columnDefs}
-          rowData={result.length >= 2 ? result[1] : []}
+          rowData={result.length >= 1 ? result[1] : []}
           rowHeight={35}
         ></AgGridReact>
       </div>

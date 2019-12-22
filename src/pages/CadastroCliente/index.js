@@ -84,7 +84,7 @@ const CadastroCliente = () => {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-              Cancelar
+              Fechar
             </Button>
           </Modal.Footer>
         </Modal>
@@ -95,6 +95,7 @@ const CadastroCliente = () => {
           id="formCliente"
           schema={schema}
           key={'FormIndexCadClienteKey'}
+          style={{ marginTop: '0' }}
         >
           <div className={'containerForm'} onClick={onSubmitForm} key="123144">
             {/* tabs */}

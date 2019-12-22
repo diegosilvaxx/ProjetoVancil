@@ -65,3 +65,11 @@ export function setCliente(action) {
     payload: action,
   };
 }
+
+//INSERIR PEDIDO
+export function inserirPedido(action) {
+  return {
+    type: '@pedidoVenda/INSERIR_PEDIDO',
+    payload: action,
+  };
+}

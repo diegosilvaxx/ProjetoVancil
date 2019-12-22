@@ -143,7 +143,7 @@ export function* getClienteByName({ payload }) {
   debugger;
   const result = yield call(
     api.get,
-    `/HUB/HUB/ListaCliente/${codigoVendedor},${pesquisa},${token}`
+    `/HUB/HUB/ListaCliente/${codigoVendedor},${pesquisa + ' busca'},${token}`
   );
 
   debugger;

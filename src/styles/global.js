@@ -128,5 +128,7 @@ button {
     margin: 30px 0px 30px 30px;
   }
 
+  li {cursor: pointer;}
+
 }
 `;

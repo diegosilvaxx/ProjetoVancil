@@ -68,7 +68,7 @@ export function* getClienteByName({ payload }) {
   debugger;
   const result = yield call(
     api.get,
-    `/HUB/HUB/ListaCliente/${codigoVendedor},${pesquisa},${token}`
+    `/HUB/HUB/ListaCliente/${codigoVendedor},${pesquisa + 'busca'},${token}`
   );
 
   debugger;
@@ -79,8 +79,55 @@ export function* getClienteByName({ payload }) {
   }
 }
 
+//INSERIR PEDIDO
+export function* inserirPedido({ payload }) {
+  //CHAMADA API
+  const { token, codigoVendedor } = store.getState().auth;
+  const produtos = store.getState().pedidoVenda;
+
+  debugger;
+
+  if (!token) {
+    toast.error('Falha na autenticação, verifique seus dados!');
+    return;
+  }
+  const data = {
+    DocEntry: '',
+    Serie: '',
+    Status: '',
+    CardCode: payload.data.codigoCliente,
+    CardName: payload.data.nome,
+    NumCliente: payload.data.refCliente,
+    DataLancamento: '2019-12-15T16:33:07.381Z',
+    DataDocumento: '2019-12-15T16:33:07.381Z',
+    DataEntrega: payload.data.dataEntrega,
+    Comentarios: payload.data.comentario,
+    Vendedor: codigoVendedor,
+    CondPgto: -1,
+    FormaPgto: '',
+    IDEndEntrega: '',
+    IDEndCobranca: '',
+    ItensPedido: produtos.ProdutosSelecionado,
+  };
+
+  debugger;
+  const result = yield call(
+    api.put,
+    `/HUB/HUB/PedidoVenda/Inserir/${token}`,
+    data
+  );
+
+  debugger;
+  if (result.data.Retorno.MsgRetorno === 'OK') {
+    toast.success('Pedido de Venda realizado com sucesso!');
+  } else {
+    toast.error(result.data.Retorno.MsgRetorno);
+  }
+}
+
 export default all([
   takeLatest('@pedidoVenda/GET_PEDIDO', getPedidoByName),
   takeLatest('@pedidoVenda/GET_PRODUTO', getProdutoByName),
   takeLatest('@pedidoVenda/GET_CLIENTE', getClienteByName),
+  takeLatest('@pedidoVenda/INSERIR_PEDIDO', inserirPedido),
 ]);

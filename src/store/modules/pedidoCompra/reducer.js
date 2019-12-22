@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce from "immer";
 
 const INITIAL_STATE = {
   //PEDIDO
@@ -16,43 +16,47 @@ const INITIAL_STATE = {
   Pedido: [{}],
   Produto: [{}],
   Cliente: [{}],
-  ProdutosSelecionado: [{}],
+  ProdutosSelecionado: [{}]
 };
 
-export default function pedidoVenda(state = INITIAL_STATE, action) {
+export default function pedidoCompra(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case '@pedidoVenda/GET_PEDIDO':
+    case "@pedidoCompra/GET_PEDIDO":
       return state;
-    case '@pedidoVenda/SET_PEDIDO_LIST':
+    case "@pedidoCompra/SET_PEDIDO_LIST":
       return produce(state, draft => {
         draft.Pedido.push(action.payload);
       });
-    case '@pedidoVenda/SET_PEDIDO':
+    case "@pedidoCompra/SET_PEDIDO":
       return produce(state, draft => {
         debugger;
         const dataFormatada = action.payload.DataDocumento.substr(0, 10)
-          .split('/')
+          .split("/")
           .reverse()
-          .join('-');
+          .join("-");
 
         draft.NumeroPedido = action.payload.NumeroPedido;
         draft.CodigoCliente = action.payload.CodigoCliente;
         draft.NomeCliente = action.payload.NomeCliente;
         draft.DataDocumento = dataFormatada;
-        draft.Status = 'teste';
+        draft.Status = "teste";
         debugger;
       });
     //PRODUTO
-    case '@pedidoVenda/GET_PRODUTO':
+    case "@pedidoCompra/GET_PRODUTO":
       return state;
-    case '@pedidoVenda/SET_PRODUTO_LIST':
+    case "@pedidoCompra/SET_PRODUTO_LIST":
+      debugger;
       return produce(state, draft => {
         draft.Produto.push(action.payload);
       });
-    case '@pedidoVenda/ADICIONAR_PRODUTO':
+    case "@pedidoCompra/ADICIONAR_PRODUTO":
+      debugger;
       return produce(state, draft => {
         draft.ProdutosSelecionado.push(action.payload);
-        if (state.ProdutosSelecionado[0].valueOf().Codigo == null) {
+        debugger;
+        if (state.ProdutosSelecionado[0].valueOf().Quantidade == null) {
+          debugger;
           draft.ProdutosSelecionado.splice(0, 1);
         }
         draft.Total += parseFloat(action.payload.Preco);

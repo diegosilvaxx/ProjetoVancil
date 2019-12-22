@@ -1,26 +1,30 @@
-import React, { useState } from 'react';
-import { Form, Input } from '@rocketseat/unform';
-import * as Yup from 'yup';
-import './styles.css';
-import GridVenda from './GridVenda';
-import Tabs from '../../components/Tabs';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import PesquisaPedido from './PesquisaPedido';
-import PesquisaProduto from './PesquisaProduto';
-import PesquisaCliente from './PesquisaCliente';
-import Logistica from './Logistica';
-import Contabilidade from './Contabilidade';
-import store from '~/store';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import { Form, Input } from "@rocketseat/unform";
+import * as Yup from "yup";
+import "./styles.css";
+import GridVenda from "./GridVenda";
+import Tabs from "../../components/Tabs";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import PesquisaPedido from "./PesquisaPedido";
+import PesquisaProduto from "./PesquisaProduto";
+import PesquisaCliente from "./PesquisaCliente";
+import Logistica from "./Logistica";
+import Contabilidade from "./Contabilidade";
+import store from "~/store";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { inserirPedido } from "~/store/modules/pedidoVenda/actions";
+import CurrencyInput from "react-currency-input";
 
-const schema = Yup.object().shape({
-  nome: Yup.string().required('O nome é obrigatório'),
-  PessoaContato: Yup.string().required('Pessoa de contato é obrigatório'),
-});
+// const schema = Yup.object().shape({
+//   nome: Yup.string().required('O nome é obrigatório'),
+//   PessoaContato: Yup.string().required('Pessoa de contato é obrigatório'),
+// });
 
 export default function PedidoVenda() {
   const statePedidoVenda = store.getState().pedidoVenda;
+  const dispatch = useDispatch();
   //PEDIDO
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -33,7 +37,7 @@ export default function PedidoVenda() {
     if (CodigoCliente != null) {
       setShowProduto(true);
     } else {
-      toast.warn('Campo Razão Social não preenchido!');
+      toast.error("Campo Razão Social não preenchido!");
     }
   };
   //CLIENTE
@@ -41,30 +45,32 @@ export default function PedidoVenda() {
   const handleCloseCliente = () => setShowCliente(false);
   const handleShowCliente = () => setShowCliente(true);
 
-  function handleSubmit({ nome, PessoaContato }) {
-    console.log(nome, PessoaContato);
+  async function handleForm(data) {
+    if (data != null) {
+      dispatch(inserirPedido({ data }));
+    }
   }
   return (
     <>
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          backgroundColor: 'white',
-          width: '90%',
-          borderRadius: '4px',
-          margin: 'auto',
-          marginBottom: '15px',
+          display: "flex",
+          flexDirection: "column",
+          backgroundColor: "white",
+          width: "90%",
+          borderRadius: "4px",
+          margin: "auto",
+          marginBottom: "15px"
         }}
       >
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
+            display: "flex",
+            justifyContent: "space-between"
           }}
         >
-          <label className={'lblTitulo'}>Pedido de Venda</label>
-          <Button onClick={handleShow} className={'PesquisaCliente'}>
+          <label className={"lblTitulo"}>Pedido de Venda</label>
+          <Button onClick={handleShow} className={"PesquisaCliente"}>
             Pesquisar Pedidos
           </Button>
         </div>
@@ -111,10 +117,10 @@ export default function PedidoVenda() {
           </Modal.Footer>
         </Modal>
 
-        <Form schema={schema} onSubmit={handleSubmit}>
-          <div className={'containerForm'}>
-            <div style={{ display: 'flex' }}>
-              <div className={'inputWidth'}>
+        <Form onSubmit={handleForm}>
+          <div className={"containerForm"}>
+            <div style={{ display: "flex" }}>
+              <div className={"inputWidth"}>
                 <label htmlFor="name">Razão Social</label>
                 <Input
                   name="nome"
@@ -124,7 +130,7 @@ export default function PedidoVenda() {
                   value={statePedidoVenda.NomeCliente}
                 />
               </div>
-              <div className={'inputWidth'}>
+              <div className={"inputWidth"}>
                 <label htmlFor="name">Pessoa de contato</label>
                 <Input
                   name="PessoaContato"
@@ -132,7 +138,7 @@ export default function PedidoVenda() {
                   placeholder="Pessoa de contato"
                 />
               </div>
-              <div className={'inputWidth'}>
+              <div className={"inputWidth"}>
                 <label htmlFor="name" className="">
                   Nº Ref. Cliente
                 </label>
@@ -144,8 +150,8 @@ export default function PedidoVenda() {
               </div>
             </div>
 
-            <div style={{ display: 'flex' }}>
-              <div className={'inputWidth'}>
+            <div style={{ display: "flex" }}>
+              <div className={"inputWidth"}>
                 <label htmlFor="name" className="">
                   Código do Cliente
                 </label>
@@ -157,7 +163,7 @@ export default function PedidoVenda() {
                   value={statePedidoVenda.CodigoCliente}
                 />
               </div>
-              <div className={'inputWidth'}>
+              <div className={"inputWidth"}>
                 <label htmlFor="name" className="">
                   Data de Entrega
                 </label>
@@ -166,12 +172,13 @@ export default function PedidoVenda() {
                   type="date"
                   placeholder="Data de Entrega"
                   value={statePedidoVenda.DataDocumento}
+                  style={{ width: "95%", maxWidth: "600px" }}
                 />
               </div>
             </div>
 
-            <div style={{ display: 'flex' }}>
-              <div className={'inputWidth'}>
+            <div style={{ display: "flex" }}>
+              <div className={"inputWidth"}>
                 <label htmlFor="name" className="">
                   Status
                 </label>
@@ -182,7 +189,7 @@ export default function PedidoVenda() {
                   placeholder="Status"
                 />
               </div>
-              <div className={'inputWidth'}>
+              <div className={"inputWidth"}>
                 <label htmlFor="name" className="">
                   Número do Pedido
                 </label>
@@ -194,7 +201,7 @@ export default function PedidoVenda() {
                   value={statePedidoVenda.NumeroPedido}
                 />
               </div>
-              <div className={'inputWidth'}>
+              <div className={"inputWidth"}>
                 <label htmlFor="name" className="">
                   Nº Doc SAP
                 </label>
@@ -207,34 +214,35 @@ export default function PedidoVenda() {
               </div>
             </div>
 
-            <div style={{ display: 'flex' }}>
-              <div className={'comentario'}>
+            <div style={{ display: "flex" }}>
+              <div className={"comentario"}>
                 <label htmlFor="name" className="">
                   Comentários
                 </label>
-                <textarea
-                  className="form-control"
-                  idname="comentario"
+                <Input
+                  multiline
+                  name="comentario"
                   rows="5"
+                  className="form-control"
                 />
               </div>
             </div>
 
             <div
               style={{
-                display: 'flex',
-                alignContent: 'center',
-                marginLeft: '30px',
+                display: "flex",
+                alignContent: "center",
+                marginLeft: "30px"
               }}
             >
               {/* tabs */}
 
               <Tabs>
-                <Tabs.Tab label={'Conteúdo'}>
-                  <div className={'PesquisaVenda'}>
+                <Tabs.Tab label={"Conteúdo"}>
+                  <div className={"PesquisaVenda"}>
                     <Button
                       onClick={handleShowProduto}
-                      className={'PesquisaVenda'}
+                      className={"PesquisaVenda"}
                     >
                       Pesquisar Produtos
                     </Button>
@@ -242,11 +250,11 @@ export default function PedidoVenda() {
                   </div>
                 </Tabs.Tab>
 
-                <Tabs.Tab label={'Logística'}>
+                <Tabs.Tab label={"Logística"}>
                   <Logistica />
                 </Tabs.Tab>
 
-                <Tabs.Tab label={'Contabilidade'}>
+                <Tabs.Tab label={"Contabilidade"}>
                   <Contabilidade />
                 </Tabs.Tab>
               </Tabs>
@@ -254,35 +262,24 @@ export default function PedidoVenda() {
               {/* tabs */}
             </div>
 
-            <div style={{ display: 'flex' }}>
-              <div className={'inputWidth'}>
+            <div style={{ display: "flex" }}>
+              <div className={"inputWidth"}>
                 <label for="name">Total</label>
-                <Input
+                <CurrencyInput
                   name="total"
                   type="text"
-                  placeholder="Nome"
-                  value={statePedidoVenda.Total}
+                  value={statePedidoVenda.TotalPedido}
                   disabled
                 />
               </div>
             </div>
 
-            <div style={{ display: 'flex', marginBottom: '30px' }}>
-              <div className={'inputWidth'} style={{ margin: '0 30px 0' }}>
-                <Button
-                  type="submit"
-                  onClick={() =>
-                    handleSubmit({
-                      nome: 'diegao2',
-                      PessoaContato: 'master321',
-                    })
-                  }
-                >
-                  Ok
-                </Button>
+            <div style={{ display: "flex", marginBottom: "30px" }}>
+              <div className={"inputWidth"} style={{ margin: "0 30px 0" }}>
+                <Button type="submit">Ok</Button>
               </div>
-              <div className={'inputWidth'}>
-                <Button variant="secondary" onClick={() => alert('Cancelado')}>
+              <div className={"inputWidth"}>
+                <Button variant="secondary" onClick={() => alert("Cancelado")}>
                   Cancelar Pedido
                 </Button>
               </div>

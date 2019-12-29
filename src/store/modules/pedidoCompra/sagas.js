@@ -50,10 +50,25 @@ export function* getProdutoByName({ payload }) {
 }
 
 //INSERIR PEDIDO
-export function* inserirPedido({ payload }) {
+export function* inserirPedido(ListaPedidos) {
   //CHAMADA API
+  const { payload, incluirAtualizar } = ListaPedidos;
+  debugger;
   const { token, codigoVendedor } = store.getState().auth;
   const produtos = store.getState().pedidoCompra;
+
+  const resultProduto = [];
+  produtos.ProdutosSelecionado.forEach(data => {
+    resultProduto.push({
+      CodigoItem: data.data.Codigo,
+      Quantidade: data.Quantidade,
+      ValorUnitario: parseFloat(data.Desconto),
+      Utilizacao: 0,
+      UM: "",
+      Deposito: "",
+      PercDesconto: 0
+    });
+  });
 
   debugger;
 
@@ -65,19 +80,20 @@ export function* inserirPedido({ payload }) {
     DocEntry: "",
     Serie: "",
     Status: "",
-    CardCode: payload.data.codigoCliente,
-    CardName: payload.data.nome,
-    NumCliente: payload.data.refCliente,
+    CardCode: "",
+    CardName: "",
+    NumCliente: "",
     DataLancamento: "2019-12-15T16:33:07.381Z",
     DataDocumento: "2019-12-15T16:33:07.381Z",
-    DataEntrega: payload.data.dataEntrega,
-    Comentarios: payload.data.comentario,
+    DataEntrega: "2019-12-15T16:33:07.381Z",
+    Comentarios: payload.comentario,
     Vendedor: codigoVendedor,
     CondPgto: -1,
     FormaPgto: "",
     IDEndEntrega: "",
     IDEndCobranca: "",
-    ItensPedido: produtos.ProdutosSelecionado
+    ItensPedido: resultProduto,
+    Finalizado: incluirAtualizar
   };
 
   debugger;
@@ -88,8 +104,8 @@ export function* inserirPedido({ payload }) {
   );
 
   debugger;
-  if (result.data.Retorno.MsgRetorno === "OK") {
-    toast.success("Pedido de Venda realizado com sucesso!");
+  if (result.data.Retorno.CodRetorno === 100) {
+    toast.success("Pedido enviado com sucesso!");
   } else {
     toast.error(result.data.Retorno.MsgRetorno);
   }

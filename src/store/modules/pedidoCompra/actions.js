@@ -44,9 +44,18 @@ export function adicionarProduto(action) {
 }
 
 //INSERIR PEDIDO
-export function inserirPedido(action) {
+export function inserirPedido(action, result) {
   return {
     type: "@pedidoCompra/INSERIR_PEDIDO",
+    payload: action,
+    incluirAtualizar: result
+  };
+}
+
+//DELETE PRODUTO
+export function deleteProduto(action) {
+  return {
+    type: "@pedidoCompra/DELETE_PRODUTO",
     payload: action
   };
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Input, Select } from "@rocketseat/unform";
 import Form from "react-bootstrap/Form";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // import { getGrupoAndTerritorio } from '~/store/modules/cadastroCliente/actions';
 
 const Cliente = () => {
@@ -60,7 +60,12 @@ const Cliente = () => {
           <label htmlFor="name" className="">
             Razão Social
           </label>
-          <Input name="nomeCliente" type="text" placeholder="Razão Social" />
+          <Input
+            name="nomeCliente"
+            type="text"
+            placeholder="Razão Social"
+            style={{ maxWidth: "100%" }}
+          />
         </div>
         <div className={"inputWidth"}>
           <label htmlFor="name" className="">

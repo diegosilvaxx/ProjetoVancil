@@ -10,6 +10,8 @@ import Contabilidade from "./Contabilidade";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { inserirPedido } from "~/store/modules/pedidoCompra/actions";
+import store from "~/store";
+import PesquisaPedido from "./PesquisaPedido";
 
 const schema = Yup.object().shape({
   // nome: Yup.string().required("O nome é obrigatório"),
@@ -17,17 +19,31 @@ const schema = Yup.object().shape({
 
 export default function PedidoCompra() {
   const dispatch = useDispatch();
+  const { nomeVendedor } = store.getState().auth;
 
+  //PRODUTO
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  function handleSubmit(data) {
+  //PEDIDO
+  const [showPedido, setShowPedido] = useState(false);
+  const handleClosePedido = () => setShowPedido(false);
+  const handleShowPedido = () => setShowPedido(true);
+
+  //ATUALIZAR/ENVIAR
+  const [showEnviarAtualizar, setShowEnviarAtualizar] = useState(false);
+  const handleCloseEnviarAtualizar = () => setShowEnviarAtualizar(false);
+  const handleShowEnviarAtualizar = () => setShowEnviarAtualizar(true);
+
+  function EnviarPedido(data) {
+    console.log(data);
     debugger;
     if (data != null) {
-      dispatch(inserirPedido(data));
+      dispatch(inserirPedido(data, showEnviarAtualizar));
     }
   }
+
   return (
     <>
       <div
@@ -38,7 +54,8 @@ export default function PedidoCompra() {
           width: "90%",
           borderRadius: "4px",
           margin: "auto",
-          marginBottom: "15px"
+          marginBottom: "15px",
+          maxWidth: "1366px"
         }}
       >
         <div
@@ -47,8 +64,25 @@ export default function PedidoCompra() {
             justifyContent: "space-between"
           }}
         >
-          <label className={"lblTitulo"}>Pedido de Compra</label>
+          <label className={"lblTitulo"}>Pedido de Venda</label>
+          <Button onClick={handleShowPedido} className={"PesquisaCliente"}>
+            Pesquisar Pedidos
+          </Button>
         </div>
+        {/* //PEDIDO */}
+        <Modal show={showPedido} onHide={handleClosePedido} size="xl">
+          <Modal.Header closeButton>
+            <Modal.Title>Pesquisa de Pedidos</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <PesquisaPedido></PesquisaPedido>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClosePedido}>
+              Fechar
+            </Button>
+          </Modal.Footer>
+        </Modal>
         {/* //PRODUTO */}
         <Modal show={show} onHide={handleClose} size="xl">
           <Modal.Header closeButton>
@@ -64,14 +98,19 @@ export default function PedidoCompra() {
           </Modal.Footer>
         </Modal>
 
-        <Form schema={schema} onSubmit={handleSubmit}>
+        <Form onSubmit={EnviarPedido}>
           <div className={"containerForm"}>
             <div style={{ display: "flex" }}>
               <div className={"inputWidth"}>
                 <label htmlFor="name" className="">
                   Status
                 </label>
-                <Input name="Status" type="text" placeholder="Status" />
+                <Input
+                  name="Status"
+                  type="text"
+                  placeholder="Status"
+                  disabled
+                />
               </div>
               <div className={"inputWidth"}>
                 <label htmlFor="name" className="">
@@ -81,13 +120,19 @@ export default function PedidoCompra() {
                   name="seqNumerica"
                   type="text"
                   placeholder="Nº – Seq. numérica"
+                  disabled
                 />
               </div>
               <div className={"inputWidth"}>
                 <label htmlFor="name" className="">
                   Nº Doc SAP
                 </label>
-                <Input name="DocSap" type="text" placeholder="Nº Doc SAP" />
+                <Input
+                  name="DocSap"
+                  type="text"
+                  placeholder="Nº Doc SAP"
+                  disabled
+                />
               </div>
             </div>
 
@@ -100,19 +145,20 @@ export default function PedidoCompra() {
                   name="refCliente"
                   type="text"
                   placeholder="Nº Ref. Cliente"
+                  disabled
+                  value={nomeVendedor}
                 />
               </div>
             </div>
 
             <div style={{ display: "flex" }}>
               <div className={"comentario"}>
-                <label htmlFor="name" className="">
-                  Comentários
-                </label>
-                <textarea
-                  className="form-control"
-                  idname="comentario"
+                <label style={{ marginLeft: 0 }}>Observações</label>
+                <Input
+                  multiline
+                  name="comentario"
                   rows="5"
+                  className="form-control"
                 />
               </div>
             </div>
@@ -146,11 +192,21 @@ export default function PedidoCompra() {
 
             <div style={{ display: "flex", marginBottom: "30px" }}>
               <div className={"inputWidth"} style={{ margin: "0 30px 0" }}>
-                <Button type="submit">Incluir</Button>
+                <Button
+                  type="button"
+                  type="submit"
+                  onClick={handleShowEnviarAtualizar}
+                >
+                  Atualizar Pedido
+                </Button>
               </div>
               <div className={"inputWidth"} style={{ margin: "0 30px 0" }}>
-                <Button variant="success" type="submit">
-                  Finalizar Pedido
+                <Button
+                  variant="success"
+                  type="submit"
+                  onClick={handleCloseEnviarAtualizar}
+                >
+                  Enviar Pedido
                 </Button>
               </div>
               <div className={"inputWidth"}>

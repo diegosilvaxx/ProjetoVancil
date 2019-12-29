@@ -1,34 +1,14 @@
 import React, { useState } from "react";
 import { Input, Select } from "@rocketseat/unform";
-import Form from "react-bootstrap/Form";
+import FormReact from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getMunicipio,
-  getEstado,
-  setEnderecoComplemento
+  getEstado
 } from "~/store/modules/cadastroCliente/actions";
-import Button from "react-bootstrap/Button";
-import EnderecoComplemento from "./enderecoComplemento";
-import { toast } from "react-toastify";
 
-const Endereco = () => {
+const EnderecoComplemento = props => {
   const dispatch = useDispatch();
-
-  const stateCadastroCliente = useSelector(state => state.cadastroCliente);
-  const AdicionarEndereco = () => {
-    if (stateCadastroCliente.EnderecoComplemento.length <= 2) {
-      dispatch(
-        setEnderecoComplemento(
-          <EnderecoComplemento
-            Quantidade={stateCadastroCliente.EnderecoComplemento.length}
-          />
-        )
-      );
-    } else {
-      toast.error("Numero maximo de endereço atingido!");
-    }
-  };
-
   const [carregoDados, setCarregoDados] = useState(false);
   const options = [
     { id: "Cobrança", title: "Cobrança" },
@@ -47,6 +27,7 @@ const Endereco = () => {
     { id: "Carregando", title: "Carregando" }
   ]);
 
+  const stateCadastroCliente = useSelector(state => state.cadastroCliente);
   if (carregoDados == false) {
     dispatch(getMunicipio());
     dispatch(getEstado());
@@ -65,9 +46,22 @@ const Endereco = () => {
         });
       });
       resultMunicipio.splice(0, 1);
-      const resultMunicipioFiltrado = resultMunicipio.filter(
-        element => element.estado == stateCadastroCliente.estado
-      );
+
+      let resultMunicipioFiltrado = undefined;
+      if (props.Quantidade == 0) {
+        resultMunicipioFiltrado = resultMunicipio.filter(
+          element => element.estado == stateCadastroCliente.estadoComplemento0
+        );
+      } else if (props.Quantidade == 1) {
+        resultMunicipioFiltrado = resultMunicipio.filter(
+          element => element.estado == stateCadastroCliente.estadoComplemento1
+        );
+      } else if (props.Quantidade == 2) {
+        resultMunicipioFiltrado = resultMunicipio.filter(
+          element => element.estado == stateCadastroCliente.estadoComplemento2
+        );
+      }
+
       setOptionsMunicipio(resultMunicipioFiltrado);
     }
   }
@@ -88,16 +82,6 @@ const Endereco = () => {
     }
   }
 
-  //htmlForca carregar municipio
-  if (optionsMunicipio.length <= 1 && stateCadastroCliente.estado != "") {
-    loadMunicipio();
-  }
-
-  //htmlForca carregar estado
-  if (optionsEstado.length <= 1) {
-    loadEstado();
-  }
-
   return (
     <>
       <div
@@ -114,41 +98,40 @@ const Endereco = () => {
             className=""
             style={{ marginLeft: 0, fontSize: "15pt", marginTop: "5px" }}
           >
-            Endereço 1
+            Endereço {props.Quantidade + 2}
           </label>
         </div>
       </div>
-      <div style={{ display: "flex" }} key={"gfd"}>
+      <div style={{ display: "flex" }}>
         <div className={"inputWidth"}>
           <label htmlFor="name" className="">
             Id endereço
           </label>
-          <Input name="idEndereco" type="text" placeholder="Id endereço" />
+          <Input
+            name={"idEnderecoComplemento" + props.Quantidade}
+            type="text"
+            placeholder="Id endereço"
+          />
         </div>
-        <div className={"inputWidth"} key={"gfdfgh"}>
+        <div className={"inputWidth"}>
           <label htmlFor="name" className="">
             Tipo endereço (cobrança/entrega)
           </label>
-          <Form.Group
-            controlId="FormCliente"
-            key={"KeyFormGrupoEndereco"}
-            className={"comboboxGroup"}
-          >
+          <FormReact.Group controlId="FormCliente" className={"comboboxGroup"}>
             <Select
-              name="tipoEndereco"
+              name={"tipoEnderecoComplemento" + props.Quantidade}
               options={options.length <= 1 ? Carregando : options}
               className={"comboboxControl"}
               placeholder={"Selecione"}
-              key={"KeyFormGrupoSelectEndereco"}
             />
-          </Form.Group>
+          </FormReact.Group>
         </div>
         <div className={"inputWidth"}>
           <label htmlFor="name" className="">
             Tipo Logradouro (Rua,viela e etc)
           </label>
           <Input
-            name="tipoLogradouro"
+            name={"tipoLogradouroComplemento" + props.Quantidade}
             type="text"
             placeholder="Tipo Logradouro"
           />
@@ -160,19 +143,31 @@ const Endereco = () => {
           <label htmlFor="name" className="">
             Nome da Rua
           </label>
-          <Input name="nomeRua" type="text" placeholder="Rua" />
+          <Input
+            name={"nomeRuaComplemento" + props.Quantidade}
+            type="text"
+            placeholder="Rua"
+          />
         </div>
         <div className={"inputWidth"}>
           <label htmlFor="name" className="">
             Nº
           </label>
-          <Input name="numero" type="text" placeholder="Numero" />
+          <Input
+            name={"numeroComplemento" + props.Quantidade}
+            type="text"
+            placeholder="Numero"
+          />
         </div>
         <div className={"inputWidth"}>
           <label htmlFor="name" className="">
             Complemento
           </label>
-          <Input name="complemento" type="text" placeholder="Complemento" />
+          <Input
+            name={"complementoComplemento" + props.Quantidade}
+            type="text"
+            placeholder="Complemento"
+          />
         </div>
       </div>
 
@@ -181,28 +176,31 @@ const Endereco = () => {
           <label htmlFor="name" className="">
             CEP (Apenas numero)
           </label>
-          <Input name="cep" type="text" placeholder="CEP" />
+          <Input
+            name={"cepComplemento" + props.Quantidade}
+            type="text"
+            placeholder="CEP"
+          />
         </div>
         <div className={"inputWidth"}>
           <label>Bairro</label>
-          <Input name="bairro" type="text" placeholder="Bairro" />
+          <Input
+            name={"bairroComplemento" + props.Quantidade}
+            type="text"
+            placeholder="Bairro"
+          />
         </div>
-        <div className={"inputWidth"}>
+        <div className={"inputWidth"} onMouseOver={loadEstado}>
           <label>Estado</label>
-          <Form.Group
-            controlId="FormCliente"
-            key={"KeyFormFroupEstado"}
-            className={"comboboxGroup"}
-          >
+          <FormReact.Group controlId="FormCliente" className={"comboboxGroup"}>
             <Select
-              key={"selectEstadoComboBoxKey"}
-              name="estado"
+              name={"estadoComplemento" + props.Quantidade}
               options={optionsEstado.length <= 1 ? Carregando : optionsEstado}
               className={"comboboxControl"}
               placeholder={"Selecione"}
               onClick={loadEstado}
             />
-          </Form.Group>
+          </FormReact.Group>
         </div>
       </div>
 
@@ -211,9 +209,12 @@ const Endereco = () => {
           <label htmlFor="name" className="">
             Município
           </label>
-          <Form.Group controlId="htmlFormCliente" className={"comboboxGroup"}>
+          <FormReact.Group
+            controlId="htmlFormCliente"
+            className={"comboboxGroup"}
+          >
             <Select
-              name="municipio"
+              name={"municipioComplemento" + props.Quantidade}
               options={
                 optionsMunicipio.length <= 1 ? Carregando : optionsMunicipio
               }
@@ -221,7 +222,7 @@ const Endereco = () => {
               placeholder={"Selecione o Estado primeiro"}
               onClick={loadMunicipio}
             />
-          </Form.Group>
+          </FormReact.Group>
         </div>
         <div className={"inputWidth"}>
           <label htmlFor="name" className="">
@@ -229,26 +230,14 @@ const Endereco = () => {
           </label>
           <Input
             style={{ width: "95%", maxWidth: "600px" }}
-            name="cidade"
+            name={"cidadeComplemento" + props.Quantidade}
             type="text"
             placeholder="Cidade"
           />
         </div>
       </div>
-
-      {stateCadastroCliente.EnderecoComplemento.map(item => item)}
-
-      <div style={{ width: "100%", paddingLeft: "30px" }}>
-        <Button
-          variant="success"
-          style={{ width: "100%" }}
-          onClick={() => AdicionarEndereco()}
-        >
-          Novo Endereço
-        </Button>
-      </div>
     </>
   );
 };
 
-export default Endereco;
+export default EnderecoComplemento;

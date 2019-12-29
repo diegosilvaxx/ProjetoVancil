@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import Button from 'react-bootstrap/Button';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCliente } from '~/store/modules/cadastroCliente/actions';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-balham.css";
+import Button from "react-bootstrap/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { getClienteCompleto } from "~/store/modules/cadastroCliente/actions";
+import { toast } from "react-toastify";
 
 export default function GridCliente() {
   const dispatch = useDispatch();
@@ -13,24 +13,24 @@ export default function GridCliente() {
   const result = stateGetCliente.Cliente;
 
   async function selecionaCliente({ data }) {
-    dispatch(setCliente(data));
-    toast.success('Cliente selecionado com sucesso!');
+    dispatch(getClienteCompleto(data));
+    toast.success("Cliente selecionado com sucesso!");
   }
 
   const [state] = useState({
     columnDefs: [
-      { headerName: 'CodigoCliente', field: 'Codigo' },
-      { headerName: 'Razao Social', field: 'Nome' },
-      { headerName: 'CNPJ', field: 'CNPJ' },
-      { headerName: 'Telefone', field: 'Telefone', width: 380 },
+      { headerName: "CodigoCliente", field: "Codigo" },
+      { headerName: "Razao Social", field: "Nome" },
+      { headerName: "CNPJ", field: "CNPJ" },
+      { headerName: "Telefone", field: "Telefone", width: 380 },
       {
-        headerName: 'Actions',
-        field: 'actions',
+        headerName: "Actions",
+        field: "actions",
         width: 120,
         cellRendererFramework: function(params) {
           return (
             <Button
-              style={{ width: 'auto', margin: '0', height: 'auto' }}
+              style={{ width: "auto", margin: "0", height: "auto" }}
               variant="primary"
               size="sm"
               onClick={() => selecionaCliente(params)}
@@ -38,16 +38,16 @@ export default function GridCliente() {
               Selecionar
             </Button>
           );
-        },
-      },
-    ],
+        }
+      }
+    ]
   });
 
   return (
     <>
       <div
         className="ag-theme-balham"
-        style={{ height: '390px', width: '100%', justifyContent: 'center' }}
+        style={{ height: "390px", width: "100%", justifyContent: "center" }}
       >
         <AgGridReact
           enableSorting={true}

@@ -4,17 +4,18 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 import Button from "react-bootstrap/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { adicionarProduto } from "~/store/modules/pedidoCompra/actions";
+import { deleteProduto } from "~/store/modules/pedidoCompra/actions";
 import { toast } from "react-toastify";
+import RemoveReferenciaArray from "~/components/RemoveReferenciaArray";
 
 export default function GridVenda() {
   const dispatch = useDispatch();
-  const stateGetProduto = useSelector(state => state.pedidoCompra);
+  var stateGetProduto = useSelector(state => state.pedidoCompra);
 
-  const result = stateGetProduto.ProdutosSelecionado;
-  debugger;
+  var result = RemoveReferenciaArray(stateGetProduto.ProdutosSelecionado);
 
   async function selecionaProduto({ data }) {
+    dispatch(deleteProduto(data));
     toast.success("Produto excluido com sucesso!");
   }
 
@@ -98,7 +99,11 @@ export default function GridVenda() {
           enableFilter={true}
           pagination={true}
           columnDefs={state.columnDefs}
-          rowData={result[0].valueOf().Quantidade != null ? result : []}
+          rowData={
+            result[0][0].valueOf().Quantidade != null || result[0].length > 1
+              ? result[0]
+              : []
+          }
           rowHeight={35}
         ></AgGridReact>
       </div>

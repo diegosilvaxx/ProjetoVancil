@@ -18,7 +18,12 @@ const INITIAL_STATE = {
   Pedido: [{}],
   Produto: [{}],
   Cliente: [{}],
-  ProdutosSelecionado: [{}]
+  ProdutosSelecionado: [{}],
+  PontoEntrega: undefined,
+  EnderecoCobranca: undefined,
+  EnderecoCombox: [],
+  CondicoesPagamento: undefined,
+  FormaPagamento: undefined
 };
 
 export default function pedidoVenda(state = INITIAL_STATE, action) {
@@ -98,6 +103,30 @@ export default function pedidoVenda(state = INITIAL_STATE, action) {
         draft.NomeCliente = action.payload.Nome;
         draft.CodigoCliente = action.payload.Codigo;
         debugger;
+      });
+    case "@pedidoVenda/DELETE_PRODUTO":
+      return produce(state, draft => {
+        debugger;
+        const { CodigoItem } = action.payload;
+        var index = draft.ProdutosSelecionado.findIndex(
+          x => x.CodigoItem == CodigoItem
+        );
+        const ProdutoExcluido = draft.ProdutosSelecionado;
+
+        console.log(index);
+        if (index > -1) {
+          ProdutoExcluido.splice(index, 1);
+        }
+        debugger;
+        draft.ProdutosSelecionado = ProdutoExcluido;
+        debugger;
+      });
+    case "@pedidoVenda/GET_ENDERECO":
+      return state;
+    case "@pedidoVenda/SET_ENDERECO":
+      return produce(state, draft => {
+        debugger;
+        draft.EnderecoCombox = action.payload;
       });
     default:
       return state;

@@ -60,7 +60,8 @@ export default function PedidoVenda() {
           width: "90%",
           borderRadius: "4px",
           margin: "auto",
-          marginBottom: "15px"
+          marginBottom: "15px",
+          maxWidth: "1366px"
         }}
       >
         <div
@@ -161,6 +162,7 @@ export default function PedidoVenda() {
                   disabled
                   placeholder="Código do Cliente"
                   value={statePedidoVenda.CodigoCliente}
+                  style={{ maxWidth: "100%" }}
                 />
               </div>
               <div className={"inputWidth"}>
@@ -216,9 +218,7 @@ export default function PedidoVenda() {
 
             <div style={{ display: "flex" }}>
               <div className={"comentario"}>
-                <label htmlFor="name" className="">
-                  Comentários
-                </label>
+                <label style={{ marginLeft: 0 }}>Observações</label>
                 <Input
                   multiline
                   name="comentario"

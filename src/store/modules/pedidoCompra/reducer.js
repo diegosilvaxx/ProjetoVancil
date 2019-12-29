@@ -60,6 +60,26 @@ export default function pedidoCompra(state = INITIAL_STATE, action) {
           draft.ProdutosSelecionado.splice(0, 1);
         }
         draft.Total += parseFloat(action.payload.Preco);
+
+        const teste = draft;
+        console.log(teste);
+        debugger;
+      });
+    case "@pedidoCompra/DELETE_PRODUTO":
+      return produce(state, draft => {
+        const { Codigo } = action.payload.data;
+        var index = draft.ProdutosSelecionado.findIndex(
+          x => x.data.Codigo == Codigo
+        );
+        const ProdutoExcluido = draft.ProdutosSelecionado;
+
+        console.log(index);
+        if (index > -1) {
+          ProdutoExcluido.splice(index, 1);
+        }
+        debugger;
+        draft.ProdutosSelecionado = ProdutoExcluido;
+        debugger;
       });
     default:
       return state;

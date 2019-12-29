@@ -1,27 +1,24 @@
-import React, { useState } from 'react';
-import { Form } from '@rocketseat/unform';
-import Modal from 'react-bootstrap/Modal';
-import Endereco from './endereco';
-import PessoaContato from './pessoaContato';
-import Cliente from './cliente';
-import Fiscal from './fiscal';
-import PesquisaCliente from './PesquisaCliente';
-import Button from 'react-bootstrap/Button';
-import { useDispatch, useSelector, connect } from 'react-redux';
+import React, { useState } from "react";
+import { Form } from "@rocketseat/unform";
+import Modal from "react-bootstrap/Modal";
+import Endereco from "./endereco";
+import PessoaContato from "./pessoaContato";
+import Cliente from "./cliente";
+import Fiscal from "./fiscal";
+import PesquisaCliente from "./PesquisaCliente";
+import Button from "react-bootstrap/Button";
+import { useDispatch, useSelector } from "react-redux";
 import {
   insertCliente,
   setState,
-  setConfirmation,
-} from '~/store/modules/cadastroCliente/actions';
+  setConfirmation
+} from "~/store/modules/cadastroCliente/actions";
 
-import Confirmation from '~/components/Confirmation';
+import Confirmation from "~/components/Confirmation";
 
-import history from 'services/history';
+import history from "services/history";
 
-import Tabs from '../../components/Tabs';
-
-import Schema from './schema';
-const schema = Schema;
+import Tabs from "../../components/Tabs";
 
 const CadastroCliente = () => {
   const dispatch = useDispatch();
@@ -31,7 +28,7 @@ const CadastroCliente = () => {
   const stateCadastroCliente = useSelector(state => state.cadastroCliente);
 
   async function onSubmitForm() {
-    var btnSubmit = document.getElementById('btnSubmit');
+    var btnSubmit = document.getElementById("btnSubmit");
     btnSubmit.click();
   }
 
@@ -52,25 +49,25 @@ const CadastroCliente = () => {
   return (
     <>
       <div
-        key={'Principal'}
+        key={"Principal"}
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          backgroundColor: 'white',
-          width: '90%',
-          borderRadius: '4px',
-          margin: 'auto',
-          marginBottom: '15px',
+          display: "flex",
+          flexDirection: "column",
+          backgroundColor: "white",
+          width: "90%",
+          borderRadius: "4px",
+          margin: "auto",
+          maxWidth: "1366px"
         }}
       >
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
+            display: "flex",
+            justifyContent: "space-between"
           }}
         >
-          <label className={'lblTitulo'}>Cadastro de Cliente</label>
-          <Button onClick={handleShow} className={'PesquisaCliente'}>
+          <label className={"lblTitulo"}>Cadastro de Cliente</label>
+          <Button onClick={handleShow} className={"PesquisaCliente"}>
             Pesquisar Clientes
           </Button>
         </div>
@@ -93,52 +90,53 @@ const CadastroCliente = () => {
           initialData={stateCadastroCliente}
           onSubmit={handleForm}
           id="formCliente"
-          schema={schema}
-          key={'FormIndexCadClienteKey'}
-          style={{ marginTop: '0' }}
+          // schema={schema}
+          key={"FormIndexCadClienteKey"}
+          style={{ marginTop: "0" }}
+          context={stateCadastroCliente}
         >
-          <div className={'containerForm'} onClick={onSubmitForm} key="123144">
+          <div className={"containerForm"} onClick={onSubmitForm} key="123144">
             {/* tabs */}
-            <Tabs key={'TabsIndexClienteKey'}>
-              <Tabs.Tab label={'Geral'} key={'KeyTabsTabGeral'}>
+            <Tabs key={"TabsIndexClienteKey"}>
+              <Tabs.Tab label={"Geral"} key={"KeyTabsTabGeral"}>
                 <Cliente key="ClienteKey"></Cliente>
               </Tabs.Tab>
 
-              <Tabs.Tab label={'Endereço'} key={'KeyTabsTabEndereco'}>
+              <Tabs.Tab label={"Endereço"} key={"KeyTabsTabEndereco"}>
                 <Endereco key="EnderecoKey"></Endereco>
               </Tabs.Tab>
 
               <Tabs.Tab
-                label={'Pessoas de contato'}
-                key={'KeyTabsTabPessoaContato'}
+                label={"Pessoas de contato"}
+                key={"KeyTabsTabPessoaContato"}
               >
                 <PessoaContato key="PessoaContatoKey"></PessoaContato>
               </Tabs.Tab>
 
-              <Tabs.Tab label={'Fiscal'} key={'KeyTabsTabFiscal'}>
+              <Tabs.Tab label={"Fiscal"} key={"KeyTabsTabFiscal"}>
                 <Fiscal key="FiscalKey"></Fiscal>
               </Tabs.Tab>
             </Tabs>
 
             {/* tabs */}
 
-            <div style={{ display: 'flex', marginBottom: '30px' }}>
-              <div className={'inputWidth'} style={{ margin: '0 30px 0' }}>
+            <div style={{ display: "flex", marginBottom: "30px" }}>
+              <div className={"inputWidth"} style={{ margin: "0 30px 0" }}>
                 {stateCadastroCliente.ConfirmaCadastro == true ? (
                   <Confirmation
-                    title={'Atenção!'}
-                    body={'Deseja realmente cadastrar o cliente?'}
+                    title={"Atenção!"}
+                    body={"Deseja realmente cadastrar o cliente?"}
                     acao={handleSubmit}
                     disabled={stateCadastroCliente.ConfirmaCadastro}
                   ></Confirmation>
                 ) : (
-                  ''
+                  ""
                 )}
                 <Button variant="primary" onClick={handleConfirmation}>
                   Cadastrar
                 </Button>
                 <Button
-                  style={{ visibility: 'hidden', height: '0px' }}
+                  style={{ visibility: "hidden", height: "0px" }}
                   type="submit"
                   form="formCliente"
                   id="btnSubmit"
@@ -146,10 +144,10 @@ const CadastroCliente = () => {
                   Ok
                 </Button>
               </div>
-              <div className={'inputWidth'}>
+              <div className={"inputWidth"}>
                 <Button
                   variant="secondary"
-                  onClick={() => history.push('/dashboard')}
+                  onClick={() => history.push("/dashboard")}
                 >
                   Cancelar
                 </Button>

@@ -4,70 +4,26 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 import Button from "react-bootstrap/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduto } from "~/store/modules/pedidoCompra/actions";
+import { setPedido } from "~/store/modules/pedidoCompra/actions";
 import { toast } from "react-toastify";
-import RemoveReferenciaArray from "~/components/RemoveReferenciaArray";
 
-export default function GridVenda() {
+export default function GridPedido() {
   const dispatch = useDispatch();
-  var stateGetProduto = useSelector(state => state.pedidoCompra);
-
-  var result = RemoveReferenciaArray(stateGetProduto.ProdutosSelecionado);
-
-  async function selecionaProduto({ data }) {
-    dispatch(deleteProduto(data));
-    toast.success("Produto excluido com sucesso!");
+  const stateGetPedido = useSelector(state => state.pedidoCompra);
+  const result = stateGetPedido.Pedido;
+  debugger;
+  async function selecionaPedido({ data }) {
+    dispatch(setPedido(data));
+    toast.success("Pedido selecionado com sucesso!");
   }
 
   const [state] = useState({
     columnDefs: [
-      {
-        headerName: "Nº do item",
-        field: "data.Codigo",
-        editable: false,
-        width: 120
-      },
-      {
-        headerName: "Descrição do item",
-        field: "data.Descricao",
-        editable: false,
-        width: 490
-      },
-      {
-        headerName: "Preço Unitário ",
-        field: "Preco ",
-        width: 120,
-        editable: false,
-        cellRendererFramework: function(params) {
-          return (
-            <input
-              id={"Preco" + params.data.Codigo}
-              style={{ width: "100px", margin: "0", height: "auto" }}
-              type="number"
-              disabled
-              value={params.data.Desconto}
-            ></input>
-          );
-        }
-      },
-      {
-        headerName: "Quantidade ",
-        field: "Quantidade ",
-        width: 120,
-        editable: false,
-        cellRendererFramework: function(params) {
-          return (
-            <input
-              id={"Quantidade" + params.data.Codigo}
-              type="number"
-              style={{ width: "100px", margin: "0", height: "auto" }}
-              className={"teste"}
-              disabled
-              value={params.data.Quantidade}
-            ></input>
-          );
-        }
-      },
+      { headerName: "CodigoCliente", field: "CodigoCliente" },
+      { headerName: "DataDocumento", field: "DataDocumento" },
+      { headerName: "NomeCliente", field: "NomeCliente" },
+      { headerName: "NumeroPedido", field: "NumeroPedido" },
+      { headerName: "Status", field: "Status", width: 110 },
       {
         headerName: "Actions",
         field: "actions",
@@ -78,9 +34,9 @@ export default function GridVenda() {
               style={{ width: "auto", margin: "0", height: "auto" }}
               variant="primary"
               size="sm"
-              onClick={() => selecionaProduto(params)}
+              onClick={() => selecionaPedido(params)}
             >
-              Excluir
+              Selecionar
             </Button>
           );
         }
@@ -99,11 +55,7 @@ export default function GridVenda() {
           enableFilter={true}
           pagination={true}
           columnDefs={state.columnDefs}
-          rowData={
-            result[0][0].valueOf().Quantidade != null || result[0].length > 1
-              ? result[0]
-              : []
-          }
+          rowData={result.length >= 2 ? result[1] : []}
           rowHeight={35}
         ></AgGridReact>
       </div>

@@ -8,7 +8,8 @@ import {
   setPedidoList,
   setProdutoList,
   setClienteList,
-  setEndereco
+  setEndereco,
+  getGrupoProduto
 } from "./actions";
 
 //PEDIDO
@@ -25,6 +26,15 @@ export function* getPedidoByName({ payload }) {
     api.get,
     `/HUB/HUB/PedidoVenda/ListarPedidos/${codigoVendedor},${token}`
   );
+
+  // GRUPO PRODUTO
+  const grupoProduto = yield call(api.get, `/HUB/HUB/ListaGrupo/${token}`);
+
+  if (grupoProduto.statusText === "OK") {
+    yield put(getGrupoProduto(grupoProduto.data.GruposProduto));
+  }
+
+  // GRUPO PRODUTO
 
   debugger;
   if (result.statusText === "OK") {
@@ -47,7 +57,7 @@ export function* getProdutoByName({ payload }) {
   debugger;
   const result = yield call(
     api.get,
-    `/HUB/HUB/ListaProdutos/${token}?CardCode=${CodigoCliente}`
+    `/HUB/HUB/ListaProdutosGrupo/${token}?CardCode=${CodigoCliente}&GrupoItem=${payload}`
   );
 
   debugger;
@@ -75,6 +85,15 @@ export function* getClienteByName({ payload }) {
     api.get,
     `/HUB/HUB/ListaCliente/${codigoVendedor},${pesquisa + "busca"},${token}`
   );
+
+  // GRUPO PRODUTO
+  const grupoProduto = yield call(api.get, `/HUB/HUB/ListaGrupo/${token}`);
+
+  if (grupoProduto.statusText === "OK") {
+    yield put(getGrupoProduto(grupoProduto.data.GruposProduto));
+  }
+
+  // GRUPO PRODUTO
 
   debugger;
   if (result.statusText === "OK") {

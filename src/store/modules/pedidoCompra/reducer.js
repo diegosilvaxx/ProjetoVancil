@@ -55,10 +55,13 @@ export default function pedidoCompra(state = INITIAL_STATE, action) {
       return produce(state, draft => {
         draft.ProdutosSelecionado.push(action.payload);
         debugger;
-        if (state.ProdutosSelecionado[0].valueOf().Quantidade == null) {
-          debugger;
-          draft.ProdutosSelecionado.splice(0, 1);
+        if (state.ProdutosSelecionado[0] != undefined) {
+          if (state.ProdutosSelecionado[0].valueOf().Quantidade == null) {
+            debugger;
+            draft.ProdutosSelecionado.splice(0, 1);
+          }
         }
+
         draft.Total += parseFloat(action.payload.Preco);
 
         const teste = draft;

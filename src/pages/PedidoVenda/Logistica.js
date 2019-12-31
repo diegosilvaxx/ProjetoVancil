@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { Input, Select } from "@rocketseat/unform";
+import { setLogistica } from "~/store/modules/pedidoVenda/actions";
 
 const Logistica = () => {
   var Carregando = [{ id: "Carregando", title: "Carregando..." }];
+  const dispatch = useDispatch();
   const statePedidoVenda = useSelector(state => state.pedidoVenda);
   //CARREGA ENDEREÇOS COBRANCA
   const [optionsEnderecoCobranca, setOptionsEnderecoCobranca] = useState([
     { id: "Carregando", title: "Carregando" }
   ]);
+
   async function loadEnderecoCobranca() {
     let resultGrupo = [{ id: "Carregando", title: "Carregando" }];
     if (statePedidoVenda.EnderecoCombox != undefined) {
@@ -55,16 +58,18 @@ const Logistica = () => {
     }
   }
 
-  async function setEnderecoCobranca(data) {
+  async function setEnderecoCobranca() {
     var enderecoCobranca = document.getElementById("enderecoCobranca").value;
     document.getElementById(
-      "enderecoCobrancaComentario"
+      "enderecoCobrancaDetalhes"
     ).value = enderecoCobranca;
+    dispatch(setLogistica({ EnderecoCobranca: enderecoCobranca }));
   }
 
-  async function setPontoEntrega(data) {
+  async function setPontoEntrega() {
     var pontoEntrega = document.getElementById("pontoEntrega").value;
-    document.getElementById("pontoEntregaComentario").value = pontoEntrega;
+    document.getElementById("pontoEntregaDetalhes").value = pontoEntrega;
+    dispatch(setLogistica({ PontoEntrega: pontoEntrega }));
   }
 
   return (
@@ -74,7 +79,7 @@ const Logistica = () => {
           <label htmlFor="name" className="">
             Ponto de entrega
           </label>
-          <Form.Group controlId="PontoEntrega" className={"comboboxGroup"}>
+          <Form.Group className={"comboboxGroup"}>
             <Select
               id="pontoEntrega"
               name="pontoEntrega"
@@ -90,21 +95,23 @@ const Logistica = () => {
             />
           </Form.Group>
           <Input
-            id="pontoEntregaComentario"
+            id="pontoEntregaDetalhes"
             multiline
-            name="pontoEntregaComentario"
+            name="pontoEntregaDetalhes"
             rows="5"
             className="form-control"
             style={{ marginLeft: "30px", width: "95%" }}
             disabled
+            value={statePedidoVenda.pontoEntregaDetalhes}
           />
         </div>
         <div className={"inputWidth"}>
           <label htmlFor="name" className="">
             Endereço de cobrança
           </label>
-          <Form.Group controlId="EnderecoCobranca" className={"comboboxGroup"}>
+          <Form.Group className={"comboboxGroup"}>
             <Select
+              id="enderecoCobranca"
               name="enderecoCobranca"
               options={
                 optionsEnderecoCobranca.length <= 1
@@ -119,12 +126,13 @@ const Logistica = () => {
           </Form.Group>
           <Input
             multiline
-            id="enderecoCobrancaComentario"
-            name="enderecoCobrancaComentario"
+            id="enderecoCobrancaDetalhes"
+            name="enderecoCobrancaDetalhes"
             rows="5"
             className="form-control"
             style={{ marginLeft: "30px", width: "95%" }}
             disabled
+            value={statePedidoVenda.enderecoCobrancaDetalhes}
           />
         </div>
       </div>

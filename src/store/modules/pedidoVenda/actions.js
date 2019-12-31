@@ -97,3 +97,27 @@ export function setEndereco(action) {
     payload: action
   };
 }
+
+//SET Logistica
+export function setLogistica(action) {
+  return {
+    type: "@pedidoVenda/SET_LOGISTICA",
+    payload: action
+  };
+}
+
+//SET CONTABILIDADE
+export function setContabilidade(action) {
+  return {
+    type: "@pedidoVenda/SET_CONTABILIDADE",
+    payload: action
+  };
+}
+
+//GET GRUPO PRODUTO
+export function getGrupoProduto(action) {
+  return {
+    type: "@pedidoVenda/GET_GRUPO_PRODUTO",
+    payload: action
+  };
+}

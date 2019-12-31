@@ -35,10 +35,20 @@ export default function GridVenda() {
 
     let Desconto = document.getElementById("Preco" + data.Codigo).value;
 
+    let NumeroPedidoCompra = document.getElementById(
+      "NumeroPedidoCompra" + data.Codigo
+    ).value;
+
+    let ItemPedidoCompra = document.getElementById(
+      "ItemPedidoCompra" + data.Codigo
+    ).value;
+
     const payload = {
       data: data,
       Quantidade: Quantidade,
-      Desconto: Desconto
+      Desconto: Desconto,
+      ItemPedidoCompra: ItemPedidoCompra,
+      NumeroPedidoCompra: NumeroPedidoCompra
     };
     dispatch(adicionarProduto(payload));
     toast.success("Produto selecionado com sucesso!");
@@ -83,6 +93,34 @@ export default function GridVenda() {
               id={"Quantidade" + params.data.Codigo}
               type="number"
               style={{ width: "100px" }}
+            ></input>
+          );
+        }
+      },
+      {
+        headerName: "Numero do Pedido de compra",
+        field: "NumeroPedidoCompra",
+        width: 230,
+        cellRendererFramework: function(params) {
+          return (
+            <input
+              id={"NumeroPedidoCompra" + params.data.Codigo}
+              type="text"
+              style={{ width: "200px" }}
+            ></input>
+          );
+        }
+      },
+      {
+        headerName: "Item do Pedido de compra ",
+        field: "ItemPedidoCompra ",
+        width: 230,
+        cellRendererFramework: function(params) {
+          return (
+            <input
+              id={"ItemPedidoCompra" + params.data.Codigo}
+              style={{ width: "200px" }}
+              type="text"
             ></input>
           );
         }

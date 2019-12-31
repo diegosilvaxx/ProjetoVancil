@@ -118,7 +118,12 @@ export default function PedidoVenda() {
           </Modal.Footer>
         </Modal>
 
-        <Form onSubmit={handleForm}>
+        <Form
+          noValidate
+          onSubmit={handleForm}
+          context={statePedidoVenda}
+          initialData={statePedidoVenda}
+        >
           <div className={"containerForm"}>
             <div style={{ display: "flex" }}>
               <div className={"inputWidth"}>

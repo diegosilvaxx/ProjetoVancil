@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Input } from "@rocketseat/unform";
 import * as Yup from "yup";
 import "./styles.css";
-import GridVenda from "./GridPedido";
+import GridVenda from "./GridProdutoSelecionado";
 import Tabs from "../../components/Tabs";
 import Button from "react-bootstrap/Button";
 import PesquisaProduto from "./PesquisaProduto";
@@ -33,8 +33,8 @@ export default function PedidoCompra() {
 
   //ATUALIZAR/ENVIAR
   const [showEnviarAtualizar, setShowEnviarAtualizar] = useState(false);
-  const handleCloseEnviarAtualizar = () => setShowEnviarAtualizar(false);
-  const handleShowEnviarAtualizar = () => setShowEnviarAtualizar(true);
+  const handleCloseEnviarAtualizar = () => setShowEnviarAtualizar(true);
+  const handleShowEnviarAtualizar = () => setShowEnviarAtualizar(false);
 
   function EnviarPedido(data) {
     console.log(data);
@@ -64,7 +64,7 @@ export default function PedidoCompra() {
             justifyContent: "space-between"
           }}
         >
-          <label className={"lblTitulo"}>Pedido de Venda</label>
+          <label className={"lblTitulo"}>Pedido de Compras</label>
           <Button onClick={handleShowPedido} className={"PesquisaCliente"}>
             Pesquisar Pedidos
           </Button>

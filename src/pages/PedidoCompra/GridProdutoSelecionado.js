@@ -6,11 +6,11 @@ import Button from "react-bootstrap/Button";
 import { toast } from "react-toastify";
 import RemoveReferenciaArray from "~/components/RemoveReferenciaArray";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduto } from "~/store/modules/pedidoVenda/actions";
+import { deleteProduto } from "~/store/modules/pedidoCompra/actions";
 
 export default function GridVenda() {
   const dispatch = useDispatch();
-  const stateGetProduto = useSelector(state => state.pedidoVenda);
+  const stateGetProduto = useSelector(state => state.pedidoCompra);
   var result = RemoveReferenciaArray(stateGetProduto.ProdutosSelecionado);
   console.log(result);
   debugger;
@@ -22,8 +22,8 @@ export default function GridVenda() {
 
   const [state] = useState({
     columnDefs: [
-      { headerName: "Nº do item", field: "CodigoItem", width: 110 },
-      { headerName: "Descrição do item", field: "Descricao" },
+      { headerName: "Nº do item", field: "data.Codigo", width: 110 },
+      { headerName: "Descrição do item", field: "data.Descricao" },
       {
         headerName: "Quantidade",
         field: "Quantidade",
@@ -31,18 +31,12 @@ export default function GridVenda() {
       },
       {
         headerName: "Preço unitário",
-        field: "ValorUnitario",
+        field: "Desconto",
         width: 110
       },
-      {
-        headerName: "Desconto %",
-        field: "PercDesconto",
-        width: 110
-      },
-      { headerName: "Total(MC) ", field: "Total" },
       {
         headerName: "Numero do Pedido de compra",
-        field: "NumPedidoCompra",
+        field: "NumeroPedidoCompra",
         width: 210
       },
       {

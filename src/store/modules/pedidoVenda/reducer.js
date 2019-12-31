@@ -19,11 +19,17 @@ const INITIAL_STATE = {
   Produto: [{}],
   Cliente: [{}],
   ProdutosSelecionado: [{}],
-  PontoEntrega: undefined,
-  EnderecoCobranca: undefined,
+  //LOGISTICA
+  pontoEntrega: undefined,
+  enderecoCobranca: undefined,
+  pontoEntregaDetalhes: undefined,
+  enderecoCobrancaDetalhes: undefined,
   EnderecoCombox: [],
+  //CONTABILIDADE
   CondicoesPagamento: undefined,
-  FormaPagamento: undefined
+  FormaPagamento: undefined,
+  //GRUPO PRODUTO
+  GrupoProdutoCombox: []
 };
 
 export default function pedidoVenda(state = INITIAL_STATE, action) {
@@ -46,12 +52,19 @@ export default function pedidoVenda(state = INITIAL_STATE, action) {
         draft.CodigoCliente = action.payload.CodigoCliente;
         draft.NomeCliente = action.payload.NomeCliente;
         draft.DataDocumento = dataFormatada;
-        draft.Status = "teste";
+        draft.Status = "";
         debugger;
       });
     //PRODUTO
     case "@pedidoVenda/GET_PRODUTO":
       return state;
+    //GET GRUPO PRODUTO
+    case "@pedidoVenda/GET_GRUPO_PRODUTO":
+      return produce(state, draft => {
+        console.log(action.payload);
+        debugger;
+        draft.GrupoProdutoCombox = action.payload;
+      });
     case "@pedidoVenda/SET_PRODUTO_LIST":
       return produce(state, draft => {
         console.log(action.payload);
@@ -79,7 +92,9 @@ export default function pedidoVenda(state = INITIAL_STATE, action) {
             UM: "Manual",
             PercDesconto: parseInt(action.payload.Desconto),
             Utilizacao: 0,
-            Total: TotalValor
+            Total: TotalValor,
+            NumPedidoCompra: action.payload.NumeroPedidoCompra,
+            ItemPedidoCompra: action.payload.ItemPedidoCompra
           }
         };
         debugger;
@@ -127,6 +142,43 @@ export default function pedidoVenda(state = INITIAL_STATE, action) {
       return produce(state, draft => {
         debugger;
         draft.EnderecoCombox = action.payload;
+      });
+    //CONTABILIDADE
+    case "@pedidoVenda/SET_CONTABILIDADE":
+      return produce(state, draft => {
+        debugger;
+        draft.CondicoesPagamento =
+          action.payload.data.CondicoesPagamento != undefined
+            ? action.payload.data.CondicoesPagamento
+            : draft.CondicoesPagamento;
+
+        draft.FormaPagamento =
+          action.payload.data.FormaPagamento != undefined
+            ? action.payload.data.FormaPagamento
+            : draft.FormaPagamento;
+      });
+    //LOGISTICA
+    case "@pedidoVenda/SET_LOGISTICA":
+      return produce(state, draft => {
+        debugger;
+        draft.pontoEntrega =
+          action.payload.PontoEntrega != undefined || ""
+            ? action.payload.PontoEntrega
+            : draft.pontoEntrega;
+        draft.pontoEntregaDetalhes =
+          action.payload.PontoEntrega != undefined || ""
+            ? action.payload.PontoEntrega
+            : draft.pontoEntregaDetalhes;
+
+        draft.enderecoCobranca =
+          action.payload.EnderecoCobranca != undefined || ""
+            ? action.payload.EnderecoCobranca
+            : draft.enderecoCobranca;
+
+        draft.enderecoCobrancaDetalhes =
+          action.payload.EnderecoCobranca != undefined || ""
+            ? action.payload.EnderecoCobranca
+            : draft.enderecoCobrancaDetalhes;
       });
     default:
       return state;

@@ -13,6 +13,12 @@
   color: white;
 }
 
+.hr {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #fff;
+  margin-top: 15px;
+}
+
 .menuLateral a {
   color: white;
   margin-bottom: 20px;

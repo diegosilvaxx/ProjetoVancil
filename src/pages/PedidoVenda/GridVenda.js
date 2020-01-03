@@ -32,7 +32,7 @@ export default function GridVenda() {
       {
         headerName: "Preço unitário",
         field: "ValorUnitario",
-        width: 110
+        width: 140
       },
       {
         headerName: "Desconto %",

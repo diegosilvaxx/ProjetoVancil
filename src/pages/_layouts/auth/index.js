@@ -19,7 +19,7 @@ export default function AuthLayout({ children }) {
       >
         <ul style={{ height: "30px", marginRight: "40px" }}>
           <li style={{ marginTop: "5px" }}>
-            <a href="tel:1935939999" style={{ color: "white", width: "100px" }}>
+            <a href="tel:1935939999" style={{ color: "white", width: "auto" }}>
               <img
                 src="http://vansil.com.br/wp-content/uploads/2017/06/telefone-icon.svg"
                 style={{ height: "100%" }}

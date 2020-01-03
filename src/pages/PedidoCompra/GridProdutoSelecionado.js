@@ -37,7 +37,7 @@ export default function GridVenda() {
       {
         headerName: "Numero do Pedido de compra",
         field: "NumeroPedidoCompra",
-        width: 210
+        width: 220
       },
       {
         headerName: "Item do Pedido de compra ",
@@ -72,6 +72,7 @@ export default function GridVenda() {
       >
         <AgGridReact
           enableSorting={true}
+          overlayNoRowsTemplate={"Produtos não Selecionados"}
           enableFilter={true}
           pagination={true}
           columnDefs={state.columnDefs}

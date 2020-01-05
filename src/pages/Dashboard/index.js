@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import store from "~/store";
 import Button from "react-bootstrap/Button";
 import { Input } from "@rocketseat/unform";
@@ -6,7 +6,6 @@ import Logo from "~/assets/img/brand/logo.png";
 import Table from "react-bootstrap/Table";
 import { getRelatorio } from "~/store/modules/relatorios/actions";
 import { useDispatch } from "react-redux";
-import { element } from "prop-types";
 
 export default function Dashboard() {
   const { Relatorio } = store.getState().relatorio;

@@ -9,7 +9,8 @@ import {
   setProdutoList,
   setClienteList,
   setEndereco,
-  getGrupoProduto
+  getGrupoProduto,
+  setPedido
 } from "./actions";
 
 //PEDIDO
@@ -39,6 +40,29 @@ export function* getPedidoByName({ payload }) {
   debugger;
   if (result.statusText === "OK") {
     yield put(setPedidoList(result.data.Pedidos));
+    toast.success("Pedidos carregado com sucesso!");
+  }
+}
+
+//GET PEDIDO ALL
+export function* getPedidoAllSaga({ payload }) {
+  //CHAMADA API
+  const { token } = store.getState().auth;
+
+  if (!token) {
+    toast.error("Falha na autenticação, verifique seus dados!");
+    return;
+  }
+
+  const result = yield call(
+    api.get,
+    `/HUB/HUB/PedidoVenda/Pesquisar/${payload.NumeroPedido},${token}`
+  );
+
+  debugger;
+  if (result.statusText === "OK") {
+    debugger;
+    yield put(setPedido(result.data));
     toast.success("Pedidos carregado com sucesso!");
   }
 }
@@ -173,5 +197,6 @@ export default all([
   takeLatest("@pedidoVenda/GET_PRODUTO", getProdutoByName),
   takeLatest("@pedidoVenda/GET_CLIENTE", getClienteByName),
   takeLatest("@pedidoVenda/INSERIR_PEDIDO", inserirPedido),
-  takeLatest("@pedidoVenda/GET_ENDERECO", setEnderecos)
+  takeLatest("@pedidoVenda/GET_ENDERECO", setEnderecos),
+  takeLatest("@pedidoVenda/GET_PEDIDO_ALL", getPedidoAllSaga)
 ]);

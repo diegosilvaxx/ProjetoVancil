@@ -48,12 +48,43 @@ export default function pedidoVenda(state = INITIAL_STATE, action) {
           .reverse()
           .join("-");
 
-        draft.NumeroPedido = action.payload.NumeroPedido;
-        draft.CodigoCliente = action.payload.CodigoCliente;
-        draft.NomeCliente = action.payload.NomeCliente;
-        draft.DataDocumento = dataFormatada;
-        draft.Status = "";
-        debugger;
+        draft.NumeroPedido = action.payload.DocEntry;
+        draft.CodigoCliente = action.payload.CardCode;
+        draft.NomeCliente = action.payload.CardName;
+        draft.DataDocumento = action.payload.DataDocumento;
+        draft.Status = action.payload.Status;
+
+        for (
+          let index = 0;
+          index < action.payload.ItensPedido.length;
+          index++
+        ) {
+          draft.ProdutosSelecionado.push({
+            CodigoItem: action.payload.ItensPedido[index].CodigoItem,
+            Descricao: action.payload.ItensPedido[index].CodigoItem,
+            ValorUnitario: action.payload.ItensPedido[index].ValorUnitario,
+            Quantidade: action.payload.ItensPedido[index].Quantidade,
+            Desconto: action.payload.ItensPedido[index].PercDesconto,
+            ItemPedidoCompra:
+              action.payload.ItensPedido[index].ItemPedidoCompra,
+            NumPedidoCompra: action.payload.ItensPedido[index].NumPedidoCompra,
+            Total: parseFloat(
+              action.payload.ItensPedido[index].Quantidade *
+                action.payload.ItensPedido[index].ValorUnitario -
+                action.payload.ItensPedido[index].PercDesconto
+            )
+          });
+          debugger;
+          if (draft.ProdutosSelecionado[0].CodigoItem == undefined) {
+            draft.ProdutosSelecionado.shift();
+          }
+          debugger;
+          draft.TotalPedido += parseFloat(
+            action.payload.ItensPedido[index].Quantidade *
+              action.payload.ItensPedido[index].ValorUnitario -
+              action.payload.ItensPedido[index].PercDesconto
+          );
+        }
       });
     //PRODUTO
     case "@pedidoVenda/GET_PRODUTO":

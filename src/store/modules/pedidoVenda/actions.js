@@ -20,6 +20,13 @@ export function setPedido(action) {
   };
 }
 
+export function getPedidoAll(action) {
+  return {
+    type: "@pedidoVenda/GET_PEDIDO_ALL",
+    payload: action
+  };
+}
+
 //PRODUTO
 export function getProduto(action) {
   return {

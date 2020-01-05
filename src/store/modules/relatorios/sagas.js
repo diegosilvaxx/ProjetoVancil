@@ -20,9 +20,7 @@ export function* getRelatorioSaga({ payload }) {
 
   const result = yield call(
     api.get,
-    `/HUB/HUB/Relatorios/Comissao/${23},${payload.dataInicio},${
-      payload.dataFim
-    }` //codigoVendedor
+    `/HUB/HUB/Relatorios/Comissao/${codigoVendedor},${payload.dataInicio},${payload.dataFim}` //codigoVendedor
   );
 
   debugger;

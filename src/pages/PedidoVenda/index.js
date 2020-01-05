@@ -46,9 +46,10 @@ export default function PedidoVenda() {
   const handleShowCliente = () => setShowCliente(true);
 
   async function handleForm(data) {
-    if (data != null) {
+    if (data != null && statePedidoVenda.Status != "Fechado") {
       dispatch(inserirPedido({ data }));
     }
+    toast.error("Status do Pedido Fechado,somente em Aberto!");
   }
   return (
     <>
@@ -284,7 +285,7 @@ export default function PedidoVenda() {
                 <Button type="submit">Ok</Button>
               </div>
               <div className={"inputWidth"}>
-                <Button variant="secondary" onClick={() => alert("Cancelado")}>
+                <Button variant="secondary" onClick={() => {}}>
                   Cancelar Pedido
                 </Button>
               </div>

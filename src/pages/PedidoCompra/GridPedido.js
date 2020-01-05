@@ -4,7 +4,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 import Button from "react-bootstrap/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { setPedido } from "~/store/modules/pedidoCompra/actions";
+import { getPedidoAll } from "~/store/modules/pedidoCompra/actions";
 import { toast } from "react-toastify";
 
 export default function GridPedido() {
@@ -13,7 +13,7 @@ export default function GridPedido() {
   const result = stateGetPedido.Pedido;
   debugger;
   async function selecionaPedido({ data }) {
-    dispatch(setPedido(data));
+    dispatch(getPedidoAll(data));
     toast.success("Pedido selecionado com sucesso!");
   }
 

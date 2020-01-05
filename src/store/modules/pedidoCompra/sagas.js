@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 import api from "~/services/api";
 
-import { setPedidoList, setProdutoList } from "./actions";
+import { setPedidoList, setProdutoList, setPedido } from "./actions";
 
 //PEDIDO
 export function* getPedidoByName({ payload }) {
@@ -24,6 +24,28 @@ export function* getPedidoByName({ payload }) {
   debugger;
   if (result.statusText === "OK") {
     yield put(setPedidoList(result.data.Pedidos));
+    toast.success("Pedidos carregado com sucesso!");
+  }
+}
+
+//GET PEDIDO ALL
+export function* getPedidoAllSaga({ payload }) {
+  //CHAMADA API
+  const { token } = store.getState().auth;
+
+  if (!token) {
+    toast.error("Falha na autenticação, verifique seus dados!");
+    return;
+  }
+
+  const result = yield call(
+    api.get,
+    `/HUB/HUB/PedidoCompra/Pesquisar/${payload.NumeroPedido},${token}`
+  );
+
+  debugger;
+  if (result.statusText === "OK") {
+    yield put(setPedido(result.data));
     toast.success("Pedidos carregado com sucesso!");
   }
 }
@@ -114,5 +136,6 @@ export function* inserirPedido(ListaPedidos) {
 export default all([
   takeLatest("@pedidoCompra/GET_PEDIDO", getPedidoByName),
   takeLatest("@pedidoCompra/GET_PRODUTO", getProdutoByName),
-  takeLatest("@pedidoCompra/INSERIR_PEDIDO", inserirPedido)
+  takeLatest("@pedidoCompra/INSERIR_PEDIDO", inserirPedido),
+  takeLatest("@pedidoCompra/GET_PEDIDO_ALL", getPedidoAllSaga)
 ]);

@@ -35,13 +35,42 @@ export default function pedidoCompra(state = INITIAL_STATE, action) {
           .reverse()
           .join("-");
 
-        draft.NumeroPedido = action.payload.NumeroPedido;
-        draft.CodigoCliente = action.payload.CodigoCliente;
-        draft.NomeCliente = action.payload.NomeCliente;
+        draft.NumeroPedido = action.payload.DocEntry;
+        draft.CodigoCliente = action.payload.CardCode;
+        draft.NomeCliente = action.payload.CardName;
         draft.DataDocumento = dataFormatada;
-        draft.Status = "teste";
+        draft.Status = action.payload.Status;
         debugger;
+        for (
+          let index = 0;
+          index < action.payload.ItensPedido.length;
+          index++
+        ) {
+          draft.ProdutosSelecionado.push({
+            data: {
+              Codigo: action.payload.ItensPedido[index].CodigoItem,
+              Descricao: action.payload.ItensPedido[index].CodigoItem
+            },
+            Quantidade: action.payload.ItensPedido[index].Quantidade,
+            Desconto: action.payload.ItensPedido[index].PercDesconto,
+            ItemPedidoCompra:
+              action.payload.ItensPedido[index].ItemPedidoCompra,
+            NumeroPedidoCompra:
+              action.payload.ItensPedido[index].NumPedidoCompra
+          });
+        }
+
+        debugger;
+        if (state.ProdutosSelecionado[0] != undefined) {
+          if (state.ProdutosSelecionado[0].valueOf().Quantidade == null) {
+            debugger;
+            draft.ProdutosSelecionado.splice(0, 1);
+          }
+        }
       });
+    case "@pedidoCompra/GET_PEDIDO_ALL":
+      return state;
+
     //PRODUTO
     case "@pedidoCompra/GET_PRODUTO":
       return state;

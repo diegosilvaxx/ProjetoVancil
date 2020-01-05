@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { inserirPedido } from "~/store/modules/pedidoCompra/actions";
 import store from "~/store";
 import PesquisaPedido from "./PesquisaPedido";
+import { toast } from "react-toastify";
 
 const schema = Yup.object().shape({
   // nome: Yup.string().required("O nome é obrigatório"),
@@ -20,6 +21,9 @@ const schema = Yup.object().shape({
 export default function PedidoCompra() {
   const dispatch = useDispatch();
   const { nomeVendedor } = store.getState().auth;
+  const pedidoCompra = store.getState().pedidoCompra;
+  console.log(pedidoCompra);
+  debugger;
 
   //PRODUTO
   const [show, setShow] = useState(false);
@@ -37,11 +41,11 @@ export default function PedidoCompra() {
   const handleShowEnviarAtualizar = () => setShowEnviarAtualizar(false);
 
   function EnviarPedido(data) {
-    console.log(data);
     debugger;
-    if (data != null) {
+    if (data != null && pedidoCompra.Status != "Fechado") {
       dispatch(inserirPedido(data, showEnviarAtualizar));
     }
+    toast.error("Status do Pedido Fechado,somente em Aberto!");
   }
 
   return (
@@ -110,6 +114,7 @@ export default function PedidoCompra() {
                   type="text"
                   placeholder="Status"
                   disabled
+                  value={pedidoCompra.Status}
                 />
               </div>
               <div className={"inputWidth"}>
@@ -132,6 +137,7 @@ export default function PedidoCompra() {
                   type="text"
                   placeholder="Nº Doc SAP"
                   disabled
+                  value={pedidoCompra.NumeroPedido}
                 />
               </div>
             </div>

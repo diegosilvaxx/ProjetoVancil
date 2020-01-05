@@ -1,46 +1,50 @@
-import React from "react";
+import React, { useEffect } from "react";
 import store from "~/store";
 import Button from "react-bootstrap/Button";
 import { Input } from "@rocketseat/unform";
 import Logo from "~/assets/img/brand/logo.png";
 import Table from "react-bootstrap/Table";
+import { getRelatorio } from "~/store/modules/relatorios/actions";
+import { useDispatch } from "react-redux";
+import { element } from "prop-types";
 
 export default function Dashboard() {
-  const { nomeVendedor } = store.getState().auth;
-  let resultRelatorio = (
-    <>
-      <div
-        id="HeaderRelatorio"
-        style={{
-          display: "flex",
-          marginLeft: "30px",
-          alignItems: "center",
-          marginTop: "15px"
-        }}
-      >
-        <div
-          id="ResultRelatorio"
-          style={{
-            marginLeft: "30px",
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-            marginRight: "60px"
-          }}
-        >
-          <div className="LineEmissao">
-            <label>
-              Emissão: {"06/02/2019"} NFe: {"120.807"} PN: {"C00001"}{" "}
-              {"COOPERATIVA AGRO PECUARIA DE BOA ESPERANCA LTDA"}
-            </label>
-          </div>
-          <div className="LinePrazo">
-            <label>Prazo: {"LUIZ ANTONIO DE PAIVA - ME"}</label>
-          </div>
-          <div className="LineObs">
-            <label>Obs: {"LUIZ ANTONIO DE PAIVA - ME"}</label>
-          </div>
-          <div className="LineObs">
+  const { Relatorio } = store.getState().relatorio;
+  const dispatch = useDispatch();
+
+  let ArrayResultRelatorio = [];
+  let ArrayResultRelatorioItens = [];
+  let ArrayResultDevolucoes = [];
+
+  function returnRelatorio(data, index) {
+    debugger;
+    let result = data.filter(element => element.id == index);
+    var component = [];
+    for (let index = 0; index < result.length; index++) {
+      component.push(result[index].component);
+    }
+
+    let resultContainer = (
+      <>
+        {component}
+        {result[0].total}
+      </>
+    );
+    return resultContainer;
+  }
+
+  //TABLE DOS ITENS DO RELATORIO
+
+  if (Relatorio.length == 2) {
+    for (let index = 0; index < Relatorio[1].Notas.length; index++) {
+      for (
+        let indexItens = 0;
+        indexItens < Relatorio[1].Notas[index].Itens.length;
+        indexItens++
+      ) {
+        ArrayResultRelatorioItens.push({
+          id: index,
+          component: (
             <Table striped bordered hover>
               <thead>
                 <tr>
@@ -60,45 +64,188 @@ export default function Dashboard() {
               </thead>
               <tbody>
                 <tr>
-                  <td>PA000198</td>
-                  <td>TINTURA DE IODO 10% VANSIL LITRO</td>
-                  <td>LT</td>
-                  <td>12</td>
-                  <td>101,43</td>
-                  <td>20,00</td>
-                  <td>12,50</td>
-                  <td>0,00</td>
-                  <td>71,00</td>
-                  <td>852,01</td>
-                  <td>5,00</td>
-                  <td>42,60</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>Total: </td>
-                  <td>504.09</td>
-                  <td>3.00</td>
-                  <td>15,12</td>
+                  <td>{Relatorio[1].Notas[index].Itens[indexItens].Codigo}</td>
+                  <td>
+                    {Relatorio[1].Notas[index].Itens[indexItens].Descricao}
+                  </td>
+                  <td>{Relatorio[1].Notas[index].Itens[indexItens].UN}</td>
+                  <td>
+                    {Relatorio[1].Notas[index].Itens[indexItens].Quantidade}
+                  </td>
+                  <td>
+                    {Relatorio[1].Notas[index].Itens[indexItens].PrecoTabela}
+                  </td>
+                  <td>{Relatorio[1].Notas[index].Itens[indexItens].Perfil}</td>
+                  <td>
+                    {Relatorio[1].Notas[index].Itens[indexItens].Campanha}
+                  </td>
+                  <td>
+                    {Relatorio[1].Notas[index].Itens[indexItens].Desconto}
+                  </td>
+                  <td>
+                    {Relatorio[1].Notas[index].Itens[indexItens].PrecoLiquido}
+                  </td>
+                  <td>
+                    {Relatorio[1].Notas[index].Itens[indexItens].ValorTotal}
+                  </td>
+                  <td>
+                    {Relatorio[1].Notas[index].Itens[indexItens].PercComissao}
+                  </td>
+                  <td>
+                    {Relatorio[1].Notas[index].Itens[indexItens].ValorComissao}
+                  </td>
                 </tr>
               </tbody>
             </Table>
-          </div>
-        </div>
-      </div>
-      <div class="hr"></div>
-    </>
-  );
+          ),
+          total: (
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Vlr Total</th>
+                  <th>% Com</th>
+                  <th>Vlr Com</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Total: </td>
+                  <td>{Relatorio[1].Notas[index].Total}</td>
+                  <td>{Relatorio[1].Notas[index].MediaComissao}</td>
+                  <td>{Relatorio[1].Notas[index].ValorComissao}</td>
+                </tr>
+              </tbody>
+            </Table>
+          )
+        });
+      }
+    }
+  }
 
-  let ArrayResultRelatorio = [];
-  for (let index = 0; index < 6; index++) {
-    ArrayResultRelatorio.push(resultRelatorio);
+  //for depara relatorio
+
+  if (Relatorio.length == 2) {
+    for (let index = 0; index < Relatorio[1].Notas.length; index++) {
+      ArrayResultRelatorio.push(
+        <>
+          <div
+            id="HeaderRelatorio"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "15px"
+            }}
+          >
+            <div
+              id="ResultRelatorio"
+              style={{
+                marginLeft: "30px",
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                marginRight: "60px"
+              }}
+            >
+              <div className="LineEmissao">
+                <label>
+                  Emissão: {Relatorio[1].Notas[index].Emissao} - NFe:{" "}
+                  {Relatorio[1].Notas[index].NFe} - PN:{" "}
+                  {Relatorio[1].Notas[index].PN} -
+                  {Relatorio[1].Notas[index].NomePN}
+                </label>
+              </div>
+              <div className="LinePrazo">
+                <label>
+                  Prazo: {Relatorio[1].Notas[index].Prazo} - Cidade:{" "}
+                  {Relatorio[1].Notas[index].Cidade} - UF:{" "}
+                  {Relatorio[1].Notas[index].UF}
+                </label>
+              </div>
+              <div className="LineObs">
+                <label>Obs: {Relatorio[1].Notas[index].Observacao} </label>
+              </div>
+              <div className="LineObs">
+                {returnRelatorio(ArrayResultRelatorioItens, index)}
+              </div>
+            </div>
+          </div>
+          <div class="hr"></div>
+        </>
+      );
+    }
+  }
+
+  //DEVOLUCOES RELATORIO
+
+  if (Relatorio.length == 2) {
+    for (let index = 0; index < Relatorio[1].Devolucoes.length; index++) {
+      ArrayResultDevolucoes.push(
+        <>
+          <div
+            id="HeaderRelatorio"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "15px"
+            }}
+          >
+            <div
+              id="ResultRelatorio"
+              style={{
+                marginLeft: "30px",
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                marginRight: "60px"
+              }}
+            >
+              <div className="LineEmissao">
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>NFe</th>
+                      <th>Código</th>
+                      <th>Parceiro de Negócios</th>
+                      <th>Vlr Total</th>
+                      <th>% Com</th>
+                      <th>Vlr Com</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{Relatorio[1].Devolucoes[index].Data}</td>
+                      <td> {Relatorio[1].Devolucoes[index].NFe}</td>
+                      <td> {Relatorio[1].Devolucoes[index].Codigo}</td>
+                      <td> {Relatorio[1].Devolucoes[index].ParcNegocio}</td>
+                      <td>{Relatorio[1].Devolucoes[index].Valor}</td>
+                      <td> {Relatorio[1].Devolucoes[index].PercComissao}</td>
+                      <td> {Relatorio[1].Devolucoes[index].ValorComissao}</td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </div>
+            </div>
+          </div>
+          <div class="hr"></div>
+        </>
+      );
+    }
+  }
+
+  let dataInicio = undefined;
+  let dataFim = undefined;
+
+  if (document.getElementById("dataInicio") != null) {
+    dataInicio = document.getElementById("dataInicio").value;
+    dataFim = document.getElementById("dataFim").value;
+  }
+
+  function buscaRelatorio() {
+    dataInicio = document.getElementById("dataInicio").value;
+    dataFim = document.getElementById("dataFim").value;
+    dispatch(getRelatorio({ dataInicio, dataFim }));
   }
 
   return (
@@ -127,9 +274,10 @@ export default function Dashboard() {
               Data Inicio
             </label>
             <Input
-              name="dataEntrega"
+              name="dataInicio"
+              id="dataInicio"
               type="date"
-              placeholder="Data de Entrega"
+              placeholder="Data Inicio"
               style={{ width: "95%", maxWidth: "600px", height: "35px" }}
             />
           </div>
@@ -138,13 +286,18 @@ export default function Dashboard() {
               Data Fim
             </label>
             <Input
-              name="dataEntrega"
+              name="dataFim"
+              id="dataFim"
               type="date"
-              placeholder="Data de Entrega"
+              placeholder="Data Fim"
               style={{ width: "95%", maxWidth: "600px", height: "35px" }}
             />
           </div>
-          <Button style={{ marginTop: "44px" }} className={"PesquisaCliente"}>
+          <Button
+            style={{ marginTop: "44px" }}
+            className={"PesquisaCliente"}
+            onClick={buscaRelatorio}
+          >
             Consultar
           </Button>
         </div>
@@ -177,14 +330,41 @@ export default function Dashboard() {
             }}
           >
             <label>Relatório de Comissão de Vendas</label>
-            <label>Representante: {"LUIZ ANTONIO DE PAIVA - ME"}</label>
             <label>
-              Período: {"01/02/2019"} à {"28/02/2019"}
+              Representante:{" "}
+              {Relatorio.length > 1
+                ? Relatorio[1].Notas[0].NomeVendedor
+                : Relatorio[0].NomeVendedor}
+            </label>
+            <label>
+              Período: {dataInicio} à {dataFim}
             </label>
           </div>
         </div>
         <div class="hr"></div>
         {ArrayResultRelatorio}
+        <div
+          style={{
+            display: "flex",
+            paddingLeft: "30px",
+            alignItems: "center",
+            marginTop: "30px",
+            backgroundColor: "#2F353A",
+            paddingTop: "5px",
+            color: "#fff"
+          }}
+        >
+          <label
+            style={{
+              alignItems: "center",
+              textAlign: "center",
+              fontSize: "13pt"
+            }}
+          >
+            Devoluções
+          </label>
+        </div>
+        {ArrayResultDevolucoes}
       </div>
     </>
   );

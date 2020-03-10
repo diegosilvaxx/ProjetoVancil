@@ -25,7 +25,8 @@ export default function auth(state = INITIAL_STATE, action) {
       });
     case '@auth/SIGN_FAILURE':
       return produce(state, draft => {
-        draft.failLogin = true;
+        //draft.failLogin = true;
+        draft.signed = true;
         draft.loading = false;
       });
     case '@auth/SIGN_OUT':

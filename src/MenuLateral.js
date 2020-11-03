@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import "~/styles/headerCSS.css";
 import { Link } from "react-router-dom";
 import {
-  FaBeer,
-  FaUserAlt,
-  FaTruckMoving,
   FaChartBar,
   FaWindowClose
 } from "react-icons/fa";
@@ -41,28 +38,9 @@ export default function MenuLateral() {
       <header className="menuLateral">
         <ul>
           <li>
-            <Link to="/cadastroCliente">
-              <FaUserAlt style={{ marginRight: 10 }} />
-              Cadastro de Cliente
-            </Link>
-          </li>
-          <li>
-            <Link to="/pedidoVenda">
-              <FaTruckMoving style={{ marginRight: 10 }} />
-              Pedido de Vendas
-            </Link>
-          </li>
-          <li>
-            <Link to="/pedidoCompra">
-              <FaBeer style={{ marginRight: 10 }} />
-              Pedido de Compras
-            </Link>
-          </li>
-          <li>
-            <i className="nav-icon icon-puzzle"></i>
-            <Link to="/">
+            <Link to="/pesquisaDebito">
               <FaChartBar style={{ marginRight: 10 }} />
-              Relatórios
+              Pesquisa de Débitos
             </Link>
           </li>
           <li>

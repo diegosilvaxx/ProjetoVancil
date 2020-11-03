@@ -25,13 +25,13 @@ export default function SignIn() {
 
   return (
     <>
-      <img src={logo} style={{ width: 150 }} alt="PortalVendas" />
+      <img src={logo} style={{ width: 350 }} alt="PortalVendas" />
       <Form schema={schema} onSubmit={handleSubmit}>
         <Input name="usuario" type="text" placeholder="Usuário" />
         <Input name="password" type="password" placeholder="Password" />
 
         <Button type="submit">{loading ? "Carregando..." : "Acessar"}</Button>
-        {/* <Link to="/register">Criar conta gratuita</Link> */}
+        <Link className="linkButton" to="/register">Cadastrar</Link>
       </Form>
     </>
   );

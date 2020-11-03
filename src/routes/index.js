@@ -5,12 +5,9 @@ import Route from './Route';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 
-import Dashboard from '../pages/Dashboard';
-import PedidoVenda from '../pages/PedidoVenda';
-import PedidoCompra from '../pages/PedidoCompra';
-import CadastroCliente from '../pages/CadastroCliente';
+import PesquisaDebito from '../pages/PesquisaDebito/index';
 import MenuLateral from '~/MenuLateral';
-import Header from '~/Header';
+import Header from '~/components/Header/Header.jsx';
 import '~/styles/headerCSS.css';
 import GlobalStyle from '../styles/global';
 
@@ -22,37 +19,15 @@ export default function Routes() {
       <>
         <Header />
         <GlobalStyle />
-        <div className="container" key={'divIndexRouterKey'}>
+        <div className="container">
           <section id={'sectionLeft'} className="sectionLeft">
             <MenuLateral></MenuLateral>
           </section>
-          <section className="sectionRight" key={'sectionRightKey'}>
+          <section className="sectionRight">
             <Route
-              path="/dashboard"
-              key={'dashboardKey'}
+              path="/pesquisaDebito"
               exact
-              component={Dashboard}
-              isPrivate
-            />
-            <Route
-              path="/cadastroCliente"
-              key={'cadastroClienteKey'}
-              exact
-              component={CadastroCliente}
-              isPrivate
-            />
-            <Route
-              key={'KEYpedidoVenda'}
-              path="/pedidoVenda"
-              exact
-              component={PedidoVenda}
-              isPrivate
-            />
-            <Route
-              key={'KEYpedidoCompra'}
-              path="/pedidoCompra"
-              exact
-              component={PedidoCompra}
+              component={PesquisaDebito}
               isPrivate
             />
           </section>

@@ -48,6 +48,7 @@ body{
 
 body, input, button {
   font: 14px 'Roboto', sans-serif;
+  overflow: hidden;
 }
 
 a {

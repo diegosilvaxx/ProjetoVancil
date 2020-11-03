@@ -1,57 +1,51 @@
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import Button from 'react-bootstrap/Button';
+import autoBind from 'react-autobind';
+import * as moment from 'moment';
+import 'moment/locale/pt-br';
+import { connect } from 'react-redux';
 
 import React, { Component } from 'react';
 
-className Grid extends Component {
+class Grid extends Component {
   constructor(props) {
     super(props);
+    autoBind(this);
 
-    this.state = {
+  }
+
+  LoadGrid() {
+    let debito = this.props.pesquisaDebito;
+    let valor = debito.valorOriginal + debito.valorJuros;
+    return {
       columnDefs: [
-        { headerName: 'Make', field: 'make' },
-        { headerName: 'Model', field: 'model' },
-        { headerName: 'Price', field: 'price', editable: true },
-        {
-          headerName: 'Actions',
-          field: 'actions',
-          width: 180,
-          cellRendererFramework: function(params) {
-            return (
-              <Button
-                style={{ width: 'auto', margin: '0', height: 'auto' }}
-                variant="primary"
-                size="sm"
-                onClick={() => alert('funciono')}
-              >
-                Exibir
-              </Button>
-            );
-          },
-        },
+        { headerName: 'Parcela', field: 'parcela' },
+        { headerName: 'Data Vencimento', field: 'dataVencimento' },
+        { headerName: 'Valor', field: 'valor', editable: true },
       ],
       rowData: [
-        { make: 'Toyota', model: 'Celica', price: 35000 },
-        { make: 'Ford', model: 'Mondeo', price: 32000 },
-        { make: 'Porsche', model: 'Boxter', price: 72000 },
+        { parcela: '1', dataVencimento: moment((new Date(Date.now()))).add({ 'day': 1 }).locale('pt-br').format('L'), valor: valor },
+        { parcela: '2', dataVencimento: moment((new Date(Date.now()))).add({ 'day': 1, 'month': 1 }).locale('pt-br').format('L'), valor: valor / 2 },
+        { parcela: '3', dataVencimento: moment((new Date(Date.now()))).add({ 'day': 1, 'month': 2 }).format('L'), valor: valor / 3 },
       ],
     };
   }
 
   render() {
+
+    let grid = this.LoadGrid()
+
     return (
       <div
         className="ag-theme-balham"
-        style={{ height: '200px', width: '100%', justifyContent: 'center' }}
       >
         <AgGridReact
           enableSorting={true}
           enableFilter={true}
           pagination={true}
-          columnDefs={this.state.columnDefs}
-          rowData={this.state.rowData}
+          columnDefs={grid.columnDefs}
+          rowData={grid.rowData}
           rowHeight={35}
         ></AgGridReact>
       </div>
@@ -59,4 +53,10 @@ className Grid extends Component {
   }
 }
 
-export default Grid;
+function mapStateToProps(state) {
+  return {
+    pesquisaDebito: state.pesquisaDebito
+  }
+}
+
+export default connect(mapStateToProps)(Grid) 

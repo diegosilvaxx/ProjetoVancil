@@ -8,14 +8,21 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 
+  .linkButton{
+    flex-direction: row;
+    border: 1;
+    border-radius: 4px;
+    height: 39px;
+    padding: 10px;
+    margin: 0 0 10px;
+    margin-top: 11px;
+    margin-bottom: 30px;
+    background-color: grey;
+  }
+
   form {
     display: flex;
     margin-top: 30px;
-
-    label{
-      margin-left: 30px;
-
-    }
 
     input {
       flex-direction: row;
@@ -24,34 +31,10 @@ export const Wrapper = styled.div`
       height: 44px;
       padding: 0 15px;
       margin: 0 0 10px;
-      margin: 30px;
+      margin-top: 30px;
+      margin-bottom: 30px;
       width: 92%;
-      max-width: 400px;
     }
-
-    span {
-      color: #fb6f91;
-      align-self: flex-start;
-      margin: 0 0 10px;
-      font-weight: bold;
-    }
-
-    // button {
-    //   margin: 0 0 10px;
-    //   margin: 30px;
-    //   height: 44px;
-    //   background: #3b9eff;
-    //   font-weight: bold;
-    //   color: #fff;
-    //   border: 0;
-    //   border-radius: 4px;
-    //   font-size: 16px;
-    //   transition: background 0.2s;
-    //   width:100%;
-    //   :hover {
-    //     background: ${darken(0.03, '#3b9eff')};
-    //   }
-    // }
 
     a {
       color: #fff;

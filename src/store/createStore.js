@@ -1,16 +1,16 @@
 import { createStore, compose, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
 
-function create(reducers, middlewares) {
+
+export default (reducers, middlewares) => {
   const enhancer =
     process.env.NODE_ENV === 'development'
       ? compose(
-          console.tron.createEnhancer(),
-          applyMiddleware(...middlewares, thunk)
-        )
-      : applyMiddleware(...middlewares, thunk);
+        console.tron.createEnhancer(),
+        applyMiddleware(...middlewares)
+      )
+      : applyMiddleware(...middlewares);
 
   return createStore(reducers, enhancer);
 }
 
-export default create;
+

@@ -2,6 +2,7 @@ import './config/ReactotronConfig';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
+import './config/ReactotronConfig';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Routes from './routes';
 import { Router } from 'react-router-dom';

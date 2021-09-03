@@ -19,7 +19,7 @@
     "express": "^4.17.1",
     "flag-icon-css": "^3.3.0",
     "history": "^4.10.1",
-    "immer": "^5.0.0",
+    "immer": "^9.0.6",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "moment": "^2.29.1",
